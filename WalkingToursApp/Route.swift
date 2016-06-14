@@ -12,7 +12,7 @@ class Route : NSObject {
     
     var objectId : String?
     var routeName : String?
-    var routeDistance : Double = 0
+    var routeDistance : String?
     var routeDiscription : String?
     var routePicName : String?
     var created: NSDate?

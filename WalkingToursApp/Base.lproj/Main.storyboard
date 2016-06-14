@@ -111,7 +111,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VsV-YB-jAb">
-                                <rect key="frame" x="0.0" y="214" width="600" height="386"/>
+                                <rect key="frame" x="0.0" y="342" width="600" height="258"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="ZlU-tV-1iw" detailTextLabel="kWf-6M-iJd" style="IBUITableViewCellStyleSubtitle" id="xsU-6W-zU6">
@@ -144,7 +144,7 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route Stops and Points of Interest:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcF-Ra-2kB">
-                                <rect key="frame" x="20" y="185" width="265" height="21"/>
+                                <rect key="frame" x="20" y="313" width="265" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="GC9-G2-hQh"/>
                                 </constraints>
@@ -152,8 +152,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfz-1S-N72">
-                                <rect key="frame" x="519" y="185" width="61" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfz-1S-N72">
+                                <rect key="frame" x="519" y="313" width="61" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="GsO-hc-dxP"/>
+                                    <constraint firstAttribute="width" constant="61" id="fhI-op-yJa"/>
+                                </constraints>
                                 <state key="normal" title="add stop"/>
                                 <connections>
                                     <segue destination="GNj-KV-eri" kind="show" identifier="addNewWP" id="hQ9-MT-nGw"/>
@@ -167,32 +171,103 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route Distance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6Q-5P-uVO">
+                                <rect key="frame" x="20" y="114" width="149" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="149" id="f0Y-wB-KEL"/>
+                                    <constraint firstAttribute="height" constant="21" id="lYN-ym-I9R"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Distance" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q4s-Yh-jaZ">
+                                <rect key="frame" x="483" y="110" width="97" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="97" id="35d-ED-Baq"/>
+                                    <constraint firstAttribute="height" constant="30" id="WZO-FP-qOs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJm-9v-Ns5">
+                                <rect key="frame" x="18" y="143" width="151" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="Ls6-Ng-Yc0"/>
+                                    <constraint firstAttribute="width" constant="151" id="sUE-sx-Ypc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aex-ch-bJm">
+                                <rect key="frame" x="20" y="180" width="560" height="125"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ZMs-U8-Nej" firstAttribute="top" secondItem="D7e-bt-fvI" secondAttribute="bottom" constant="8" id="0MC-3a-BDO"/>
+                            <constraint firstItem="Q4s-Yh-jaZ" firstAttribute="centerY" secondItem="B6Q-5P-uVO" secondAttribute="centerY" id="1Fc-Iy-hyj"/>
+                            <constraint firstItem="dcF-Ra-2kB" firstAttribute="top" secondItem="aex-ch-bJm" secondAttribute="bottom" constant="8" id="36v-o4-lrR"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ZMs-U8-Nej" secondAttribute="leading" id="3Mw-5a-zeR"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="aex-ch-bJm" secondAttribute="leading" id="3j0-ew-TzS"/>
                             <constraint firstAttribute="leadingMargin" secondItem="dcF-Ra-2kB" secondAttribute="leading" id="5Ge-fe-KxZ"/>
-                            <constraint firstItem="dcF-Ra-2kB" firstAttribute="top" secondItem="ZMs-U8-Nej" secondAttribute="bottom" constant="83" id="75s-3v-VEe"/>
+                            <constraint firstItem="aex-ch-bJm" firstAttribute="leading" secondItem="KJm-9v-Ns5" secondAttribute="trailing" constant="8" id="5eV-wv-OBy"/>
+                            <constraint firstItem="KJm-9v-Ns5" firstAttribute="top" secondItem="B6Q-5P-uVO" secondAttribute="bottom" constant="8" id="6jY-26-fYZ"/>
+                            <constraint firstItem="aex-ch-bJm" firstAttribute="top" secondItem="KJm-9v-Ns5" secondAttribute="bottom" constant="-29" id="6xc-7a-HmO"/>
+                            <constraint firstItem="dcF-Ra-2kB" firstAttribute="top" secondItem="ZMs-U8-Nej" secondAttribute="bottom" constant="211" id="75s-3v-VEe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aex-ch-bJm" secondAttribute="trailing" id="8Mq-lH-v36"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Nfz-1S-N72" secondAttribute="trailing" id="AAB-iX-hMR"/>
+                            <constraint firstItem="VsV-YB-jAb" firstAttribute="top" secondItem="Nfz-1S-N72" secondAttribute="bottom" constant="8" id="ATz-Pc-2fZ"/>
                             <constraint firstItem="2QK-j9-Chv" firstAttribute="top" secondItem="VsV-YB-jAb" secondAttribute="bottom" id="Ejz-aX-5mc"/>
                             <constraint firstItem="VsV-YB-jAb" firstAttribute="leading" secondItem="hkg-1A-2xL" secondAttribute="leadingMargin" constant="-20" id="EyP-oB-hVZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Q4s-Yh-jaZ" secondAttribute="trailing" id="K9f-As-QRh"/>
+                            <constraint firstItem="dcF-Ra-2kB" firstAttribute="top" secondItem="KJm-9v-Ns5" secondAttribute="bottom" constant="141" id="Lwi-iZ-DCn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="VsV-YB-jAb" secondAttribute="trailing" constant="-20" id="PWI-dS-DbN"/>
+                            <constraint firstItem="Q4s-Yh-jaZ" firstAttribute="top" secondItem="ZMs-U8-Nej" secondAttribute="bottom" constant="8" id="QMH-Oi-2HC"/>
+                            <constraint firstItem="dcF-Ra-2kB" firstAttribute="top" secondItem="aex-ch-bJm" secondAttribute="bottom" constant="42" id="RLZ-th-qnd"/>
+                            <constraint firstItem="B6Q-5P-uVO" firstAttribute="top" secondItem="ZMs-U8-Nej" secondAttribute="bottom" constant="12" id="V8J-e0-hQS"/>
+                            <constraint firstItem="aex-ch-bJm" firstAttribute="top" secondItem="Q4s-Yh-jaZ" secondAttribute="bottom" constant="3" id="VqZ-EA-GXH"/>
+                            <constraint firstItem="Q4s-Yh-jaZ" firstAttribute="top" secondItem="ZMs-U8-Nej" secondAttribute="bottom" constant="8" id="YTH-a6-b0w"/>
+                            <constraint firstItem="dcF-Ra-2kB" firstAttribute="top" secondItem="KJm-9v-Ns5" secondAttribute="bottom" constant="141" id="ZSI-Y7-qvz"/>
+                            <constraint firstItem="KJm-9v-Ns5" firstAttribute="leading" secondItem="hkg-1A-2xL" secondAttribute="leadingMargin" constant="-2" id="ajr-eQ-GZU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ZMs-U8-Nej" secondAttribute="trailing" id="eKk-Nz-6cJ"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="B6Q-5P-uVO" secondAttribute="leading" id="gRC-Er-3nB"/>
                             <constraint firstItem="VsV-YB-jAb" firstAttribute="top" secondItem="dcF-Ra-2kB" secondAttribute="bottom" constant="8" id="gz5-Gt-2Q3"/>
+                            <constraint firstItem="aex-ch-bJm" firstAttribute="top" secondItem="KJm-9v-Ns5" secondAttribute="bottom" constant="8" id="hoV-Xf-eaQ"/>
+                            <constraint firstItem="aex-ch-bJm" firstAttribute="top" secondItem="Q4s-Yh-jaZ" secondAttribute="bottom" constant="3" id="rWB-Zs-mAa"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="5eV-wv-OBy"/>
+                                <exclude reference="6xc-7a-HmO"/>
+                                <exclude reference="VqZ-EA-GXH"/>
+                                <exclude reference="rWB-Zs-mAa"/>
+                                <exclude reference="75s-3v-VEe"/>
+                                <exclude reference="Lwi-iZ-DCn"/>
+                                <exclude reference="RLZ-th-qnd"/>
+                                <exclude reference="1Fc-Iy-hyj"/>
+                                <exclude reference="QMH-Oi-2HC"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="xpM-zg-z3Z">
+                    <navigationItem key="navigationItem" id="C21-4w-1tM">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="save" id="6Mf-gO-Rnq">
+                            <barButtonItem systemItem="save" id="lFU-um-0yN">
                                 <connections>
-                                    <action selector="saveButtonPressed:" destination="GiG-Ig-JKv" id="pdX-CR-UjL"/>
+                                    <action selector="saveRouteInfo:" destination="GiG-Ig-JKv" id="LqE-W4-c96"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="trash" id="O7S-ag-cHk"/>
+                            <barButtonItem systemItem="trash" id="lyH-r1-aPz"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <outlet property="routeTitleTXTField" destination="ZMs-U8-Nej" id="6Gc-Lm-ZZB"/>
+                        <outlet property="routeDescriptionTXTView" destination="aex-ch-bJm" id="DRq-qi-Jb3"/>
+                        <outlet property="routeDistTXTField" destination="Q4s-Yh-jaZ" id="yZq-rD-WJS"/>
+                        <outlet property="routeTitleTXTField" destination="ZMs-U8-Nej" id="nxM-Zj-e7i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TmL-WT-pfd" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -9,32 +9,64 @@
 import UIKit
 
 class RouteViewController: UIViewController {
-
+    
     let backendless = Backendless.sharedInstance()
     var selectedRoute = Route?()
     var waypointArray = [Waypoint]()
-    @IBOutlet weak var routeTitleTXTField:     UITextField!
-    @IBOutlet weak var routeDistLabel:      UILabel!
-    @IBOutlet weak var waypointTableView:   UITableView!
+    @IBOutlet weak var routeTitleTXTField:      UITextField!
+    @IBOutlet weak var routeDistTXTField:       UITextField!
+    @IBOutlet weak var routeDescriptionTXTView: UITextView!
+    @IBOutlet weak var waypointTableView:       UITableView!
     
     //MARK: - Interactivity Methods
     
-    @IBAction func saveButtonPressed(sender: UIBarButtonItem){
+    @IBAction func saveRouteInfo(sender: UIBarButtonItem) {
         print("route saved pressed")
-        
-        let dataStore = backendless.data.of(Route.ofClass())
-        dataStore.save(selectedRoute, response: { (result) in
-            print("entry saved")
-        }) { (fault) in
-            print("server reported error:\(fault)")
+        if selectedRoute == nil {
+            let newRoute = Route()
+            if let routeName = routeTitleTXTField.text {
+                newRoute.routeName = routeName
+            }
+            if let routeDistance = routeDistTXTField.text {
+                newRoute.routeDistance = routeDistance
+            }
+            if let routeDescription = routeDescriptionTXTView.text {
+                newRoute.routeDiscription=routeDescription
+            }
+            
+            let dataStore = backendless.data.of(Route.ofClass())
+            dataStore.save(
+                newRoute,
+                response: { (result) in
+                    print("entry saved")
+            }) { (fault) in
+                print("server reported error:\(fault)")
+            }
+        } else {
+            let dataStore = Backendless.sharedInstance().data.of(Route.ofClass())
+            
+            selectedRoute!.routeName = routeTitleTXTField.text
+            selectedRoute!.routeDiscription = routeDescriptionTXTView.text
+            selectedRoute!.routeDistance = routeDistTXTField.text
+            
+            dataStore.save(
+                selectedRoute,
+                response: { (result: AnyObject!) -> Void in
+                    let updatedRoute = result as! Route
+                    print("Contact has been updated: \(updatedRoute.objectId)")
+                },
+                error: { (fault: Fault!) -> Void in
+                    print("Server reported an error (2): \(fault)")
+            })
         }
-        
     }
+    
+    
     
     @IBAction func deleteButtonPressed(sender: UIBarButtonItem){
         print("delete pressed")
         self.navigationController!.popViewControllerAnimated(true)
-
+        
     }
     //MARK: - Table Methods
     
@@ -71,14 +103,23 @@ class RouteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let selRoute = selectedRoute {
-            routeTitleTXTField.text = selRoute.routeName
-            //routeDistLabel.text = "\(selRoute.routeDistance) mi"
+            if let routeName = selRoute.routeName{
+                routeTitleTXTField.text = routeName
+                self.navigationController?.title = routeName
+            }
+            if let routeDist = selRoute.routeDistance {
+                routeDistTXTField.text = routeDist
+            }
+            if let routeDescript = selRoute.routeDiscription {
+                routeDescriptionTXTView.text = routeDescript
+            }
         } else {
             routeTitleTXTField.text = ""
-            //routeDistLabel.text = ""
+            routeDistTXTField.text = "0"
+            routeDescriptionTXTView.text = ""
         }
     }
-
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         print("Route Name: \(selectedRoute?.routeName) and ID \(selectedRoute?.objectId)")

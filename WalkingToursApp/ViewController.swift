@@ -73,9 +73,9 @@ class ViewController: UIViewController {
     
     func saveNewRoute() {
         let route = Route()
-        route.routeName = "IronPints Spring 2016"
-        route.routeDiscription = "Stops made by Iron Yard Students in the spring of 2016"
-        route.routeDistance = 2.5
+        route.routeName = "D-town Brew Tours  2016"
+        route.routeDiscription = "Brews in the D 2016"
+        route.routeDistance = "4"
         
         let dataStore = backendless.data.of(Route.ofClass())
         // save object asynchronously
