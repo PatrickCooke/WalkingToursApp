@@ -13,6 +13,9 @@
 		43132D0B1D105B85007BCC66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43132D0A1D105B85007BCC66 /* Assets.xcassets */; };
 		43132D0E1D105B85007BCC66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43132D0C1D105B85007BCC66 /* LaunchScreen.storyboard */; };
 		43132D161D105C1C007BCC66 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D151D105C1C007BCC66 /* Route.swift */; };
+		43132D1A1D106131007BCC66 /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D181D106131007BCC66 /* RouteViewController.swift */; };
+		43132D1B1D106131007BCC66 /* WayPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D191D106131007BCC66 /* WayPointViewController.swift */; };
+		43132D1D1D106176007BCC66 /* Waypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D1C1D106176007BCC66 /* Waypoint.swift */; };
 		B7637D5815BFF29E15937E43 /* Pods_WalkingToursApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633140528618EF6365ED9D7B /* Pods_WalkingToursApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +28,9 @@
 		43132D0D1D105B85007BCC66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		43132D0F1D105B85007BCC66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43132D151D105C1C007BCC66 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		43132D181D106131007BCC66 /* RouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteViewController.swift; sourceTree = "<group>"; };
+		43132D191D106131007BCC66 /* WayPointViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WayPointViewController.swift; sourceTree = "<group>"; };
+		43132D1C1D106176007BCC66 /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
 		45E7C5414A84DE0FE913E932 /* Pods-WalkingToursApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalkingToursApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WalkingToursApp/Pods-WalkingToursApp.release.xcconfig"; sourceTree = "<group>"; };
 		633140528618EF6365ED9D7B /* Pods_WalkingToursApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalkingToursApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9ACAD4AE768526427A2C2F /* Pods-WalkingToursApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalkingToursApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WalkingToursApp/Pods-WalkingToursApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -65,6 +71,8 @@
 			children = (
 				43132D031D105B85007BCC66 /* AppDelegate.swift */,
 				43132D051D105B85007BCC66 /* ViewController.swift */,
+				43132D181D106131007BCC66 /* RouteViewController.swift */,
+				43132D191D106131007BCC66 /* WayPointViewController.swift */,
 				43132D171D105C20007BCC66 /* Model */,
 				43132D071D105B85007BCC66 /* Main.storyboard */,
 				43132D0A1D105B85007BCC66 /* Assets.xcassets */,
@@ -78,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				43132D151D105C1C007BCC66 /* Route.swift */,
+				43132D1C1D106176007BCC66 /* Waypoint.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -223,6 +232,9 @@
 			files = (
 				43132D161D105C1C007BCC66 /* Route.swift in Sources */,
 				43132D061D105B85007BCC66 /* ViewController.swift in Sources */,
+				43132D1D1D106176007BCC66 /* Waypoint.swift in Sources */,
+				43132D1B1D106131007BCC66 /* WayPointViewController.swift in Sources */,
+				43132D1A1D106131007BCC66 /* RouteViewController.swift in Sources */,
 				43132D041D105B85007BCC66 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

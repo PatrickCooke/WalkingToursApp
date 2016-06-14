@@ -10,11 +10,66 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    
-    
-    
-    //MARK: - Temp Add Records
     var backendless = Backendless.sharedInstance()
+        var routeArray = [Route]()
+    
+        @IBOutlet private weak var RouteTable  :UITableView!
+    
+        ////MARK: - Table Methods
+    
+        func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return routeArray.count
+        }
+    
+        func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+            let selectedRoute = routeArray[indexPath.row]
+            cell.textLabel?.text = selectedRoute.routeName
+            cell.detailTextLabel?.text = "\(selectedRoute.routeDistance) mi"
+    
+            return cell
+        }
+    
+        //MARK: - Segue Methods
+    
+        override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+            let destController = segue.destinationViewController as! RouteViewController
+            if segue.identifier == "seeSelectedRoute" {
+                let indexPath = RouteTable.indexPathForSelectedRow!
+                let selectedRoute = routeArray[indexPath.row]
+                destController.selectedRoute = selectedRoute
+                RouteTable.deselectRowAtIndexPath(indexPath, animated: true)
+            } else if segue.identifier == "addNewRoute" {
+                destController.selectedRoute = nil
+            }
+    
+        }
+    
+    //MARK: - Fetch Methods
+    
+        private func fetchData() {
+            let dataQuery = BackendlessDataQuery()
+            var error: Fault?
+            let bc = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
+            if error == nil {
+                routeArray = bc.getCurrentPage() as! [Route]
+                print("requests: \(routeArray.count)")
+            } else {
+                print("server error \(error)")
+                routeArray = [Route]()
+            }
+        }
+    
+    //MARK: - Reoccuring Functions
+    
+        func refetchAndReload(){
+            fetchData()
+            RouteTable.reloadData()
+        }
+    
+    
+    
+    ////MARK: - Temp Add Records
     
     func saveNewRoute() {
         let route = Route()
@@ -35,17 +90,23 @@ class ViewController: UIViewController {
         })
     }
     
-    //MARK: - Life Cycle Methods
+    ////MARK: - Life Cycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        saveNewRoute()
-        
+        //saveNewRoute()
+        refetchAndReload()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        refetchAndReload()
+
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
     
