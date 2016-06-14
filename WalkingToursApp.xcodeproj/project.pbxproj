@@ -1,0 +1,385 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43132D041D105B85007BCC66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D031D105B85007BCC66 /* AppDelegate.swift */; };
+		43132D061D105B85007BCC66 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D051D105B85007BCC66 /* ViewController.swift */; };
+		43132D091D105B85007BCC66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43132D071D105B85007BCC66 /* Main.storyboard */; };
+		43132D0B1D105B85007BCC66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43132D0A1D105B85007BCC66 /* Assets.xcassets */; };
+		43132D0E1D105B85007BCC66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43132D0C1D105B85007BCC66 /* LaunchScreen.storyboard */; };
+		43132D161D105C1C007BCC66 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D151D105C1C007BCC66 /* Route.swift */; };
+		B7637D5815BFF29E15937E43 /* Pods_WalkingToursApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633140528618EF6365ED9D7B /* Pods_WalkingToursApp.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43132D001D105B85007BCC66 /* WalkingToursApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalkingToursApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		43132D031D105B85007BCC66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		43132D051D105B85007BCC66 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		43132D081D105B85007BCC66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		43132D0A1D105B85007BCC66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		43132D0D1D105B85007BCC66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		43132D0F1D105B85007BCC66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		43132D151D105C1C007BCC66 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		45E7C5414A84DE0FE913E932 /* Pods-WalkingToursApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalkingToursApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WalkingToursApp/Pods-WalkingToursApp.release.xcconfig"; sourceTree = "<group>"; };
+		633140528618EF6365ED9D7B /* Pods_WalkingToursApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalkingToursApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF9ACAD4AE768526427A2C2F /* Pods-WalkingToursApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalkingToursApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WalkingToursApp/Pods-WalkingToursApp.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43132CFD1D105B85007BCC66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7637D5815BFF29E15937E43 /* Pods_WalkingToursApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43132CF71D105B85007BCC66 = {
+			isa = PBXGroup;
+			children = (
+				43132D021D105B85007BCC66 /* WalkingToursApp */,
+				43132D011D105B85007BCC66 /* Products */,
+				D9C05750025017610F705C11 /* Pods */,
+				932F9942E094A1BC45D39A59 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		43132D011D105B85007BCC66 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43132D001D105B85007BCC66 /* WalkingToursApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43132D021D105B85007BCC66 /* WalkingToursApp */ = {
+			isa = PBXGroup;
+			children = (
+				43132D031D105B85007BCC66 /* AppDelegate.swift */,
+				43132D051D105B85007BCC66 /* ViewController.swift */,
+				43132D171D105C20007BCC66 /* Model */,
+				43132D071D105B85007BCC66 /* Main.storyboard */,
+				43132D0A1D105B85007BCC66 /* Assets.xcassets */,
+				43132D0C1D105B85007BCC66 /* LaunchScreen.storyboard */,
+				43132D0F1D105B85007BCC66 /* Info.plist */,
+			);
+			path = WalkingToursApp;
+			sourceTree = "<group>";
+		};
+		43132D171D105C20007BCC66 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				43132D151D105C1C007BCC66 /* Route.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		932F9942E094A1BC45D39A59 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				633140528618EF6365ED9D7B /* Pods_WalkingToursApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D9C05750025017610F705C11 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EF9ACAD4AE768526427A2C2F /* Pods-WalkingToursApp.debug.xcconfig */,
+				45E7C5414A84DE0FE913E932 /* Pods-WalkingToursApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		43132CFF1D105B85007BCC66 /* WalkingToursApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43132D121D105B85007BCC66 /* Build configuration list for PBXNativeTarget "WalkingToursApp" */;
+			buildPhases = (
+				862505AC96C5249A4676A4B5 /* 📦 Check Pods Manifest.lock */,
+				43132CFC1D105B85007BCC66 /* Sources */,
+				43132CFD1D105B85007BCC66 /* Frameworks */,
+				43132CFE1D105B85007BCC66 /* Resources */,
+				296C9909F535B9647D576855 /* 📦 Embed Pods Frameworks */,
+				8E4541E4FA918F15C25ACE2D /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WalkingToursApp;
+			productName = WalkingToursApp;
+			productReference = 43132D001D105B85007BCC66 /* WalkingToursApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43132CF81D105B85007BCC66 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Patrick Cooke";
+				TargetAttributes = {
+					43132CFF1D105B85007BCC66 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 43132CFB1D105B85007BCC66 /* Build configuration list for PBXProject "WalkingToursApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 43132CF71D105B85007BCC66;
+			productRefGroup = 43132D011D105B85007BCC66 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43132CFF1D105B85007BCC66 /* WalkingToursApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		43132CFE1D105B85007BCC66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43132D0E1D105B85007BCC66 /* LaunchScreen.storyboard in Resources */,
+				43132D0B1D105B85007BCC66 /* Assets.xcassets in Resources */,
+				43132D091D105B85007BCC66 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		296C9909F535B9647D576855 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WalkingToursApp/Pods-WalkingToursApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		862505AC96C5249A4676A4B5 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8E4541E4FA918F15C25ACE2D /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WalkingToursApp/Pods-WalkingToursApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43132CFC1D105B85007BCC66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43132D161D105C1C007BCC66 /* Route.swift in Sources */,
+				43132D061D105B85007BCC66 /* ViewController.swift in Sources */,
+				43132D041D105B85007BCC66 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		43132D071D105B85007BCC66 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				43132D081D105B85007BCC66 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		43132D0C1D105B85007BCC66 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				43132D0D1D105B85007BCC66 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		43132D101D105B85007BCC66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		43132D111D105B85007BCC66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		43132D131D105B85007BCC66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF9ACAD4AE768526427A2C2F /* Pods-WalkingToursApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = WalkingToursApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.appsbypat.WalkingToursApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		43132D141D105B85007BCC66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 45E7C5414A84DE0FE913E932 /* Pods-WalkingToursApp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = WalkingToursApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.appsbypat.WalkingToursApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43132CFB1D105B85007BCC66 /* Build configuration list for PBXProject "WalkingToursApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43132D101D105B85007BCC66 /* Debug */,
+				43132D111D105B85007BCC66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43132D121D105B85007BCC66 /* Build configuration list for PBXNativeTarget "WalkingToursApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43132D131D105B85007BCC66 /* Debug */,
+				43132D141D105B85007BCC66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43132CF81D105B85007BCC66 /* Project object */;
+}
