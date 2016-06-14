@@ -10,14 +10,14 @@ import Foundation
 
 class Waypoint: NSObject {
 
-    var wpName    :String = ""
-    var wpAddress       :String = ""
-    var wpLat        :String = ""
-    var wpLon        :String = ""
-    var wpDescript      :String = ""
+    var wpName          :String?
+    var wpAddress       :String?
+    var wpLat           :String?
+    var wpLon           :String?
+    var wpDescript      :String?
     var wpStopNum       :Int8 = 0
-    var wpPicName       :String = ""
-    var wpAudioName     :String = ""
+    var wpPicName       :String?
+    var wpAudioName     :String?
     var objectId        :String?
     var created         :NSDate?
     var updated         :NSDate?

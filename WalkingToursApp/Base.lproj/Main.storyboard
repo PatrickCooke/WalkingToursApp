@@ -142,6 +142,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="GiG-Ig-JKv" id="DuQ-uW-Pk1"/>
+                                    <outlet property="delegate" destination="GiG-Ig-JKv" id="FXQ-fD-9UN"/>
+                                </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route Stops and Points of Interest:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcF-Ra-2kB">
                                 <rect key="frame" x="20" y="313" width="265" height="21"/>
@@ -261,16 +265,27 @@
                                     <action selector="saveRouteInfo:" destination="GiG-Ig-JKv" id="LqE-W4-c96"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="trash" id="lyH-r1-aPz"/>
+                            <barButtonItem systemItem="trash" id="lyH-r1-aPz">
+                                <connections>
+                                    <action selector="deleteButtonPressed:" destination="GiG-Ig-JKv" id="T88-RM-I5r"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="routeDescriptionTXTView" destination="aex-ch-bJm" id="DRq-qi-Jb3"/>
                         <outlet property="routeDistTXTField" destination="Q4s-Yh-jaZ" id="yZq-rD-WJS"/>
                         <outlet property="routeTitleTXTField" destination="ZMs-U8-Nej" id="nxM-Zj-e7i"/>
+                        <outlet property="waypointTableView" destination="VsV-YB-jAb" id="e5n-Vp-jGq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TmL-WT-pfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="V2K-WP-e63">
+                    <connections>
+                        <action selector="resignAll:" destination="GiG-Ig-JKv" id="SsK-TR-Roe"/>
+                        <outlet property="delegate" destination="GiG-Ig-JKv" id="ARY-q7-MXf"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1775" y="265"/>
         </scene>

@@ -24,8 +24,8 @@ class ViewController: UIViewController {
         func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
             let selectedRoute = routeArray[indexPath.row]
-            cell.textLabel?.text = selectedRoute.routeName
-            cell.detailTextLabel?.text = "\(selectedRoute.routeDistance) mi"
+            cell.textLabel!.text = selectedRoute.routeName
+            cell.detailTextLabel!.text = "\(selectedRoute.routeDistance!) mi"
     
             return cell
         }
@@ -38,9 +38,15 @@ class ViewController: UIViewController {
                 let indexPath = RouteTable.indexPathForSelectedRow!
                 let selectedRoute = routeArray[indexPath.row]
                 destController.selectedRoute = selectedRoute
+                let backItem = UIBarButtonItem()
+                backItem.title = "Menu"
+                navigationItem.backBarButtonItem = backItem
                 RouteTable.deselectRowAtIndexPath(indexPath, animated: true)
             } else if segue.identifier == "addNewRoute" {
                 destController.selectedRoute = nil
+                let backItem = UIBarButtonItem()
+                backItem.title = "Menu"
+                navigationItem.backBarButtonItem = backItem
             }
     
         }

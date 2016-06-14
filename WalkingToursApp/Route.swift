@@ -17,5 +17,5 @@ class Route : NSObject {
     var routePicName : String?
     var created: NSDate?
     var updated: NSDate?
-    
+    var waypoint: [Waypoint] = []
 }

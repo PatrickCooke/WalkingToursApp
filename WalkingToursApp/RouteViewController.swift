@@ -20,7 +20,30 @@ class RouteViewController: UIViewController {
     
     //MARK: - Interactivity Methods
     
+    @IBAction func deleteButtonPressed(sender: UIBarButtonItem){
+        
+        let alertView = UIAlertController(title: "Sorry, you can't directly delete this Routes", message: "To protect the routes created by other, you'll have to email me to delete this route for you.", preferredStyle: .Alert)
+        alertView.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+        presentViewController(alertView, animated: true, completion: nil)
+    }
+    
+    func deleteListing() {
+        print("delete Listing")
+        //        self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func resignAll(selector: UIGestureRecognizer){
+        resignFirstRespond()
+    }
+    
+    func resignFirstRespond() {
+        routeDistTXTField.resignFirstResponder()
+        routeTitleTXTField.resignFirstResponder()
+        routeDescriptionTXTView.resignFirstResponder()
+    }
+    
     @IBAction func saveRouteInfo(sender: UIBarButtonItem) {
+        resignFirstRespond()
         print("route saved pressed")
         if selectedRoute == nil {
             let newRoute = Route()
@@ -62,12 +85,6 @@ class RouteViewController: UIViewController {
     }
     
     
-    
-    @IBAction func deleteButtonPressed(sender: UIBarButtonItem){
-        print("delete pressed")
-        self.navigationController!.popViewControllerAnimated(true)
-        
-    }
     //MARK: - Table Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -78,9 +95,30 @@ class RouteViewController: UIViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         let selectedWP = waypointArray[indexPath.row]
         cell.textLabel?.text = selectedWP.wpName
-        cell.detailTextLabel?.text = selectedWP.wpAddress
+
         
         return cell
+    }
+    
+    //MARK: - Fetch Methods
+    
+    private func fetchData() {
+            
+            let dataQuery = BackendlessDataQuery()
+            let queryOptions = QueryOptions()
+            queryOptions.related = ["Route", "Route.waypoints"];
+            dataQuery.queryOptions = queryOptions
+            
+            var error: Fault?
+            let bc = backendless.data.of(Waypoint.ofClass()).find(dataQuery, fault: &error)
+            if error == nil {
+                print("Orders have been retrieved: \(bc.data)")
+                waypointArray = bc.data as! [Waypoint]
+                print("items: \(waypointArray.count)")
+            }
+            else {
+                print("Server reported an error: \(error)")
+        }
     }
     
     //MARK: - Segue Methods
@@ -123,6 +161,8 @@ class RouteViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         print("Route Name: \(selectedRoute?.routeName) and ID \(selectedRoute?.objectId)")
+        fetchData()
+        waypointTableView.reloadData()
     }
     
     override func viewDidDisappear(animated: Bool) {
