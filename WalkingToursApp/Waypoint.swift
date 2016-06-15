@@ -12,6 +12,9 @@ class Waypoint: NSObject {
 
     var wpName          :String?
     var wpAddress       :String?
+    var wpCity          :String?
+    var wpState         :String?
+    var wpZip           :String?
     var wpLat           :String?
     var wpLon           :String?
     var wpDescript      :String?

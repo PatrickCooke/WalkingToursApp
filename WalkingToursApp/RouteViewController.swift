@@ -125,14 +125,17 @@ class RouteViewController: UIViewController {
     //MARK: - Segue Methods
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         let destController = segue.destinationViewController as! WayPointViewController
+        destController.sourceRoute = selectedRoute!
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        navigationItem.backBarButtonItem = backItem
+        
         if segue.identifier == "seeSelectedWP" {
             let indexPath = waypointTableView.indexPathForSelectedRow!
             let selectedWP = waypointArray[indexPath.row]
             destController.selectedWP = selectedWP
-            let backItem = UIBarButtonItem()
-            backItem.title = "Back"
-            navigationItem.backBarButtonItem = backItem
             waypointTableView.deselectRowAtIndexPath(indexPath, animated: true)
         } else if segue.identifier == "addNewWP" {
             destController.selectedWP = nil

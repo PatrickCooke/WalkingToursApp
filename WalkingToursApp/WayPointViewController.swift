@@ -12,8 +12,12 @@ class WayPointViewController: UIViewController {
     
     let backendless = Backendless.sharedInstance()
     var selectedWP = Waypoint?()
+    var sourceRoute :Route!
     @IBOutlet weak var wpNameTxtField           :UITextField!
     @IBOutlet weak var wpaddressTxtField        :UITextField!
+    @IBOutlet weak var wpCityTxtField           :UITextField!
+    @IBOutlet weak var wpStateTxtField          :UITextField!
+    @IBOutlet weak var wpZipTxtField            :UITextField!
     @IBOutlet weak var wpDescriptionTxtField    :UITextField!
     @IBOutlet weak var wpstopNumberTxtField     :UITextField!
     @IBOutlet weak var wpMapView                :MKMapView!
@@ -43,8 +47,11 @@ class WayPointViewController: UIViewController {
     
     func geocodeAddress() {
         if let add = wpaddressTxtField.text {
+            let city = wpCityTxtField.text ?? ""
+            let state = wpStateTxtField.text ?? ""
+            let zip = wpZipTxtField.text ?? ""
             
-            let address = add
+            let address = "\(add) \(city) \(state) \(zip)"
             let geocoder = CLGeocoder()
             
             geocoder.geocodeAddressString(address, completionHandler: {(placemarks, error) -> Void in
@@ -71,27 +78,58 @@ class WayPointViewController: UIViewController {
                 }
             })
         }
+        
+        
+        
     }
     
     //MARK: - Interactivity Methods
     
     @IBAction func saveRouteInfo(sender: UIBarButtonItem) {
-        saveWayPoint()//what to do here? I want to put the source route's object ID in...
+        saveWayPoint(sourceRoute)//what to do here? I want to put the source route's object ID in...
         resignAllFirstResponders()
     }
     
-    func saveWayPoint(route: Route) -> Route? {
+    func saveWayPoint(route: Route) {
         print("wp saved pressed")
         if selectedWP == nil {
-
+            let newWP = Waypoint()
+            if let routeName = wpNameTxtField.text {
+                newWP.wpName = routeName
+            }
+            if let descript = wpDescriptionTxtField.text {
+                newWP.wpDescript = descript
+            }
+            if let address = wpaddressTxtField.text {
+                newWP.wpAddress = address
+            }
+            if let city = wpCityTxtField.text {
+                newWP.wpCity = city
+            }
+            if let state = wpStateTxtField.text {
+                newWP.wpState = state
+            }
+            if let zip = wpZipTxtField.text {
+                newWP.wpZip = zip
+            }
+            if let stopNum = wpstopNumberTxtField.text {
+                newWP.wpStopNum = Int(stopNum)!
+            } else {
+                newWP.wpStopNum = 0
+            }
+            newWP.wpLat = latCoord
+            newWP.wpLon = lonCoord
             
-            let dataStore = backendless.data.of(Route.ofClass())
-            dataStore.save(
-                newWP,
-                response: { (result) in
-                    print("entry saved")
-            }) { (fault) in
-                print("server reported error:\(fault)")
+            
+            route.routeWaypoints.append(newWP)
+            
+            var error: Fault?
+            let result = backendless.data.save(route, error: &error) as? Route
+            if error == nil {
+                print("Route havs been updated: \(result)")
+            }
+            else {
+                print("Server reported an error: \(error)")
             }
             
         } else {
@@ -102,6 +140,15 @@ class WayPointViewController: UIViewController {
             selectedWP!.wpName = wpNameTxtField.text
             selectedWP!.wpDescript = wpDescriptionTxtField.text
             selectedWP!.wpAddress = wpaddressTxtField.text
+            if let city = wpCityTxtField.text {
+                selectedWP!.wpCity = city
+            }
+            if let state = wpStateTxtField.text {
+                selectedWP!.wpState = state
+            }
+            if let zip = wpZipTxtField.text {
+                selectedWP!.wpZip = zip
+            }
             if let stopNum = wpstopNumberTxtField.text {
                 selectedWP!.wpStopNum = Int(stopNum)!
             } else {
@@ -128,6 +175,9 @@ class WayPointViewController: UIViewController {
         wpaddressTxtField.resignFirstResponder()
         wpDescriptionTxtField.resignFirstResponder()
         wpstopNumberTxtField.resignFirstResponder()
+        wpCityTxtField.resignFirstResponder()
+        wpStateTxtField.resignFirstResponder()
+        wpZipTxtField.resignFirstResponder()
     }
     
     //MARK: - Life Cycle Methods
