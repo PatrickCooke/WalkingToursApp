@@ -56,7 +56,6 @@ class RouteViewController: UIViewController {
             if let routeDescription = routeDescriptionTXTView.text {
                 newRoute.routeDiscription=routeDescription
             }
-            
             let dataStore = backendless.data.of(Route.ofClass())
             dataStore.save(
                 newRoute,
@@ -67,11 +66,9 @@ class RouteViewController: UIViewController {
             }
         } else {
             let dataStore = Backendless.sharedInstance().data.of(Route.ofClass())
-            
             selectedRoute!.routeName = routeTitleTXTField.text
             selectedRoute!.routeDiscription = routeDescriptionTXTView.text
             selectedRoute!.routeDistance = routeDistTXTField.text
-            
             dataStore.save(
                 selectedRoute,
                 response: { (result: AnyObject!) -> Void in
@@ -95,7 +92,7 @@ class RouteViewController: UIViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         let selectedWP = waypointArray[indexPath.row]
         cell.textLabel?.text = selectedWP.wpName
-
+        cell.detailTextLabel?.text = selectedWP.wpAddress
         
         return cell
     }
@@ -103,21 +100,25 @@ class RouteViewController: UIViewController {
     //MARK: - Fetch Methods
     
     private func fetchData() {
-            
-            let dataQuery = BackendlessDataQuery()
-            let queryOptions = QueryOptions()
-            queryOptions.related = ["Route", "Route.waypoints"];
-            dataQuery.queryOptions = queryOptions
-            
-            var error: Fault?
-            let bc = backendless.data.of(Waypoint.ofClass()).find(dataQuery, fault: &error)
+        
+        var error: Fault?
+        if error == nil {
+            selectedRoute = backendless.data.of(Route.ofClass()).load(selectedRoute, relations: ["routeWaypoints"], fault: &error) as? Route
             if error == nil {
-                print("Orders have been retrieved: \(bc.data)")
-                waypointArray = bc.data as! [Waypoint]
-                print("items: \(waypointArray.count)")
+                print("Waypoints has been retrieved)")
+                waypointArray.removeAll()
+                for point in (selectedRoute?.routeWaypoints)! {
+                    print("\(point.wpStopNum) - \(point.wpName), \(point.wpAddress), \(point.wpDescript)")
+                    waypointArray.append(point)
+                    print("Stops count: \(waypointArray.count)")
+                }
             }
             else {
                 print("Server reported an error: \(error)")
+            }
+        }
+        else {
+            print("Server reported an error: \(error)")
         }
     }
     
@@ -129,6 +130,9 @@ class RouteViewController: UIViewController {
             let indexPath = waypointTableView.indexPathForSelectedRow!
             let selectedWP = waypointArray[indexPath.row]
             destController.selectedWP = selectedWP
+            let backItem = UIBarButtonItem()
+            backItem.title = "Back"
+            navigationItem.backBarButtonItem = backItem
             waypointTableView.deselectRowAtIndexPath(indexPath, animated: true)
         } else if segue.identifier == "addNewWP" {
             destController.selectedWP = nil
@@ -143,7 +147,7 @@ class RouteViewController: UIViewController {
         if let selRoute = selectedRoute {
             if let routeName = selRoute.routeName{
                 routeTitleTXTField.text = routeName
-                self.navigationController?.title = routeName
+                self.title = routeName
             }
             if let routeDist = selRoute.routeDistance {
                 routeDistTXTField.text = routeDist
@@ -160,7 +164,6 @@ class RouteViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        print("Route Name: \(selectedRoute?.routeName) and ID \(selectedRoute?.objectId)")
         fetchData()
         waypointTableView.reloadData()
     }

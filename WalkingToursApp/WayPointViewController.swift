@@ -12,66 +12,147 @@ class WayPointViewController: UIViewController {
     
     let backendless = Backendless.sharedInstance()
     var selectedWP = Waypoint?()
-    @IBOutlet weak var wpNameTxtField   :UITextField!
-    @IBOutlet weak var wpaddressTxtField   :UITextField!
-    @IBOutlet weak var wpDescriptionTxtField   :UITextField!
-    @IBOutlet weak var wpstopNumberTxtField   :UITextField!
+    @IBOutlet weak var wpNameTxtField           :UITextField!
+    @IBOutlet weak var wpaddressTxtField        :UITextField!
+    @IBOutlet weak var wpDescriptionTxtField    :UITextField!
+    @IBOutlet weak var wpstopNumberTxtField     :UITextField!
+    @IBOutlet weak var wpMapView                :MKMapView!
+    @IBOutlet weak var latCoordLabel            :UILabel!
+    @IBOutlet weak var lonCoordLabel            :UILabel!
+    var latCoord = String()
+    var lonCoord = String()
     
-
-    //MARK: - Temp Add Data
-    func addNewData() {
-        let wp = Waypoint()
-        wp.wpName = "University Of Phoenix"
-        wp.wpDescript = "Yeah, we're still here"
-        wp.wpAddress = "1001 woodward ave detroit mi"
-        wp.wpStopNum = 2
-        wp.wpLat = "42.3320134"
-        wp.wpLon = "-83.0476329"
+    //MARK: - Get map data
+    
+    func longPressMap(gestureRecognizer:UILongPressGestureRecognizer) {
+        print("test")
+        let touchPoint = gestureRecognizer.locationInView(self.wpMapView)
+        let newCoordinate:CLLocationCoordinate2D = wpMapView.convertPoint(touchPoint, toCoordinateFromView: self.wpMapView)
+        //var newAnnotation = MKPointAnnotation()
         
+        print("Coords: \(newCoordinate.latitude),\(newCoordinate.longitude)")
         
-        let dataStore = backendless.data.of(Waypoint.ofClass())
-
-        dataStore.save(
-            wp,
-            response: { (result: AnyObject!) -> Void in
-                let obj = result as! Waypoint
-                print("Contact has been saved: \(obj.objectId)")
-            },
-            error: { (fault: Fault!) -> Void in
-                print("fServer reported an error: \(fault)")
-        })
     }
-
-
+    
+    //MARK: - Geocode address
+    
+    @IBAction func mapAddress() {
+        geocodeAddress()
+        resignAllFirstResponders()
+    }
+    
+    func geocodeAddress() {
+        if let add = wpaddressTxtField.text {
+            
+            let address = add
+            let geocoder = CLGeocoder()
+            
+            geocoder.geocodeAddressString(address, completionHandler: {(placemarks, error) -> Void in
+                if((error) != nil){
+                    print("Error", error)
+                }
+                if let placemark = placemarks?.first {
+                    let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
+                    //                    print("coords: \(coordinates.latitude),\(coordinates.longitude)")
+                    
+                    //need to remove all previous pins...
+                    
+                    let pin = MKPointAnnotation()
+                    pin.title = self.wpNameTxtField.text
+                    pin.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
+                    
+                    self.wpMapView.addAnnotation(pin)
+                    let region: MKCoordinateRegion = MKCoordinateRegion(center: coordinates, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005))
+                    self.wpMapView.setRegion(region, animated: true)
+                    self.latCoord = "\(coordinates.latitude)"
+                    self.lonCoord = "\(coordinates.longitude)"
+                    //                    print(self.latCoord)
+                    //                    print(self.lonCoord)
+                }
+            })
+        }
+    }
+    
     //MARK: - Interactivity Methods
+    
+    @IBAction func saveRouteInfo(sender: UIBarButtonItem) {
+        saveWayPoint()//what to do here? I want to put the source route's object ID in...
+        resignAllFirstResponders()
+    }
+    
+    func saveWayPoint(route: Route) -> Route? {
+        print("wp saved pressed")
+        if selectedWP == nil {
 
-    @IBAction func saveButtonPressed(sender: UIBarButtonItem) {
-        print("save button pressed")
-        
+            
+            let dataStore = backendless.data.of(Route.ofClass())
+            dataStore.save(
+                newWP,
+                response: { (result) in
+                    print("entry saved")
+            }) { (fault) in
+                print("server reported error:\(fault)")
+            }
+            
+        } else {
+            
+            
+            let dataStore = Backendless.sharedInstance().data.of(Waypoint.ofClass())
+            
+            selectedWP!.wpName = wpNameTxtField.text
+            selectedWP!.wpDescript = wpDescriptionTxtField.text
+            selectedWP!.wpAddress = wpaddressTxtField.text
+            if let stopNum = wpstopNumberTxtField.text {
+                selectedWP!.wpStopNum = Int(stopNum)!
+            } else {
+                selectedWP!.wpStopNum = 0
+            }
+            selectedWP!.wpLat = latCoord
+            selectedWP!.wpLon = lonCoord
+            
+            dataStore.save(
+                selectedWP,
+                response: { (result: AnyObject!) -> Void in
+                    let updatedRoute = result as! Waypoint
+                    print("Contact has been updated: \(updatedRoute.objectId)")
+                },
+                error: { (fault: Fault!) -> Void in
+                    print("Server reported an error (2): \(fault)")
+            })
+        }
+    }
+    
+    
+    func resignAllFirstResponders() {
+        wpNameTxtField.resignFirstResponder()
+        wpaddressTxtField.resignFirstResponder()
+        wpDescriptionTxtField.resignFirstResponder()
+        wpstopNumberTxtField.resignFirstResponder()
     }
     
     //MARK: - Life Cycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //addNewData()
-//        if let selWP = selectedWP {
-//            if let name = selWP.wpName {
-//                wpNameTxtField.text = name
-//            }
-//            if let address = selWP.wpAddress {
-//                wpaddressTxtField.text = address
-//            }
-//            if let descript = selWP.wpDescript {
-//                wpDescriptionTxtField.text = descript
-//            }
-//            
-//        } else {
-//            wpNameTxtField.text = ""
-//            wpaddressTxtField.text = ""
-//            wpDescriptionTxtField.text = ""
-//            wpstopNumberTxtField.text = ""
-//        }
+        if let selWP = selectedWP {
+            if let name = selWP.wpName {
+                wpNameTxtField.text = name
+                self.title = name
+            }
+            if let address = selWP.wpAddress {
+                wpaddressTxtField.text = address
+                geocodeAddress()
+            }
+            if let descript = selWP.wpDescript {
+                wpDescriptionTxtField.text = descript
+            }
+            
+        } else {
+            wpNameTxtField.text = ""
+            wpaddressTxtField.text = ""
+            wpDescriptionTxtField.text = ""
+            wpstopNumberTxtField.text = ""
+        }
     }
     
     override func didReceiveMemoryWarning() {

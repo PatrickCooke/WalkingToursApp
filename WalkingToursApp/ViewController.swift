@@ -56,9 +56,9 @@ class ViewController: UIViewController {
         private func fetchData() {
             let dataQuery = BackendlessDataQuery()
             var error: Fault?
-            let bc = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
+            let result = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
             if error == nil {
-                routeArray = bc.getCurrentPage() as! [Route]
+                routeArray = result.getCurrentPage() as! [Route]
                 print("requests: \(routeArray.count)")
             } else {
                 print("server error \(error)")
