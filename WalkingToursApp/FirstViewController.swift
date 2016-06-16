@@ -10,6 +10,7 @@ import UIKit
 
 class FirstViewController: UIViewController, CLLocationManagerDelegate {
     
+    var locManager = LocationManager.sharedInstance
     var backendless = Backendless.sharedInstance()
     var routeArray = [Route]()
     var locationManager = CLLocationManager()
@@ -81,13 +82,14 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
     func refetchAndReload(){
         fetchData()
         RouteTable.reloadData()
-        locationManager = CLLocationManager()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager = CLLocationManager()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-            locationManager.startUpdatingLocation()
-        }
+        locManager.setupLocationMonitoring()
+//        locationManager = CLLocationManager()
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager = CLLocationManager()
+//        if CLLocationManager.locationServicesEnabled() {
+//            locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+//            locationManager.startUpdatingLocation()
+//        }
     }
     
     

@@ -10,6 +10,7 @@ import UIKit
 
 class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    let locManager = LocationManager.sharedInstance
     let backendless = Backendless.sharedInstance()
     var selectedRoute :Route!
     var waypointArray = [Waypoint]()
@@ -28,7 +29,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     func fillAllInfo(stop: Int) {
         let currentWaypoint = waypointArray[nextStop]
         if let stops = currentWaypoint.wpStopNum {
-        wpStopNum.text = "Stop:\(stops)"
+        wpStopNum.text = "Stop #\(stops)"
         }
         wpName.text = currentWaypoint.wpName
         if let address = currentWaypoint.wpAddress {
@@ -98,31 +99,39 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         
         wpMapView.showAnnotations(wpMapView.annotations, animated: true)
     }
-
+    
+//    func getDirections(stop: Int ){
+//        let currentWaypoint = waypointArray[stop]
+//        guard let lat = currentWaypoint.wpLat else {
+//            return
+//        }
+//        guard let lon = currentWaypoint.wpLon else {
+//            return
+//        }
+//        guard let latDouble = Double(lat) else {
+//            return
+//        }
+//        guard let lonDouble = Double(lon) else {
+//            return
+//        }
+//        let userLoc = wpMapView.userLocation.location
+//        let endLoc = CLLocation(latitude: latDouble, longitude: lonDouble)
+//        let directions = MKDirectionsRequest.
+//        
+//    }
 
 
     //MARK: - Life Cycle Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager = CLLocationManager()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.startUpdatingLocation()
-            locationManager.startUpdatingHeading()
-        }
-        
-        wpMapView.delegate = self
-        wpMapView.mapType = .Standard
-        wpMapView.zoomEnabled = true
-        wpMapView.scrollEnabled = true
-        
-        
-        
         self.title = selectedRoute.routeName
         waypointArray = selectedRoute.routeWaypoints
         waypointArray.sortInPlace { $0.wpStopNum < $1.wpStopNum }
         fillAllInfo(nextStop)
+        
+        locManager.setupLocationMonitoring()
+        wpMapView.showsUserLocation=true
     }
     
     override func didReceiveMemoryWarning() {

@@ -41,7 +41,7 @@ class RouteViewController: UIViewController {
         routeDescriptionTXTView.resignFirstResponder()
     }
     
-    @IBAction func saveRouteInfo(sender: UIBarButtonItem) {
+    @IBAction func saveRouteInfo() {
         resignFirstRespond()
         print("route saved pressed")
         if selectedRoute == nil {
@@ -106,27 +106,31 @@ class RouteViewController: UIViewController {
     
     private func fetchData() {
         
-        var error: Fault?
-        if error == nil {
+        if selectedRoute == nil {
             
-            //add sorting stuff
+        } else {
             
-            selectedRoute = backendless.data.of(Route.ofClass()).load(selectedRoute, relations: ["routeWaypoints"], fault: &error) as? Route
+            var error: Fault?
             if error == nil {
-                print("Waypoints has been retrieved")
-                waypointArray.removeAll()
-                for point in (selectedRoute?.routeWaypoints)! {
-                    //                    print("\(point.wpStopNum) - \(point.wpName), \(point.wpAddress), \(point.wpDescript)")
-                    waypointArray.append(point)
-                    //                    print("Stops count: \(waypointArray.count)")
-                    
-                }
                 
+                //add sorting stuff
+                selectedRoute = backendless.data.of(Route.ofClass()).load(selectedRoute, relations: ["routeWaypoints"], fault: &error) as? Route
+                if error == nil {
+                    print("Waypoints has been retrieved")
+                    waypointArray.removeAll()
+                    for point in (selectedRoute?.routeWaypoints)! {
+                        //                    print("\(point.wpStopNum) - \(point.wpName), \(point.wpAddress), \(point.wpDescript)")
+                        waypointArray.append(point)
+                        //                    print("Stops count: \(waypointArray.count)")
+                        
+                    }
+                    
+                } else {
+                    print("Server reported an error: \(error)")
+                }
             } else {
                 print("Server reported an error: \(error)")
             }
-        } else {
-            print("Server reported an error: \(error)")
         }
     }
     

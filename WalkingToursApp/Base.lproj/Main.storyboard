@@ -448,6 +448,7 @@
                                 </constraints>
                                 <state key="normal" title="add stop"/>
                                 <connections>
+                                    <action selector="saveRouteInfo" destination="GiG-Ig-JKv" eventType="touchUpInside" id="5Lx-a1-Z4u"/>
                                     <segue destination="GNj-KV-eri" kind="show" identifier="addNewWP" id="hQ9-MT-nGw"/>
                                 </connections>
                             </button>
