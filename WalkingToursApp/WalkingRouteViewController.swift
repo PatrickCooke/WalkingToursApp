@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate {
+class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     let backendless = Backendless.sharedInstance()
     var selectedRoute :Route!
@@ -27,7 +27,9 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate {
     
     func fillAllInfo(stop: Int) {
         let currentWaypoint = waypointArray[nextStop]
-        wpStopNum.text = currentWaypoint.wpStopNum
+        if let stops = currentWaypoint.wpStopNum {
+        wpStopNum.text = "Stop:\(stops)"
+        }
         wpName.text = currentWaypoint.wpName
         if let address = currentWaypoint.wpAddress {
             let city = currentWaypoint.wpCity ?? ""
@@ -64,6 +66,15 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate {
         fillAllInfo(nextStop)
     }
     
+    @IBAction func previousButtonPressed(sender: UIButton) {
+        wpMapView.removeAnnotations(wpMapView.annotations)
+        if nextStop > 0  {
+            nextStop -= 1
+        } else {
+            nextStop = (waypointArray.count - 1)
+        }
+        fillAllInfo(nextStop)
+    }
     
     //MARK: - Mapping Methods
     
@@ -94,18 +105,24 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
+            locationManager.startUpdatingHeading()
+        }
+        
+        wpMapView.delegate = self
+        wpMapView.mapType = .Standard
+        wpMapView.zoomEnabled = true
+        wpMapView.scrollEnabled = true
+        
+        
         
         self.title = selectedRoute.routeName
         waypointArray = selectedRoute.routeWaypoints
         waypointArray.sortInPlace { $0.wpStopNum < $1.wpStopNum }
         fillAllInfo(nextStop)
-        print("Waypoint count: \(selectedRoute?.routeWaypoints.count)")
-        
     }
     
     override func didReceiveMemoryWarning() {

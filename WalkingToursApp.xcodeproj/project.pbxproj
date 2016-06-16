@@ -16,6 +16,7 @@
 		43132D1A1D106131007BCC66 /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D181D106131007BCC66 /* RouteViewController.swift */; };
 		43132D1B1D106131007BCC66 /* WayPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D191D106131007BCC66 /* WayPointViewController.swift */; };
 		43132D1D1D106176007BCC66 /* Waypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D1C1D106176007BCC66 /* Waypoint.swift */; };
+		438FFBA11D13382A007E22C3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 438FFBA01D13382A007E22C3 /* MapKit.framework */; };
 		43D3EDE71D12D5AE0031F627 /* Routewaypointtablecell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D3EDE61D12D5AE0031F627 /* Routewaypointtablecell.swift */; };
 		43D3EDE91D12E6A80031F627 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D3EDE81D12E6A80031F627 /* FirstViewController.swift */; };
 		43D3EDEB1D12E6BC0031F627 /* WalkingRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D3EDEA1D12E6BC0031F627 /* WalkingRouteViewController.swift */; };
@@ -35,6 +36,7 @@
 		43132D181D106131007BCC66 /* RouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteViewController.swift; sourceTree = "<group>"; };
 		43132D191D106131007BCC66 /* WayPointViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WayPointViewController.swift; sourceTree = "<group>"; };
 		43132D1C1D106176007BCC66 /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
+		438FFBA01D13382A007E22C3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		43D3EDE61D12D5AE0031F627 /* Routewaypointtablecell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routewaypointtablecell.swift; sourceTree = "<group>"; };
 		43D3EDE81D12E6A80031F627 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		43D3EDEA1D12E6BC0031F627 /* WalkingRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkingRouteViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				438FFBA11D13382A007E22C3 /* MapKit.framework in Frameworks */,
 				B7637D5815BFF29E15937E43 /* Pods_WalkingToursApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -106,6 +109,7 @@
 		932F9942E094A1BC45D39A59 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				438FFBA01D13382A007E22C3 /* MapKit.framework */,
 				633140528618EF6365ED9D7B /* Pods_WalkingToursApp.framework */,
 			);
 			name = Frameworks;
@@ -155,6 +159,11 @@
 				TargetAttributes = {
 					43132CFF1D105B85007BCC66 = {
 						CreatedOnToolsVersion = 7.3;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

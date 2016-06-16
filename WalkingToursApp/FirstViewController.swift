@@ -68,7 +68,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
         let result = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
         if error == nil {
             routeArray = result.getCurrentPage() as! [Route]
-            print("requests: \(routeArray.count)")
+            //rint("requests: \(routeArray.count)")
         } else {
             print("server error \(error)")
             routeArray = [Route]()
@@ -82,10 +82,12 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
         fetchData()
         RouteTable.reloadData()
         locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        locationManager = CLLocationManager()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+            locationManager.startUpdatingLocation()
+        }
     }
     
     
