@@ -116,10 +116,7 @@ class WayPointViewController: UIViewController {
             else {
                 print("Server reported an error: \(error)")
             }
-            
         } else {
-            
-            
             let dataStore = Backendless.sharedInstance().data.of(Waypoint.ofClass())
             
             selectedWP!.wpName = wpNameTxtField.text
@@ -203,7 +200,7 @@ class WayPointViewController: UIViewController {
             geocodeAddress(true)
             
         } else {
-            wpstopNumberTxtField.text = ""
+            wpstopNumberTxtField.text = "\(sourceRoute.routeWaypoints.count + 1)"
             wpNameTxtField.text = ""
             wpaddressTxtField.text = ""
             wpCityTxtField.text = ""

@@ -17,6 +17,7 @@ class RouteViewController: UIViewController {
     @IBOutlet weak var routeDistTXTField:       UITextField!
     @IBOutlet weak var routeDescriptionTXTView: UITextView!
     @IBOutlet weak var waypointTableView:       UITableView!
+    var stopCount = 0
     
     //MARK: - Interactivity Methods
     
@@ -181,11 +182,14 @@ class RouteViewController: UIViewController {
         super.viewDidAppear(animated)
         fetchData()
         waypointTableView.reloadData()
+        stopCount = (selectedRoute?.routeWaypoints.count)!
+        print("stops: \(stopCount)")
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "reload", object: nil))
+        
     }
     
     override func didReceiveMemoryWarning() {
