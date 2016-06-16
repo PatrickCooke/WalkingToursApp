@@ -18,7 +18,7 @@ class Waypoint: NSObject {
     var wpLat           :String?
     var wpLon           :String?
     var wpDescript      :String?
-    var wpStopNum       :Int = 0
+    var wpStopNum       :String?
     var wpPicName       :String?
     var wpAudioName     :String?
     var objectId        :String?

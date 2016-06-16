@@ -26,17 +26,17 @@ class WayPointViewController: UIViewController {
     var latCoord = String()
     var lonCoord = String()
     
-    //MARK: - Get map data
-    
-    func longPressMap(gestureRecognizer:UILongPressGestureRecognizer) {
-        print("test")
-        let touchPoint = gestureRecognizer.locationInView(self.wpMapView)
-        let newCoordinate:CLLocationCoordinate2D = wpMapView.convertPoint(touchPoint, toCoordinateFromView: self.wpMapView)
-        //var newAnnotation = MKPointAnnotation()
-        
-        print("Coords: \(newCoordinate.latitude),\(newCoordinate.longitude)")
-        
-    }
+//    //MARK: - Get map data
+//    
+//    func longPressMap(gestureRecognizer:UILongPressGestureRecognizer) {
+//        print("test")
+//        let touchPoint = gestureRecognizer.locationInView(self.wpMapView)
+//        let newCoordinate:CLLocationCoordinate2D = wpMapView.convertPoint(touchPoint, toCoordinateFromView: self.wpMapView)
+//        //var newAnnotation = MKPointAnnotation()
+//        
+//        print("Coords: \(newCoordinate.latitude),\(newCoordinate.longitude)")
+//        
+//    }
     
     //MARK: - Geocode address
     
@@ -60,7 +60,6 @@ class WayPointViewController: UIViewController {
                 }
                 if let placemark = placemarks?.first {
                     let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
-                    //                    print("coords: \(coordinates.latitude),\(coordinates.longitude)")
                     
                     //need to remove all previous pins...
                     
@@ -71,16 +70,12 @@ class WayPointViewController: UIViewController {
                     self.wpMapView.addAnnotation(pin)
                     let region: MKCoordinateRegion = MKCoordinateRegion(center: coordinates, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005))
                     self.wpMapView.setRegion(region, animated: true)
+                    
                     self.latCoord = "\(coordinates.latitude)"
                     self.lonCoord = "\(coordinates.longitude)"
-                    //                    print(self.latCoord)
-                    //                    print(self.lonCoord)
                 }
             })
         }
-        
-        
-        
     }
     
     //MARK: - Interactivity Methods
@@ -92,6 +87,7 @@ class WayPointViewController: UIViewController {
     
     func saveWayPoint(route: Route) {
         print("wp saved pressed")
+        geocodeAddress()
         if selectedWP == nil {
             let newWP = Waypoint()
             if let routeName = wpNameTxtField.text {
@@ -113,9 +109,9 @@ class WayPointViewController: UIViewController {
                 newWP.wpZip = zip
             }
             if let stopNum = wpstopNumberTxtField.text {
-                newWP.wpStopNum = Int(stopNum)!
+                newWP.wpStopNum = stopNum
             } else {
-                newWP.wpStopNum = 0
+                newWP.wpStopNum = "0"
             }
             newWP.wpLat = latCoord
             newWP.wpLon = lonCoord
@@ -150,9 +146,9 @@ class WayPointViewController: UIViewController {
                 selectedWP!.wpZip = zip
             }
             if let stopNum = wpstopNumberTxtField.text {
-                selectedWP!.wpStopNum = Int(stopNum)!
+                selectedWP!.wpStopNum = stopNum
             } else {
-                selectedWP!.wpStopNum = 0
+                selectedWP!.wpStopNum = "0"
             }
             selectedWP!.wpLat = latCoord
             selectedWP!.wpLon = lonCoord
@@ -185,23 +181,46 @@ class WayPointViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let selWP = selectedWP {
+            if let stopnum = selWP.wpStopNum{
+                wpstopNumberTxtField.text = stopnum
+            }
+            
             if let name = selWP.wpName {
                 wpNameTxtField.text = name
                 self.title = name
             }
+            
             if let address = selWP.wpAddress {
                 wpaddressTxtField.text = address
-                geocodeAddress()
             }
+            
+            if let city = selWP.wpCity{
+                wpCityTxtField.text = city
+            }
+            
+            if let state = selWP.wpState{
+                wpStateTxtField.text = state
+            }
+            
+            if let zip = selWP.wpZip {
+                wpZipTxtField.text = zip
+            }
+            
             if let descript = selWP.wpDescript {
                 wpDescriptionTxtField.text = descript
             }
+            geocodeAddress()
             
         } else {
+            wpstopNumberTxtField.text = ""
             wpNameTxtField.text = ""
             wpaddressTxtField.text = ""
+            wpCityTxtField.text = ""
+            wpStateTxtField.text = ""
+            wpZipTxtField.text = ""
             wpDescriptionTxtField.text = ""
-            wpstopNumberTxtField.text = ""
+            
+            
         }
     }
     

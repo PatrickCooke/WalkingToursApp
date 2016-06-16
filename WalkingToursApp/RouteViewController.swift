@@ -21,7 +21,6 @@ class RouteViewController: UIViewController {
     //MARK: - Interactivity Methods
     
     @IBAction func deleteButtonPressed(sender: UIBarButtonItem){
-        
         let alertView = UIAlertController(title: "Sorry, you can't directly delete this Routes", message: "To protect the routes created by other, you'll have to email me to delete this route for you.", preferredStyle: .Alert)
         alertView.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
         presentViewController(alertView, animated: true, completion: nil)
@@ -84,6 +83,8 @@ class RouteViewController: UIViewController {
     
     //MARK: - Table Methods
     
+    
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return waypointArray.count
     }
@@ -91,8 +92,12 @@ class RouteViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         let selectedWP = waypointArray[indexPath.row]
+        
+        
         cell.textLabel?.text = selectedWP.wpName
-        cell.detailTextLabel?.text = selectedWP.wpAddress
+        if let stop = selectedWP.wpStopNum {
+            cell.detailTextLabel?.text = "Stop: \(stop)"
+        }
         
         return cell
     }
@@ -101,23 +106,25 @@ class RouteViewController: UIViewController {
     
     private func fetchData() {
         
+        
+        
+        
         var error: Fault?
-        if error == nil {
+        if error == nil {            
             selectedRoute = backendless.data.of(Route.ofClass()).load(selectedRoute, relations: ["routeWaypoints"], fault: &error) as? Route
             if error == nil {
                 print("Waypoints has been retrieved)")
                 waypointArray.removeAll()
                 for point in (selectedRoute?.routeWaypoints)! {
-                    print("\(point.wpStopNum) - \(point.wpName), \(point.wpAddress), \(point.wpDescript)")
+                    //                    print("\(point.wpStopNum) - \(point.wpName), \(point.wpAddress), \(point.wpDescript)")
                     waypointArray.append(point)
-                    print("Stops count: \(waypointArray.count)")
+                    //                    print("Stops count: \(waypointArray.count)")
                 }
-            }
-            else {
+                
+            } else {
                 print("Server reported an error: \(error)")
             }
-        }
-        else {
+        } else {
             print("Server reported an error: \(error)")
         }
     }
