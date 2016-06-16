@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class WayPointViewController: UIViewController {
     
@@ -26,26 +27,14 @@ class WayPointViewController: UIViewController {
     var latCoord = String()
     var lonCoord = String()
     
-//    //MARK: - Get map data
-//    
-//    func longPressMap(gestureRecognizer:UILongPressGestureRecognizer) {
-//        print("test")
-//        let touchPoint = gestureRecognizer.locationInView(self.wpMapView)
-//        let newCoordinate:CLLocationCoordinate2D = wpMapView.convertPoint(touchPoint, toCoordinateFromView: self.wpMapView)
-//        //var newAnnotation = MKPointAnnotation()
-//        
-//        print("Coords: \(newCoordinate.latitude),\(newCoordinate.longitude)")
-//        
-//    }
-    
     //MARK: - Geocode address
     
     @IBAction func mapAddress() {
-        geocodeAddress()
+        geocodeAddress(true)
         resignAllFirstResponders()
     }
     
-    func geocodeAddress() {
+    func geocodeAddress(plotOnMap: Bool) {
         if let add = wpaddressTxtField.text {
             let city = wpCityTxtField.text ?? ""
             let state = wpStateTxtField.text ?? ""
@@ -61,18 +50,19 @@ class WayPointViewController: UIViewController {
                 if let placemark = placemarks?.first {
                     let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
                     
-                    //need to remove all previous pins...
-                    
-                    let pin = MKPointAnnotation()
-                    pin.title = self.wpNameTxtField.text
-                    pin.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
-                    
-                    self.wpMapView.addAnnotation(pin)
-                    let region: MKCoordinateRegion = MKCoordinateRegion(center: coordinates, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005))
-                    self.wpMapView.setRegion(region, animated: true)
-                    
                     self.latCoord = "\(coordinates.latitude)"
                     self.lonCoord = "\(coordinates.longitude)"
+                    
+                    if plotOnMap {
+                        self.wpMapView.removeAnnotations(self.wpMapView.annotations)
+                        print("did plot")
+                        let pin = MKPointAnnotation()
+                        pin.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
+                        self.wpMapView.addAnnotation(pin)
+                        self.wpMapView.showAnnotations(self.wpMapView.annotations, animated: true)
+                    } else {
+                     print("did not plot")
+                    }
                 }
             })
         }
@@ -81,13 +71,13 @@ class WayPointViewController: UIViewController {
     //MARK: - Interactivity Methods
     
     @IBAction func saveRouteInfo(sender: UIBarButtonItem) {
-        saveWayPoint(sourceRoute)//what to do here? I want to put the source route's object ID in...
+        saveWayPoint(sourceRoute)
         resignAllFirstResponders()
     }
     
     func saveWayPoint(route: Route) {
         print("wp saved pressed")
-        geocodeAddress()
+        geocodeAddress(false)
         if selectedWP == nil {
             let newWP = Waypoint()
             if let routeName = wpNameTxtField.text {
@@ -115,8 +105,7 @@ class WayPointViewController: UIViewController {
             }
             newWP.wpLat = latCoord
             newWP.wpLon = lonCoord
-            
-            
+
             route.routeWaypoints.append(newWP)
             
             var error: Fault?
@@ -180,6 +169,8 @@ class WayPointViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         if let selWP = selectedWP {
             if let stopnum = selWP.wpStopNum{
                 wpstopNumberTxtField.text = stopnum
@@ -209,7 +200,7 @@ class WayPointViewController: UIViewController {
             if let descript = selWP.wpDescript {
                 wpDescriptionTxtField.text = descript
             }
-            geocodeAddress()
+            geocodeAddress(true)
             
         } else {
             wpstopNumberTxtField.text = ""
@@ -219,8 +210,7 @@ class WayPointViewController: UIViewController {
             wpStateTxtField.text = ""
             wpZipTxtField.text = ""
             wpDescriptionTxtField.text = ""
-            
-            
+
         }
     }
     

@@ -79,8 +79,8 @@
 			children = (
 				43132D031D105B85007BCC66 /* AppDelegate.swift */,
 				43D3EDE81D12E6A80031F627 /* FirstViewController.swift */,
-				43D3EDEC1D12E8CE0031F627 /* LoginViewController.swift */,
 				43D3EDEA1D12E6BC0031F627 /* WalkingRouteViewController.swift */,
+				43D3EDEC1D12E8CE0031F627 /* LoginViewController.swift */,
 				43132D051D105B85007BCC66 /* ViewController.swift */,
 				43132D181D106131007BCC66 /* RouteViewController.swift */,
 				43132D191D106131007BCC66 /* WayPointViewController.swift */,

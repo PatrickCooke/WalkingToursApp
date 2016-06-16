@@ -57,7 +57,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
     //MARK: - Fetch Methods
     
     private func fetchData() {
+        
         let dataQuery = BackendlessDataQuery()
+        
+        let queryOptions = QueryOptions()
+        queryOptions.sortBy = ["routeName"]
+        dataQuery.queryOptions = queryOptions
+        
         var error: Fault?
         let result = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
         if error == nil {
@@ -67,8 +73,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
             print("server error \(error)")
             routeArray = [Route]()
         }
+
     }
-    
+
     //MARK: - Reoccuring Functions
     
     func refetchAndReload(){
@@ -83,10 +90,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
     
     
     
-    
+    //MARK: - Life Cycle Method
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        refetchAndReload()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         refetchAndReload()
     }
     

@@ -8,31 +8,106 @@
 
 import UIKit
 
-class WalkingRouteViewController: UIViewController {
-
+class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate {
+    
     let backendless = Backendless.sharedInstance()
-    var selectedRoute = Route?()
-    //var waypointArray = [Waypoint]()
+    var selectedRoute :Route!
+    var waypointArray = [Waypoint]()
     var nextStop = 0
+    var locationManager = CLLocationManager()
     
     @IBOutlet weak var wpStopNum    :UILabel!
     @IBOutlet weak var wpName       :UILabel!
     @IBOutlet weak var wpAddress    :UILabel!
     @IBOutlet weak var wpDescript   :UILabel!
     @IBOutlet weak var wpDirections :UITextView!
-
-    func fillAllInfo() {
-        wpStopNum.text = selectedRoute?.routeWaypoints[nextStop].wpStopNum
-        wpName.text = selectedRoute?.routeWaypoints[nextStop].wpName
+    @IBOutlet weak var wpMapView    :MKMapView!
+    
+    //MARK: - Fill Methods
+    
+    func fillAllInfo(stop: Int) {
+        let currentWaypoint = waypointArray[nextStop]
+        wpStopNum.text = currentWaypoint.wpStopNum
+        wpName.text = currentWaypoint.wpName
+        if let address = currentWaypoint.wpAddress {
+            let city = currentWaypoint.wpCity ?? ""
+            let state = currentWaypoint.wpCity ?? ""
+            wpAddress.text = "\(address), \(city) \(state)"
+        } else {
+            wpAddress.text = ""
+        }
+        wpDescript.text = currentWaypoint.wpDescript
+        plotWayPoint(stop)
+//        if stop < waypointArray.count - 1 {
+//            plotWayPoint(stop + 1)
+//        } else {
+//            plotWayPoint(0)
+//        }
+    }
+    
+    func clearAllInfo() {
+        wpStopNum.text = ""
+        wpName.text = ""
+        wpAddress.text = ""
+        wpDescript.text = ""
+        wpDirections.text = ""
+        
+    }
+    
+    @IBAction func nextButtonPressed(sender: UIButton) {
+        wpMapView.removeAnnotations(wpMapView.annotations)
+        if nextStop < (waypointArray.count - 1) {
+            nextStop += 1
+        } else {
+            nextStop = 0
+        }
+        fillAllInfo(nextStop)
     }
     
     
+    //MARK: - Mapping Methods
+    
+    func plotWayPoint(stop: Int ) {
+        let currentWaypoint = waypointArray[stop]
+        guard let lat = currentWaypoint.wpLat else {
+            return
+        }
+        guard let lon = currentWaypoint.wpLon else {
+            return
+        }
+        guard let latDouble = Double(lat) else {
+            return
+        }
+        guard let lonDouble = Double(lon) else {
+            return
+        }
+        let pin = MKPointAnnotation()
+        pin.coordinate = CLLocationCoordinate2D(latitude: latDouble, longitude: lonDouble)
+        wpMapView.addAnnotation(pin)
+        
+        wpMapView.showAnnotations(wpMapView.annotations, animated: true)
+    }
+
+
+
+    //MARK: - Life Cycle Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = selectedRoute?.routeName
-        fillAllInfo()
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        
+        self.title = selectedRoute.routeName
+        waypointArray = selectedRoute.routeWaypoints
+        waypointArray.sortInPlace { $0.wpStopNum < $1.wpStopNum }
+        fillAllInfo(nextStop)
+        print("Waypoint count: \(selectedRoute?.routeWaypoints.count)")
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

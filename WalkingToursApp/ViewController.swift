@@ -59,7 +59,6 @@ class ViewController: UIViewController {
         //let dataQuery = "name LIKE 'Jack%'"
     
         let dataQuery = BackendlessDataQuery()
-        
         var error: Fault?
         let result = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
         if error == nil {

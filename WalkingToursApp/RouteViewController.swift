@@ -106,19 +106,20 @@ class RouteViewController: UIViewController {
     
     private func fetchData() {
         
-        
-        
-        
         var error: Fault?
-        if error == nil {            
+        if error == nil {
+            
+            //add sorting stuff
+            
             selectedRoute = backendless.data.of(Route.ofClass()).load(selectedRoute, relations: ["routeWaypoints"], fault: &error) as? Route
             if error == nil {
-                print("Waypoints has been retrieved)")
+                print("Waypoints has been retrieved")
                 waypointArray.removeAll()
                 for point in (selectedRoute?.routeWaypoints)! {
                     //                    print("\(point.wpStopNum) - \(point.wpName), \(point.wpAddress), \(point.wpDescript)")
                     waypointArray.append(point)
                     //                    print("Stops count: \(waypointArray.count)")
+                    
                 }
                 
             } else {

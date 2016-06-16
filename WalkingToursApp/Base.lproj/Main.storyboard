@@ -218,12 +218,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3QI-GD-mgZ">
-                                <rect key="frame" x="0.0" y="64" width="600" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="yvt-yw-sfO"/>
-                                </constraints>
-                            </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop # 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRd-l5-djc">
                                 <rect key="frame" x="20" y="272" width="352" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -265,6 +259,9 @@
                                         <exclude reference="NWM-Zm-Ks3"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="nextButtonPressed:" destination="MaF-gL-oss" eventType="touchUpInside" id="LuS-7L-KhB"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IH2-aj-gl4">
                                 <rect key="frame" x="20" y="520" width="276" height="60"/>
@@ -295,6 +292,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3QI-GD-mgZ">
+                                <rect key="frame" x="0.0" y="64" width="600" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="yvt-yw-sfO"/>
+                                </constraints>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -330,6 +333,7 @@
                         <outlet property="wpAddress" destination="zFT-20-njW" id="ayu-2J-nXJ"/>
                         <outlet property="wpDescript" destination="bTK-LM-viQ" id="eXy-cJ-dey"/>
                         <outlet property="wpDirections" destination="feN-rd-EX7" id="AHB-ro-8qh"/>
+                        <outlet property="wpMapView" destination="3QI-GD-mgZ" id="YoN-0F-IeV"/>
                         <outlet property="wpName" destination="A4a-RD-ZKU" id="M06-sj-vra"/>
                         <outlet property="wpStopNum" destination="LRd-l5-djc" id="HHE-Su-chn"/>
                     </connections>
