@@ -33,8 +33,9 @@ class ViewController: UIViewController {
     //MARK: - Segue Methods
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let destController = segue.destinationViewController as! RouteViewController
+//        let destController = segue.destinationViewController as! RouteViewController
         if segue.identifier == "seeSelectedRoute" {
+            let destController = segue.destinationViewController as! RouteViewController
             let indexPath = RouteTable.indexPathForSelectedRow!
             let selectedRoute = routeArray[indexPath.row]
             destController.selectedRoute = selectedRoute
@@ -43,6 +44,7 @@ class ViewController: UIViewController {
             navigationItem.backBarButtonItem = backItem
             RouteTable.deselectRowAtIndexPath(indexPath, animated: true)
         } else if segue.identifier == "addNewRoute" {
+            let destController = segue.destinationViewController as! newRouteViewController
             destController.selectedRoute = nil
             let backItem = UIBarButtonItem()
             backItem.title = "Menu"

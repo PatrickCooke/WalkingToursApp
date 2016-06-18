@@ -99,6 +99,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         refetchAndReload()
+        
+        
     }
     
     override func viewDidAppear(animated: Bool) {

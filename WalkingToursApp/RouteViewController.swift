@@ -15,20 +15,43 @@ class RouteViewController: UIViewController {
     var waypointArray = [Waypoint]()
     @IBOutlet weak var routeTitleTXTField:      UITextField!
     @IBOutlet weak var routeDistTXTField:       UITextField!
-    @IBOutlet weak var routeDescriptionTXTView: UITextView!
+    @IBOutlet weak var routeDescriptionTXTField: UITextField!
     @IBOutlet weak var waypointTableView:       UITableView!
     var stopCount = 0
     
     //MARK: - Interactivity Methods
     
     @IBAction func deleteButtonPressed(sender: UIBarButtonItem){
-        let alertView = UIAlertController(title: "Sorry, you can't directly delete this Routes", message: "To protect the routes created by other, you'll have to email me to delete this route for you.", preferredStyle: .Alert)
-        alertView.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-        presentViewController(alertView, animated: true, completion: nil)
+        //deleteListing()
     }
     
     func deleteListing() {
         print("delete Listing")
+        
+        let dataStore = backendless.data.of(Route.ofClass())
+        
+        // save object asynchronously
+        dataStore.save(
+            selectedRoute,
+            response: { (result: AnyObject!) -> Void in
+                let savedRoute = result as! Route
+                print("Contact has been saved: \(savedRoute.objectId)")
+                
+                // now delete the saved object
+                dataStore.remove(
+                    savedRoute,
+                    response: { (result: AnyObject!) -> Void in
+                        print("Route has been deleted: \(result)")
+                    },
+                    error: { (fault: Fault!) -> Void in
+                        print("Server reported an error (2): \(fault)")
+                })
+                
+            },
+            error: { (fault: Fault!) -> Void in
+                print("Server reported an error (1): \(fault)")
+        })
+        
         //        self.navigationController!.popViewControllerAnimated(true)
     }
     
@@ -37,23 +60,19 @@ class RouteViewController: UIViewController {
     }
     
     func resignFirstRespond() {
-        routeDistTXTField.resignFirstResponder()
         routeTitleTXTField.resignFirstResponder()
-        routeDescriptionTXTView.resignFirstResponder()
+        routeDescriptionTXTField.resignFirstResponder()
     }
     
     @IBAction func saveRouteInfo() {
-        resignFirstRespond()
+        //resignFirstRespond()
         print("route saved pressed")
         if selectedRoute == nil {
             let newRoute = Route()
             if let routeName = routeTitleTXTField.text {
                 newRoute.routeName = routeName
             }
-            if let routeDistance = routeDistTXTField.text {
-                newRoute.routeDistance = routeDistance
-            }
-            if let routeDescription = routeDescriptionTXTView.text {
+            if let routeDescription = routeDescriptionTXTField.text {
                 newRoute.routeDiscription=routeDescription
             }
             let dataStore = backendless.data.of(Route.ofClass())
@@ -65,19 +84,38 @@ class RouteViewController: UIViewController {
                 print("server reported error:\(fault)")
             }
         } else {
+            /*
+             let dataStore = Backendless.sharedInstance().data.of(Route.ofClass())
+             selectedRoute!.routeName = routeTitleTXTField.text
+             selectedRoute!.routeDiscription = routeDescriptionTXTField.text
+             dataStore.save(
+             selectedRoute,
+             response: { (result: AnyObject!) -> Void in
+             let updatedRoute = result as! Route
+             print("Contact has been updated: \(updatedRoute.objectId)")
+             },
+             error: { (fault: Fault!) -> Void in
+             print("Server reported an error (2): \(fault)")
+             })
+             */
+            ///////////
+            
             let dataStore = Backendless.sharedInstance().data.of(Route.ofClass())
+            
+            // update object asynchronously
             selectedRoute!.routeName = routeTitleTXTField.text
-            selectedRoute!.routeDiscription = routeDescriptionTXTView.text
-            selectedRoute!.routeDistance = routeDistTXTField.text
+            selectedRoute!.routeDiscription = routeDescriptionTXTField.text
             dataStore.save(
                 selectedRoute,
                 response: { (result: AnyObject!) -> Void in
                     let updatedRoute = result as! Route
-                    print("Contact has been updated: \(updatedRoute.objectId)")
+                    print("Route has been updated: \(updatedRoute.objectId)")
                 },
                 error: { (fault: Fault!) -> Void in
                     print("Server reported an error (2): \(fault)")
             })
+            
+            
         }
     }
     
@@ -165,16 +203,16 @@ class RouteViewController: UIViewController {
                 routeTitleTXTField.text = routeName
                 self.title = routeName
             }
-            if let routeDist = selRoute.routeDistance {
-                routeDistTXTField.text = routeDist
-            }
+            //            if let routeDist = selRoute.routeDistance {
+            //                routeDistTXTField.text = routeDist
+            //            }
             if let routeDescript = selRoute.routeDiscription {
-                routeDescriptionTXTView.text = routeDescript
+                routeDescriptionTXTField.text = routeDescript
             }
         } else {
             routeTitleTXTField.text = ""
-            routeDistTXTField.text = "0"
-            routeDescriptionTXTView.text = ""
+            //            routeDistTXTField.text = "0"
+            routeDescriptionTXTField.text = ""
         }
     }
     
@@ -182,7 +220,11 @@ class RouteViewController: UIViewController {
         super.viewDidAppear(animated)
         fetchData()
         waypointTableView.reloadData()
-        stopCount = (selectedRoute?.routeWaypoints.count)!
+        if selectedRoute == nil {
+            stopCount = 0
+        } else {
+            stopCount = (selectedRoute?.routeWaypoints.count)!
+        }
         print("stops: \(stopCount)")
     }
     

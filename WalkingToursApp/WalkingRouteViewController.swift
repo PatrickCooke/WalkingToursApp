@@ -41,6 +41,8 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         }
         wpDescript.text = currentWaypoint.wpDescript
         plotWayPoint(stop)
+        //getDirections(stop)
+        
 //        if stop < waypointArray.count - 1 {
 //            plotWayPoint(stop + 1)
 //        } else {
@@ -100,26 +102,52 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         wpMapView.showAnnotations(wpMapView.annotations, animated: true)
     }
     
-//    func getDirections(stop: Int ){
-//        let currentWaypoint = waypointArray[stop]
-//        guard let lat = currentWaypoint.wpLat else {
-//            return
-//        }
-//        guard let lon = currentWaypoint.wpLon else {
-//            return
-//        }
-//        guard let latDouble = Double(lat) else {
-//            return
-//        }
-//        guard let lonDouble = Double(lon) else {
-//            return
-//        }
-//        let userLoc = wpMapView.userLocation.location
-//        let endLoc = CLLocation(latitude: latDouble, longitude: lonDouble)
-//        let directions = MKDirectionsRequest.
-//        
-//    }
-
+    @IBAction func updateDirectionsPushed() {
+        getDirections(nextStop)
+    }
+    
+    func getDirections(stop: Int ){
+        let currentWaypoint = waypointArray[stop]
+        guard let lat = currentWaypoint.wpLat else {
+            return
+        }
+        guard let lon = currentWaypoint.wpLon else {
+            return
+        }
+        guard let latDouble = Double(lat) else {
+            return
+        }
+        guard let lonDouble = Double(lon) else {
+            return
+        }
+        let userLoc = wpMapView.userLocation.location
+    
+        let request = MKDirectionsRequest()
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: (userLoc?.coordinate.latitude)!, longitude: (userLoc?.coordinate.longitude)!), addressDictionary: nil))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: latDouble, longitude: lonDouble), addressDictionary: nil))
+        request.requestsAlternateRoutes = true
+        request.transportType = .Walking
+        
+        let directions = MKDirections(request: request)
+        
+        directions.calculateDirectionsWithCompletionHandler { [unowned self] response, error in
+            guard let unwrappedResponse = response else { return }
+            
+            for route in unwrappedResponse.routes {
+                self.wpMapView.addOverlay(route.polyline)
+                self.wpMapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+            }
+        }
+        
+    }
+    
+    
+    
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+        renderer.strokeColor = UIColor.blueColor()
+        return renderer
+    }
 
     //MARK: - Life Cycle Methods
 

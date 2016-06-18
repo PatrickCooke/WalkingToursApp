@@ -21,6 +21,8 @@ class WayPointViewController: UIViewController {
     @IBOutlet weak var wpZipTxtField            :UITextField!
     @IBOutlet weak var wpDescriptionTxtField    :UITextField!
     @IBOutlet weak var wpstopNumberTxtField     :UITextField!
+    @IBOutlet weak var wpLatTxtField            :UITextField!
+    @IBOutlet weak var wpLonTxtField            :UITextField!
     @IBOutlet weak var wpMapView                :MKMapView!
     @IBOutlet weak var latCoordLabel            :UILabel!
     @IBOutlet weak var lonCoordLabel            :UILabel!
@@ -52,6 +54,8 @@ class WayPointViewController: UIViewController {
                     
                     self.latCoord = "\(coordinates.latitude)"
                     self.lonCoord = "\(coordinates.longitude)"
+                    self.wpLatTxtField.text = "\(coordinates.latitude)"
+                    self.wpLonTxtField.text = "\(coordinates.longitude)"
                     
                     if plotOnMap {
                         self.wpMapView.removeAnnotations(self.wpMapView.annotations)
@@ -105,6 +109,7 @@ class WayPointViewController: UIViewController {
             }
             newWP.wpLat = latCoord
             newWP.wpLon = lonCoord
+
 
             route.routeWaypoints.append(newWP)
             
