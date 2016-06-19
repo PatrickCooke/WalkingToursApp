@@ -83,15 +83,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
         fetchData()
         RouteTable.reloadData()
         locManager.setupLocationMonitoring()
-//        locationManager = CLLocationManager()
-//        locationManager.requestWhenInUseAuthorization()
-//        locationManager = CLLocationManager()
-//        if CLLocationManager.locationServicesEnabled() {
-//            locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-//            locationManager.startUpdatingLocation()
-//        }
     }
-    
     
     
     //MARK: - Life Cycle Method

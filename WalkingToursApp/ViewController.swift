@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     var backendless = Backendless.sharedInstance()
+    var loginManager = LoginManager.sharedInstance
     var routeArray = [Route]()
     
     @IBOutlet private weak var RouteTable  :UITableView!
@@ -59,8 +60,14 @@ class ViewController: UIViewController {
         
         
         //let dataQuery = "name LIKE 'Jack%'"
-    
+        
         let dataQuery = BackendlessDataQuery()
+        
+        let whereClause = "ownerId = '\(loginManager.currentuser.objectId)'"
+        
+        dataQuery.whereClause = whereClause
+    
+        //let dataQuery = BackendlessDataQuery()
         var error: Fault?
         let result = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
         if error == nil {
