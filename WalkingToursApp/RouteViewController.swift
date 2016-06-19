@@ -84,22 +84,6 @@ class RouteViewController: UIViewController {
                 print("server reported error:\(fault)")
             }
         } else {
-            /*
-             let dataStore = Backendless.sharedInstance().data.of(Route.ofClass())
-             selectedRoute!.routeName = routeTitleTXTField.text
-             selectedRoute!.routeDiscription = routeDescriptionTXTField.text
-             dataStore.save(
-             selectedRoute,
-             response: { (result: AnyObject!) -> Void in
-             let updatedRoute = result as! Route
-             print("Contact has been updated: \(updatedRoute.objectId)")
-             },
-             error: { (fault: Fault!) -> Void in
-             print("Server reported an error (2): \(fault)")
-             })
-             */
-            ///////////
-            
             let dataStore = Backendless.sharedInstance().data.of(Route.ofClass())
             
             // update object asynchronously
@@ -153,17 +137,14 @@ class RouteViewController: UIViewController {
             if error == nil {
                 
                 //add sorting stuff
+                
                 selectedRoute = backendless.data.of(Route.ofClass()).load(selectedRoute, relations: ["routeWaypoints"], fault: &error) as? Route
                 if error == nil {
                     print("Waypoints has been retrieved")
                     waypointArray.removeAll()
                     for point in (selectedRoute?.routeWaypoints)! {
-                        //                    print("\(point.wpStopNum) - \(point.wpName), \(point.wpAddress), \(point.wpDescript)")
                         waypointArray.append(point)
-                        //                    print("Stops count: \(waypointArray.count)")
-                        
                     }
-                    
                 } else {
                     print("Server reported an error: \(error)")
                 }

@@ -149,8 +149,8 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
                     let distanceInMiles = String(format: "%0.2f",step.distance / 1609.344)
                     let stepDirection = String(format: "\(step.instructions) - \(distanceInMiles) mi")
                     print(stepDirection)
-                    //self.directionsArray.append(stepDirection)
                     self.wpDirections.text.appendContentsOf(stepDirection)
+                    //self.directionsArray.append("\(stepDirection)")
                     
                 }
                 //print("# of Steps: \(self.directionsArray.count)")
