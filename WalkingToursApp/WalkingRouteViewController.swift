@@ -17,12 +17,17 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     var nextStop = 0
     var locationManager = CLLocationManager()
     
+    
     @IBOutlet weak var wpStopNum    :UILabel!
     @IBOutlet weak var wpName       :UILabel!
     @IBOutlet weak var wpAddress    :UILabel!
     @IBOutlet weak var wpDescript   :UILabel!
     @IBOutlet weak var wpDirections :UITextView!
     @IBOutlet weak var wpMapView    :MKMapView!
+    @IBOutlet weak var wpDistTime   :UILabel!
+    
+      var directionsArray: [String]!
+    
     
     //MARK: - Fill Methods
     
@@ -42,13 +47,10 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         wpDescript.text = currentWaypoint.wpDescript
         plotWayPoint(stop)
         //getDirections(stop)
-        
-//        if stop < waypointArray.count - 1 {
-//            plotWayPoint(stop + 1)
-//        } else {
-//            plotWayPoint(0)
-//        }
     }
+    
+    
+    
     
     func clearAllInfo() {
         wpStopNum.text = ""
@@ -61,12 +63,14 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     
     @IBAction func nextButtonPressed(sender: UIButton) {
         wpMapView.removeAnnotations(wpMapView.annotations)
+        wpMapView.removeOverlays(wpMapView.overlays)
         if nextStop < (waypointArray.count - 1) {
             nextStop += 1
         } else {
             nextStop = 0
         }
         fillAllInfo(nextStop)
+        
     }
     
     @IBAction func previousButtonPressed(sender: UIButton) {
@@ -136,6 +140,20 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
             for route in unwrappedResponse.routes {
                 self.wpMapView.addOverlay(route.polyline)
                 self.wpMapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+                let totalRouteDistance = String(format: "Total Distance: %0.2f",route.distance / 1609.344)
+                let totalRouteTime = "Expected Time: \(route.expectedTravelTime)"
+                //self.wpDistTime.text = "\(totalRouteDistance),\(totalRouteTime)"
+                print("\(totalRouteDistance),\(totalRouteTime)")
+                
+                for step in route.steps {
+                    let distanceInMiles = String(format: "%0.2f",step.distance / 1609.344)
+                    let stepDirection = String(format: "\(step.instructions) - \(distanceInMiles) mi")
+                    print(stepDirection)
+                    //self.directionsArray.append(stepDirection)
+                    self.wpDirections.text.appendContentsOf(stepDirection)
+                    
+                }
+                //print("# of Steps: \(self.directionsArray.count)")
             }
         }
         
@@ -149,6 +167,14 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         return renderer
     }
 
+    //Table
+
+    
+    
+    
+    
+    
+
     //MARK: - Life Cycle Methods
 
     override func viewDidLoad() {
@@ -157,6 +183,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         waypointArray = selectedRoute.routeWaypoints
         waypointArray.sortInPlace { $0.wpStopNum < $1.wpStopNum }
         fillAllInfo(nextStop)
+        //wpDistTime.text = ""
         
         locManager.setupLocationMonitoring()
         wpMapView.showsUserLocation=true
