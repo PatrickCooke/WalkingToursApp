@@ -27,6 +27,8 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     @IBOutlet weak var wpMapView    :MKMapView!
     @IBOutlet weak var wpDistTime   :UILabel!
     @IBOutlet weak var wpRouteTable :UITableView!
+    @IBOutlet weak var wpDirectionsButton :UIButton!
+    
     
     var directionsArray: [String]!
     
@@ -187,6 +189,11 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         waypointArray.sortInPlace { $0.wpStopNum < $1.wpStopNum }
         fillAllInfo(nextStop)
         
+        /*
+        if location isn't available {
+            wpDirectionsButton.enabled = false
+        }
+        */
         locManager.setupLocationMonitoring()
         wpMapView.showsUserLocation=true
     }

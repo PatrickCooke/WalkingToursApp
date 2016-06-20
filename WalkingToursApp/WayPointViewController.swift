@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class WayPointViewController: UIViewController {
+class WayPointViewController: UIViewController, MKMapViewDelegate {
     
     let backendless = Backendless.sharedInstance()
     var selectedWP = Waypoint?()
@@ -122,6 +122,7 @@ class WayPointViewController: UIViewController {
                 print("Server reported an error: \(error)")
             }
         } else {
+            
             let dataStore = Backendless.sharedInstance().data.of(Waypoint.ofClass())
             
             selectedWP!.wpName = wpNameTxtField.text
@@ -165,6 +166,98 @@ class WayPointViewController: UIViewController {
         wpCityTxtField.resignFirstResponder()
         wpStateTxtField.resignFirstResponder()
         wpZipTxtField.resignFirstResponder()
+    }
+    
+    //MARK: - Search Methods
+    
+    @IBAction func pressedPlotGPS() {
+        guard let latDub = Double(wpLatTxtField.text!) else {
+            return
+        }
+        guard let lonDub = Double(wpLonTxtField.text!) else {
+            return
+        }
+        let geoCoder = CLGeocoder()
+        let location = CLLocation(latitude: latDub, longitude: lonDub)
+        
+        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+            
+            // Place details
+            var placeMark: CLPlacemark!
+            placeMark = placemarks?[0]
+            
+            // Address dictionary
+            print(placeMark.addressDictionary)
+            
+            // Location name
+            guard let locationName = placeMark.addressDictionary!["Name"] as? NSString else {
+                return
+            }
+            print("locationName \(locationName)")
+            // Street address
+            guard let streetNum = placeMark.addressDictionary!["SubThoroughfare"] as? NSString else{
+                return
+            }
+            // Street
+            guard let streetName = placeMark.addressDictionary!["Thoroughfare"] as? NSString else{
+                return
+            }
+            let street = "\(streetNum) \(streetName)"
+            print("street: \(street)")
+            // City
+            guard let city = placeMark.addressDictionary!["City"] as? NSString else {
+                return
+            }
+            print("city - \(city)")
+            // Zip code
+            guard let zip = placeMark.addressDictionary!["ZIP"] as? NSString else {
+                return
+            }
+            print("zip: \(zip)")
+            // State
+            guard let state = placeMark.addressDictionary!["State"] as? NSString else {
+                return
+            }
+            print(state)
+            // Country
+            guard let country = placeMark.addressDictionary!["Country"] as? NSString else {
+                return
+            }
+            print(country)
+            
+            self.wpMapView.removeAnnotations(self.wpMapView.annotations)
+            print("did plot")
+            let pin = MKPointAnnotation()
+            pin.coordinate = location.coordinate
+            pin.title = "\(street), \(city), \(state) \(zip)"
+            pin.subtitle = country as String
+            
+            
+            self.wpMapView.addAnnotation(pin)
+            self.wpMapView.showAnnotations(self.wpMapView.annotations, animated: true)
+            
+        })
+        
+    }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        var view = mapView.dequeueReusableAnnotationViewWithIdentifier("id")
+        if view == nil {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
+            view!.canShowCallout = true
+        } else {
+            view!.annotation = annotation
+        }
+        
+        view?.leftCalloutAccessoryView = nil
+        view?.rightCalloutAccessoryView = UIButton(type: UIButtonType.ContactAdd )
+        return view
+    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if (control as? UIButton)?.buttonType == UIButtonType.ContactAdd {
+            print("pressed")
+        }
     }
     
     //MARK: - Life Cycle Methods

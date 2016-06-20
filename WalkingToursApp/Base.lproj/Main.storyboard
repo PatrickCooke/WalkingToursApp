@@ -1014,7 +1014,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Latitude" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bdT-6V-JpX">
-                                <rect key="frame" x="20" y="340" width="276" height="30"/>
+                                <rect key="frame" x="20" y="340" width="252" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="FO3-09-lKd"/>
                                 </constraints>
@@ -1022,13 +1022,18 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Longitude" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wRg-cG-oyd">
-                                <rect key="frame" x="304" y="340" width="276" height="30"/>
+                                <rect key="frame" x="280" y="340" width="252" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="276" id="JRG-6u-p7B"/>
                                     <constraint firstAttribute="height" constant="30" id="Q6M-OE-B5m"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="JRG-6u-p7B"/>
+                                    </mask>
+                                </variation>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Oe-2k-lCh">
                                 <rect key="frame" x="23" y="328" width="94" height="11"/>
@@ -1046,8 +1051,19 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9i-ti-R3k">
+                                <rect key="frame" x="540" y="331" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="eY7-Vx-iw2"/>
+                                    <constraint firstAttribute="height" constant="40" id="muJ-Aa-eBn"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="Search"/>
+                                <connections>
+                                    <action selector="pressedPlotGPS" destination="GNj-KV-eri" eventType="touchUpInside" id="fK8-Jl-f9L"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longitude" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zdt-1W-FHR">
-                                <rect key="frame" x="304" y="328" width="94" height="11"/>
+                                <rect key="frame" x="280" y="328" width="94" height="11"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="11" id="0T0-Ro-dtL"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="11" id="V1H-lp-X43"/>
@@ -1072,6 +1088,7 @@
                             <constraint firstItem="rLH-0d-fzR" firstAttribute="top" secondItem="ZIr-No-9dh" secondAttribute="bottom" constant="20" id="3Ew-y5-QEN"/>
                             <constraint firstItem="Ljx-zv-kaT" firstAttribute="top" secondItem="Q4m-De-xyE" secondAttribute="bottom" constant="19" id="3gK-Oz-x1K"/>
                             <constraint firstItem="wRg-cG-oyd" firstAttribute="top" secondItem="Zdt-1W-FHR" secondAttribute="bottom" constant="1" id="5BB-Qj-XCE"/>
+                            <constraint firstItem="o9i-ti-R3k" firstAttribute="leading" secondItem="wRg-cG-oyd" secondAttribute="trailing" constant="8" id="62s-yn-9xd"/>
                             <constraint firstItem="ueY-SG-uPm" firstAttribute="top" secondItem="S5v-Ta-uQ7" secondAttribute="bottom" constant="2" id="68m-OJ-uds"/>
                             <constraint firstAttribute="leadingMargin" secondItem="mdV-OW-YfM" secondAttribute="leading" id="6s1-Sj-dR5"/>
                             <constraint firstItem="gON-iQ-Ja9" firstAttribute="top" secondItem="puo-Rq-Yxi" secondAttribute="bottom" constant="31" id="7nE-fx-xZu"/>
@@ -1079,8 +1096,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="wRg-cG-oyd" secondAttribute="trailing" id="A9I-Nv-bSm"/>
                             <constraint firstItem="9sk-e0-10W" firstAttribute="width" secondItem="mdV-OW-YfM" secondAttribute="width" id="ASb-Df-NHW"/>
                             <constraint firstAttribute="leadingMargin" secondItem="bdT-6V-JpX" secondAttribute="leading" id="AWq-7O-Wyw"/>
+                            <constraint firstItem="o9i-ti-R3k" firstAttribute="leading" secondItem="wRg-cG-oyd" secondAttribute="trailing" constant="8" id="CuH-Bz-hsu"/>
                             <constraint firstItem="mWy-eH-6f9" firstAttribute="top" secondItem="puo-Rq-Yxi" secondAttribute="bottom" constant="8" id="EXI-vs-6Mc"/>
                             <constraint firstAttribute="leadingMargin" secondItem="5Dw-Dm-D38" secondAttribute="leading" id="GS1-r6-Gk1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="o9i-ti-R3k" secondAttribute="trailing" id="GsE-QS-eBB"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Bf7-Ju-XMm" secondAttribute="leading" id="IlX-uh-1ec"/>
                             <constraint firstItem="Zdt-1W-FHR" firstAttribute="leading" secondItem="wRg-cG-oyd" secondAttribute="leading" id="KrD-7D-ILR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mWy-eH-6f9" secondAttribute="trailing" id="L5m-Qh-qmi"/>
@@ -1096,6 +1115,7 @@
                             <constraint firstItem="KLK-3G-jl9" firstAttribute="top" secondItem="9sk-e0-10W" secondAttribute="bottom" constant="2" id="SBz-ms-sls"/>
                             <constraint firstItem="9sk-e0-10W" firstAttribute="top" secondItem="Ljx-zv-kaT" secondAttribute="bottom" constant="8" id="SCM-y2-0EE"/>
                             <constraint firstItem="9sk-e0-10W" firstAttribute="top" secondItem="gRr-K1-TNj" secondAttribute="bottom" constant="3" id="TEc-Ft-aRf"/>
+                            <constraint firstItem="o9i-ti-R3k" firstAttribute="top" secondItem="5Dw-Dm-D38" secondAttribute="bottom" constant="8" id="THa-Sc-cbM"/>
                             <constraint firstItem="Ljx-zv-kaT" firstAttribute="leading" secondItem="gRr-K1-TNj" secondAttribute="trailing" constant="8" id="TSB-Ax-zJg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ljx-zv-kaT" secondAttribute="trailing" id="UpU-V1-90j"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9sk-e0-10W" secondAttribute="trailing" id="Var-DY-mdj"/>
@@ -1133,8 +1153,11 @@
                                 <exclude reference="P0w-Nn-BUp"/>
                                 <exclude reference="lUe-gj-ecK"/>
                                 <exclude reference="lYb-Wb-8WV"/>
+                                <exclude reference="npL-nI-pYW"/>
+                                <exclude reference="A9I-Nv-bSm"/>
                                 <exclude reference="Ydq-aT-fka"/>
                                 <exclude reference="mtb-Nb-PQN"/>
+                                <exclude reference="62s-yn-9xd"/>
                             </mask>
                         </variation>
                     </view>
