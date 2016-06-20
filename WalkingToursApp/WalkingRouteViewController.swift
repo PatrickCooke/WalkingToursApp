@@ -72,6 +72,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         fillAllInfo(nextStop)
         stepsArray.removeAll()
         wpRouteTable.reloadData()
+        updateDirectionsPushed()
     }
     
     @IBAction func previousButtonPressed(sender: UIButton) {
@@ -85,6 +86,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         fillAllInfo(nextStop)
         stepsArray.removeAll()
         wpRouteTable.reloadData()
+        updateDirectionsPushed()
     }
     
     //MARK: - Mapping Methods
@@ -104,6 +106,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
             return
         }
         let pin = MKPointAnnotation()
+        
         pin.coordinate = CLLocationCoordinate2D(latitude: latDouble, longitude: lonDouble)
         wpMapView.addAnnotation(pin)
         
@@ -111,8 +114,8 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     }
     
     @IBAction func updateDirectionsPushed() {
+        wpMapView.removeOverlays(wpMapView.overlays)
         getDirections(nextStop)
-        //wpRouteTable.reloadData()
     }
     
     func getDirections(stop: Int ){
@@ -146,18 +149,17 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
             self.wpRouteTable.reloadData()
             
             for route in unwrappedResponse.routes {
+                let mapEdgePadding = UIEdgeInsets(top: 60, left: 50, bottom: 20, right: 50)
                 self.wpMapView.addOverlay(route.polyline)
-                self.wpMapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
-                //let totalRouteDistance = String(format: "Total Distance: %0.2f",route.distance / 1609.344)
-                //let totalRouteTime = "Expected Time: \(route.expectedTravelTime)"
-                //print("\(totalRouteDistance),\(totalRouteTime)")
+                self.wpMapView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: mapEdgePadding, animated: true)
+                
             }
         }
     }
     
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-        renderer.strokeColor = UIColor().BeccaBlue()
+        renderer.strokeColor = UIColor().BeccaBlue() .colorWithAlphaComponent(0.7)
         return renderer
     }
     
@@ -171,13 +173,15 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         
         let routeStep = stepsArray[indexPath.row]
-        cell.textLabel!.text = routeStep.instructions
         let distanceInMiles = String(format: "%0.2f mi",routeStep.distance / 1609.344)
-        cell.detailTextLabel!.text = distanceInMiles
+        cell.textLabel!.text = "\(routeStep.instructions) - \(distanceInMiles)"
+        //cell.detailTextLabel!.text = ""
         
         return cell
     }
-    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 28.0
+    }
     
     
     //MARK: - Life Cycle Methods
