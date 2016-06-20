@@ -17,6 +17,7 @@ class RouteViewController: UIViewController {
     @IBOutlet weak var routeDistTXTField:       UITextField!
     @IBOutlet weak var routeDescriptionTXTField: UITextField!
     @IBOutlet weak var waypointTableView:       UITableView!
+    @IBOutlet weak var routeActiveSwith:        UISwitch!
     var stopCount = 0
     
     //MARK: - Interactivity Methods
@@ -75,6 +76,7 @@ class RouteViewController: UIViewController {
             if let routeDescription = routeDescriptionTXTField.text {
                 newRoute.routeDiscription=routeDescription
             }
+//            newRoute.routeActive? = true
             let dataStore = backendless.data.of(Route.ofClass())
             dataStore.save(
                 newRoute,
@@ -89,6 +91,7 @@ class RouteViewController: UIViewController {
             // update object asynchronously
             selectedRoute!.routeName = routeTitleTXTField.text
             selectedRoute!.routeDiscription = routeDescriptionTXTField.text
+//            selectedRoute!.routeActive = true
             dataStore.save(
                 selectedRoute,
                 response: { (result: AnyObject!) -> Void in
@@ -98,8 +101,6 @@ class RouteViewController: UIViewController {
                 error: { (fault: Fault!) -> Void in
                     print("Server reported an error (2): \(fault)")
             })
-            
-            
         }
     }
     
@@ -183,10 +184,8 @@ class RouteViewController: UIViewController {
             if let routeName = selRoute.routeName{
                 routeTitleTXTField.text = routeName
                 self.title = routeName
+                
             }
-            //            if let routeDist = selRoute.routeDistance {
-            //                routeDistTXTField.text = routeDist
-            //            }
             if let routeDescript = selRoute.routeDiscription {
                 routeDescriptionTXTField.text = routeDescript
             }
@@ -206,7 +205,12 @@ class RouteViewController: UIViewController {
         } else {
             stopCount = (selectedRoute?.routeWaypoints.count)!
         }
-        print("stops: \(stopCount)")
+        //print("stops: \(stopCount)")
+        if selectedRoute?.routeActive == "1" {
+        print("Active")
+        } else {
+            print("Not Active")
+        }
     }
     
     override func viewDidDisappear(animated: Bool) {

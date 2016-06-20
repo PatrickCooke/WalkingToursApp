@@ -61,6 +61,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
         
         let dataQuery = BackendlessDataQuery()
         
+        let whereClause = "routeActive = '1'"
+        dataQuery.whereClause = whereClause
+        
         let queryOptions = QueryOptions()
         queryOptions.sortBy = ["routeName"]
         dataQuery.queryOptions = queryOptions
