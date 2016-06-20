@@ -80,6 +80,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(segueToViews), name: "recvLoginInfo", object: nil)
+        emailTextField.becomeFirstResponder()
+        textFieldChanged()
     }
 
     override func didReceiveMemoryWarning() {
