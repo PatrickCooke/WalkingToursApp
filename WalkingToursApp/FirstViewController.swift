@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UIViewController, CLLocationManagerDelegate {
+class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate {
     
     var locManager = LocationManager.sharedInstance
     var backendless = Backendless.sharedInstance()

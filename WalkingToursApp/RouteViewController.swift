@@ -17,7 +17,7 @@ class RouteViewController: UIViewController {
     @IBOutlet weak var routeDistTXTField:       UITextField!
     @IBOutlet weak var routeDescriptionTXTField: UITextField!
     @IBOutlet weak var waypointTableView:       UITableView!
-    @IBOutlet weak var routeActiveSwith:        UISwitch!
+    @IBOutlet weak var routeActiveSwitch:        UISwitch!
     var stopCount = 0
     
     //MARK: - Interactivity Methods
@@ -28,16 +28,13 @@ class RouteViewController: UIViewController {
     
     func deleteListing() {
         print("delete Listing")
-        
         let dataStore = backendless.data.of(Route.ofClass())
-        
         // save object asynchronously
         dataStore.save(
             selectedRoute,
             response: { (result: AnyObject!) -> Void in
                 let savedRoute = result as! Route
                 print("Contact has been saved: \(savedRoute.objectId)")
-                
                 // now delete the saved object
                 dataStore.remove(
                     savedRoute,
@@ -47,13 +44,11 @@ class RouteViewController: UIViewController {
                     error: { (fault: Fault!) -> Void in
                         print("Server reported an error (2): \(fault)")
                 })
-                
             },
             error: { (fault: Fault!) -> Void in
                 print("Server reported an error (1): \(fault)")
         })
-        
-        //        self.navigationController!.popViewControllerAnimated(true)
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     @IBAction func resignAll(selector: UIGestureRecognizer){
@@ -69,45 +64,26 @@ class RouteViewController: UIViewController {
         //resignFirstRespond()
         print("route saved pressed")
         if selectedRoute == nil {
-            let newRoute = Route()
-            if let routeName = routeTitleTXTField.text {
-                newRoute.routeName = routeName
-            }
-            if let routeDescription = routeDescriptionTXTField.text {
-                newRoute.routeDiscription=routeDescription
-            }
-//            newRoute.routeActive? = true
-            let dataStore = backendless.data.of(Route.ofClass())
-            dataStore.save(
-                newRoute,
-                response: { (result) in
-                    print("entry saved")
-            }) { (fault) in
-                print("server reported error:\(fault)")
-            }
-        } else {
-            let dataStore = Backendless.sharedInstance().data.of(Route.ofClass())
-            
-            // update object asynchronously
-            selectedRoute!.routeName = routeTitleTXTField.text
-            selectedRoute!.routeDiscription = routeDescriptionTXTField.text
-//            selectedRoute!.routeActive = true
-            dataStore.save(
-                selectedRoute,
-                response: { (result: AnyObject!) -> Void in
-                    let updatedRoute = result as! Route
-                    print("Route has been updated: \(updatedRoute.objectId)")
-                },
-                error: { (fault: Fault!) -> Void in
-                    print("Server reported an error (2): \(fault)")
-            })
+            selectedRoute = Route()
+        }
+        if let routeName = routeTitleTXTField.text {
+            selectedRoute!.routeName = routeName
+        }
+        if let routeDescription = routeDescriptionTXTField.text {
+            selectedRoute!.routeDiscription = routeDescription
+        }
+        selectedRoute!.routeActive = routeActiveSwitch.on
+        let dataStore = backendless.data.of(Route.ofClass())
+        dataStore.save(
+            selectedRoute!,
+            response: { (result) in
+                print("entry saved")
+        }) { (fault) in
+            print("server reported error:\(fault)")
         }
     }
     
-    
     //MARK: - Table Methods
-    
-    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return waypointArray.count
@@ -116,13 +92,10 @@ class RouteViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         let selectedWP = waypointArray[indexPath.row]
-        
-        
         cell.textLabel?.text = selectedWP.wpName
         if let stop = selectedWP.wpStopNum {
             cell.detailTextLabel?.text = "Stop: \(stop)"
         }
-        
         return cell
     }
     
@@ -206,11 +179,10 @@ class RouteViewController: UIViewController {
             stopCount = (selectedRoute?.routeWaypoints.count)!
         }
         //print("stops: \(stopCount)")
-        if selectedRoute?.routeActive == "1" {
-        print("Active")
-        } else {
-            print("Not Active")
+        guard let route = selectedRoute else {
+            return
         }
+        routeActiveSwitch.setOn(route.routeActive, animated: true)
     }
     
     override func viewDidDisappear(animated: Bool) {

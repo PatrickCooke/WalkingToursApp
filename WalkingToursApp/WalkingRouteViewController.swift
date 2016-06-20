@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
     let locManager = LocationManager.sharedInstance
     let backendless = Backendless.sharedInstance()
@@ -16,6 +16,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     var waypointArray = [Waypoint]()
     var nextStop = 0
     var locationManager = CLLocationManager()
+    var stepsArray = [MKRouteStep]()
     
     
     @IBOutlet weak var wpStopNum    :UILabel!
@@ -25,8 +26,9 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     @IBOutlet weak var wpDirections :UITextView!
     @IBOutlet weak var wpMapView    :MKMapView!
     @IBOutlet weak var wpDistTime   :UILabel!
+    @IBOutlet weak var wpRouteTable :UITableView!
     
-      var directionsArray: [String]!
+    var directionsArray: [String]!
     
     
     //MARK: - Fill Methods
@@ -34,7 +36,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     func fillAllInfo(stop: Int) {
         let currentWaypoint = waypointArray[nextStop]
         if let stops = currentWaypoint.wpStopNum {
-        wpStopNum.text = "Stop #\(stops)"
+            wpStopNum.text = "Stop #\(stops)"
         }
         wpName.text = currentWaypoint.wpName
         if let address = currentWaypoint.wpAddress {
@@ -46,11 +48,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         }
         wpDescript.text = currentWaypoint.wpDescript
         plotWayPoint(stop)
-        //getDirections(stop)
     }
-    
-    
-    
     
     func clearAllInfo() {
         wpStopNum.text = ""
@@ -70,17 +68,21 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
             nextStop = 0
         }
         fillAllInfo(nextStop)
-        
+        stepsArray.removeAll()
+        wpRouteTable.reloadData()
     }
     
     @IBAction func previousButtonPressed(sender: UIButton) {
         wpMapView.removeAnnotations(wpMapView.annotations)
+        wpMapView.removeOverlays(wpMapView.overlays)
         if nextStop > 0  {
             nextStop -= 1
         } else {
             nextStop = (waypointArray.count - 1)
         }
         fillAllInfo(nextStop)
+        stepsArray.removeAll()
+        wpRouteTable.reloadData()
     }
     
     //MARK: - Mapping Methods
@@ -108,6 +110,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     
     @IBAction func updateDirectionsPushed() {
         getDirections(nextStop)
+        //wpRouteTable.reloadData()
     }
     
     func getDirections(stop: Int ){
@@ -125,11 +128,11 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
             return
         }
         let userLoc = wpMapView.userLocation.location
-    
+        
         let request = MKDirectionsRequest()
         request.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: (userLoc?.coordinate.latitude)!, longitude: (userLoc?.coordinate.longitude)!), addressDictionary: nil))
         request.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: latDouble, longitude: lonDouble), addressDictionary: nil))
-        request.requestsAlternateRoutes = true
+        request.requestsAlternateRoutes = false
         request.transportType = .Walking
         
         let directions = MKDirections(request: request)
@@ -137,53 +140,52 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         directions.calculateDirectionsWithCompletionHandler { [unowned self] response, error in
             guard let unwrappedResponse = response else { return }
             
+            self.stepsArray = unwrappedResponse.routes.first!.steps
+            self.wpRouteTable.reloadData()
+            
             for route in unwrappedResponse.routes {
                 self.wpMapView.addOverlay(route.polyline)
                 self.wpMapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
                 let totalRouteDistance = String(format: "Total Distance: %0.2f",route.distance / 1609.344)
                 let totalRouteTime = "Expected Time: \(route.expectedTravelTime)"
-                //self.wpDistTime.text = "\(totalRouteDistance),\(totalRouteTime)"
                 print("\(totalRouteDistance),\(totalRouteTime)")
-                
-                for step in route.steps {
-                    let distanceInMiles = String(format: "%0.2f",step.distance / 1609.344)
-                    let stepDirection = String(format: "\(step.instructions) - \(distanceInMiles) mi")
-                    print(stepDirection)
-                    self.wpDirections.text.appendContentsOf(stepDirection)
-                    //self.directionsArray.append("\(stepDirection)")
-                    
-                }
-                //print("# of Steps: \(self.directionsArray.count)")
             }
         }
-        
     }
-    
-    
     
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-        renderer.strokeColor = UIColor.blueColor()
+        renderer.strokeColor = UIColor().BeccaBlue()
         return renderer
     }
-
-    //Table
-
+    
+    //MARK: - Table View Methods
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return stepsArray.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        
+        let routeStep = stepsArray[indexPath.row]
+        cell.textLabel!.text = routeStep.instructions
+        let distanceInMiles = String(format: "%0.2f mi",routeStep.distance / 1609.344)
+        cell.detailTextLabel!.text = distanceInMiles
+        
+        return cell
+    }
     
     
     
-    
-    
-
     //MARK: - Life Cycle Methods
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = selectedRoute.routeName
         waypointArray = selectedRoute.routeWaypoints
         waypointArray.sortInPlace { $0.wpStopNum < $1.wpStopNum }
         fillAllInfo(nextStop)
-        //wpDistTime.text = ""
         
         locManager.setupLocationMonitoring()
         wpMapView.showsUserLocation=true
