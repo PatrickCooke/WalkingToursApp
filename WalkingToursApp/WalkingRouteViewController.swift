@@ -146,9 +146,9 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
             for route in unwrappedResponse.routes {
                 self.wpMapView.addOverlay(route.polyline)
                 self.wpMapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
-                let totalRouteDistance = String(format: "Total Distance: %0.2f",route.distance / 1609.344)
-                let totalRouteTime = "Expected Time: \(route.expectedTravelTime)"
-                print("\(totalRouteDistance),\(totalRouteTime)")
+                //let totalRouteDistance = String(format: "Total Distance: %0.2f",route.distance / 1609.344)
+                //let totalRouteTime = "Expected Time: \(route.expectedTravelTime)"
+                //print("\(totalRouteDistance),\(totalRouteTime)")
             }
         }
     }

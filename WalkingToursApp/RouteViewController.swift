@@ -72,7 +72,11 @@ class RouteViewController: UIViewController {
         if let routeDescription = routeDescriptionTXTField.text {
             selectedRoute!.routeDiscription = routeDescription
         }
-        selectedRoute!.routeActive = routeActiveSwitch.on
+        if routeActiveSwitch.on {
+            selectedRoute!.routeActive = "1"
+        } else {
+            selectedRoute!.routeActive = "0"
+        }
         let dataStore = backendless.data.of(Route.ofClass())
         dataStore.save(
             selectedRoute!,
@@ -182,7 +186,13 @@ class RouteViewController: UIViewController {
         guard let route = selectedRoute else {
             return
         }
-        routeActiveSwitch.setOn(route.routeActive, animated: true)
+        if route.routeActive == "1" {
+            routeActiveSwitch.on = true
+            print("active")
+        } else if route.routeActive == "0" {
+            routeActiveSwitch.on = false
+            print("not active")
+        }
     }
     
     override func viewDidDisappear(animated: Bool) {
