@@ -38,7 +38,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     func fillAllInfo(stop: Int) {
         let currentWaypoint = waypointArray[nextStop]
         if let stops = currentWaypoint.wpStopNum {
-            wpStopNum.text = "Stop #\(stops)"
+            wpStopNum.text = "Destination #\(stops)"
         }
         wpName.text = currentWaypoint.wpName
         if let address = currentWaypoint.wpAddress {

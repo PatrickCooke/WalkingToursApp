@@ -166,11 +166,14 @@ class WayPointViewController: UIViewController, MKMapViewDelegate {
         wpCityTxtField.resignFirstResponder()
         wpStateTxtField.resignFirstResponder()
         wpZipTxtField.resignFirstResponder()
+        wpLatTxtField.resignFirstResponder()
+        wpLonTxtField.resignFirstResponder()
     }
     
     //MARK: - Search Methods
     
     @IBAction func pressedPlotGPS() {
+        resignAllFirstResponders()
         guard let latDub = Double(wpLatTxtField.text!) else {
             return
         }
@@ -231,6 +234,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate {
             pin.coordinate = location.coordinate
             pin.title = "\(street), \(city), \(state) \(zip)"
             pin.subtitle = country as String
+            
             
             
             self.wpMapView.addAnnotation(pin)

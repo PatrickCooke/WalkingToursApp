@@ -62,9 +62,7 @@ class ViewController: UIViewController {
         //let dataQuery = "name LIKE 'Jack%'"
         
         let dataQuery = BackendlessDataQuery()
-        
         let whereClause = "ownerId = '\(loginManager.currentuser.objectId)'"
-        
         dataQuery.whereClause = whereClause
     
         //let dataQuery = BackendlessDataQuery()
@@ -85,29 +83,28 @@ class ViewController: UIViewController {
         fetchData()
         RouteTable.reloadData()
     }
-    
-    
+
     
     ////MARK: - Temp Add Records
     
-    func saveNewRoute() {
-        let route = Route()
-        route.routeName = "D-town Brew Tours  2016"
-        route.routeDiscription = "Brews in the D 2016"
-        route.routeDistance = "4"
-        
-        let dataStore = backendless.data.of(Route.ofClass())
-        // save object asynchronously
-        dataStore.save(
-            route,
-            response: { (result: AnyObject!) -> Void in
-                let obj = result as! Route
-                print("Contact has been saved: \(obj.objectId)")
-            },
-            error: { (fault: Fault!) -> Void in
-                print("fServer reported an error: \(fault)")
-        })
-    }
+//    func saveNewRoute() {
+//        let route = Route()
+//        route.routeName = "D-town Brew Tours  2016"
+//        route.routeDiscription = "Brews in the D 2016"
+//        route.routeDistance = "4"
+//        
+//        let dataStore = backendless.data.of(Route.ofClass())
+//        // save object asynchronously
+//        dataStore.save(
+//            route,
+//            response: { (result: AnyObject!) -> Void in
+//                let obj = result as! Route
+//                print("Contact has been saved: \(obj.objectId)")
+//            },
+//            error: { (fault: Fault!) -> Void in
+//                print("fServer reported an error: \(fault)")
+//        })
+//    }
     
     ////MARK: - Life Cycle Methods
     

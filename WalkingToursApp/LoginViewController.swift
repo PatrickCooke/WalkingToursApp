@@ -79,6 +79,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextField.text = "cookepa1@gmail.com"
+        passwordTextField.text = "password"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(segueToViews), name: "recvLoginInfo", object: nil)
         emailTextField.becomeFirstResponder()
         textFieldChanged()
