@@ -1021,7 +1021,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Stop Name" textAlignment="center" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q4m-De-xyE">
-                                <rect key="frame" x="20" y="105" width="560" height="30"/>
+                                <rect key="frame" x="20" y="105" width="522" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ftq-pj-7ny"/>
                                 </constraints>
@@ -1160,10 +1160,22 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KEw-cO-33Y">
+                                <rect key="frame" x="550" y="105" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="0g2-kI-a8e"/>
+                                    <constraint firstAttribute="height" constant="30" id="w7H-J8-cWX"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="Search"/>
+                                <connections>
+                                    <action selector="localSearch" destination="GNj-KV-eri" eventType="touchUpInside" id="MK7-dh-NuE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="KLK-3G-jl9" firstAttribute="leading" secondItem="V87-ah-Ndc" secondAttribute="trailing" constant="8" id="01b-P9-C2j"/>
+                            <constraint firstItem="KEw-cO-33Y" firstAttribute="leading" secondItem="Q4m-De-xyE" secondAttribute="trailing" constant="8" id="0Mi-mJ-8fL"/>
                             <constraint firstItem="5Dw-Dm-D38" firstAttribute="top" secondItem="Bf7-Ju-XMm" secondAttribute="bottom" constant="2" id="0pn-69-wV6"/>
                             <constraint firstItem="gRr-K1-TNj" firstAttribute="leading" secondItem="dGu-us-nVn" secondAttribute="leading" id="1G5-vf-n0u"/>
                             <constraint firstItem="V87-ah-Ndc" firstAttribute="top" secondItem="mdV-OW-YfM" secondAttribute="bottom" constant="3" id="2Yi-Sw-VOG"/>
@@ -1180,6 +1192,7 @@
                             <constraint firstAttribute="leadingMargin" secondItem="bdT-6V-JpX" secondAttribute="leading" id="AWq-7O-Wyw"/>
                             <constraint firstItem="o9i-ti-R3k" firstAttribute="leading" secondItem="wRg-cG-oyd" secondAttribute="trailing" constant="8" id="CuH-Bz-hsu"/>
                             <constraint firstItem="mWy-eH-6f9" firstAttribute="top" secondItem="puo-Rq-Yxi" secondAttribute="bottom" constant="8" id="EXI-vs-6Mc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KEw-cO-33Y" secondAttribute="trailing" id="Ewc-DD-hlq"/>
                             <constraint firstAttribute="leadingMargin" secondItem="5Dw-Dm-D38" secondAttribute="leading" id="GS1-r6-Gk1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="o9i-ti-R3k" secondAttribute="trailing" id="GsE-QS-eBB"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Bf7-Ju-XMm" secondAttribute="leading" id="IlX-uh-1ec"/>
@@ -1226,12 +1239,14 @@
                             <constraint firstItem="wRg-cG-oyd" firstAttribute="leading" secondItem="bdT-6V-JpX" secondAttribute="trailing" constant="8" id="pgk-b2-Ggt"/>
                             <constraint firstItem="gRr-K1-TNj" firstAttribute="top" secondItem="dGu-us-nVn" secondAttribute="bottom" constant="2" id="sA5-Lh-URJ"/>
                             <constraint firstAttribute="leadingMargin" secondItem="dGu-us-nVn" secondAttribute="leading" id="vfv-3M-n4I"/>
+                            <constraint firstItem="KEw-cO-33Y" firstAttribute="top" secondItem="mWy-eH-6f9" secondAttribute="bottom" constant="2" id="wwN-Xv-Hwd"/>
                             <constraint firstItem="bdT-6V-JpX" firstAttribute="top" secondItem="0Oe-2k-lCh" secondAttribute="bottom" constant="1" id="ysH-WB-Bhp"/>
                             <constraint firstAttribute="leadingMargin" secondItem="gON-iQ-Ja9" secondAttribute="leading" id="zfA-DZ-3Qh"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ueY-SG-uPm" secondAttribute="leading" id="zsq-2a-pGG"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="MFO-QC-hvb"/>
                                 <exclude reference="P0w-Nn-BUp"/>
                                 <exclude reference="lUe-gj-ecK"/>
                                 <exclude reference="lYb-Wb-8WV"/>
