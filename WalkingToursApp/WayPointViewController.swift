@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class WayPointViewController: UIViewController, MKMapViewDelegate {
+class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
     
     let backendless = Backendless.sharedInstance()
     var selectedWP = Waypoint?()
@@ -255,34 +255,40 @@ class WayPointViewController: UIViewController, MKMapViewDelegate {
                 print(name)
                 //Address Info
                 
-                guard let streetNum = addDict!["SubThoroughfare"] as? NSString else{
+                guard let streetNum = addDict!["SubThoroughfare"] as? String else{
                     return
                 }
-                guard let streetName = addDict!["Thoroughfare"] as? NSString else{
+                guard let streetName = addDict!["Thoroughfare"] as? String else{
                     return
                 }
                 let street = "\(streetNum) \(streetName)"
                 print("street: \(street)")
-                guard let city = addDict!["City"] as? NSString else {
+                guard let city = addDict!["City"] as? String else {
                     return
                 }
                 print("city - \(city)")
-                guard let zip = addDict!["ZIP"] as? NSString else {
+                guard let zip = addDict!["ZIP"] as? String else {
                     return
                 }
                 print("zip: \(zip)")
-                guard let state = addDict!["State"] as? NSString else {
+                guard let state = addDict!["State"] as? String else {
                     return
                 }
                 print(state)
                 
-                let pin = MKPointAnnotation()
+                let pin = WayPointAnnotation()
                 pin.coordinate = location.coordinate
                 pin.title = name
                 pin.subtitle = street
-                
-                
-                
+                let waypoint = Waypoint()
+                waypoint.wpName = name
+                waypoint.wpAddress = street
+                waypoint.wpCity = city
+                waypoint.wpState = state
+                waypoint.wpZip = zip
+                waypoint.wpLat = "\(location.coordinate.latitude)"
+                waypoint.wpLon = "\(location.coordinate.longitude)"
+                pin.waypoint = waypoint
                 self.wpMapView.addAnnotation(pin)
                 self.wpMapView.showAnnotations(self.wpMapView.annotations, animated: true)
             }
@@ -297,7 +303,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate {
         var pin = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseIdentifier) as? MKPinAnnotationView
         if pin == nil {
             pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
-            pin!.pinTintColor = UIColor.redColor()
+            pin!.pinTintColor = UIColor().BeccaBlue()
             pin!.canShowCallout = true
             pin!.rightCalloutAccessoryView = UIButton(type: .ContactAdd)
         } else {
@@ -312,21 +318,39 @@ class WayPointViewController: UIViewController, MKMapViewDelegate {
             guard let pin = annotationView.annotation else {
                 return
             }
-            print(pin.coordinate.latitude)
-            print(pin.coordinate.longitude)
+            if pin.isKindOfClass(WayPointAnnotation) {
+                print("Got WPA")
+                let waypointPin = pin as! WayPointAnnotation
+                guard let wp = waypointPin.waypoint else {
+                    return
+                }
+                wpCityTxtField.text = wp.wpCity
+                wpStateTxtField.text = wp.wpState
+                wpZipTxtField.text = wp.wpZip
+            }
             wpLatTxtField.text = String(pin.coordinate.latitude)
             wpLonTxtField.text = String(pin.coordinate.longitude)
-            if let title = pin.title {
-            print("title: \(title)")
-            }
-            if let subtitle = pin.subtitle {
-            print("subtitle: \(subtitle)")
-                wpaddressTxtField.text = subtitle
-            }
-            
-//            let app = UIApplication.sharedApplication()
-//            app.openURL(NSURL(string: (annotationView.annotation!.subtitle!)!)!)
+            wpNameTxtField.text = pin.title!
+            wpaddressTxtField.text = pin.subtitle!
+          
         }
+    }
+    
+    //MARK: - Textfield Delegate Methods
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()  //if desired
+        switch textField {
+        case wpNameTxtField:
+            localSearch()
+        case wpaddressTxtField, wpCityTxtField, wpStateTxtField, wpZipTxtField:
+            mapAddress()
+        case wpLonTxtField, wpLatTxtField:
+            pressedPlotGPS()
+        default:
+            print("nothing")
+        }
+        return true
     }
     
     //MARK: - Life Cycle Methods
@@ -334,6 +358,9 @@ class WayPointViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         wpMapView.delegate = self
+        
+        wpNameTxtField.delegate = self
+        
         
         if let selWP = selectedWP {
             if let stopnum = selWP.wpStopNum{
