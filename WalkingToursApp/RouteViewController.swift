@@ -77,6 +77,10 @@ class RouteViewController: UIViewController {
         } else {
             selectedRoute!.routeActive = "0"
         }
+        if let routeCount = selectedRoute?.routeWaypoints.count {
+            selectedRoute?.routeWpCount = routeCount
+            print(routeCount)
+        }
         let dataStore = backendless.data.of(Route.ofClass())
         dataStore.save(
             selectedRoute!,

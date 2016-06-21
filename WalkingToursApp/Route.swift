@@ -16,6 +16,7 @@ class Route : NSObject {
     var routeDiscription : String?
     var routePicName : String?
     var routeActive :String?
+    var routeWpCount : Int = 0
     var created: NSDate?
     var updated: NSDate?
     var routeWaypoints: [Waypoint] = []

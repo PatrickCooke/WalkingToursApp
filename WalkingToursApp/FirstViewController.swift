@@ -61,7 +61,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         
         let dataQuery = BackendlessDataQuery()
         
-        let whereClause = "routeActive = '1'"
+        let whereClause = "routeActive = '1' AND routeWpCount > 0"
         dataQuery.whereClause = whereClause
         
         let queryOptions = QueryOptions()
