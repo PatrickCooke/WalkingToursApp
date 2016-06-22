@@ -37,10 +37,25 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch featuredSegCtrl.selectedSegmentIndex {
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCellWithIdentifier("fcell", forIndexPath: indexPath) as! FeaturedCellTableViewCell
             let selectedRoute = featuredArray[indexPath.row]
-            cell.textLabel!.text = selectedRoute.routeName
-            cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
+            cell.routeNameLabel.text = selectedRoute.routeName
+            cell.routeDescript.text = selectedRoute.routeDiscription
+            cell.routeStartPoint.text = selectedRoute.routeWaypoints[indexPath.row].wpCity
+            //cell.routeMapView = nil
+            
+            for stop in selectedRoute.routeWaypoints {
+                let lat = Double(stop.wpLat!)
+                let lon = Double(stop.wpLon!)
+                let location = CLLocation(latitude: lat!, longitude: lon!)
+                let pin = MKPointAnnotation()
+                pin.coordinate = location.coordinate
+                
+                cell.routeMapView.addAnnotation(pin)
+                cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: true)
+            }
+            
+            
             return cell
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
@@ -55,6 +70,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
             
             return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        switch featuredSegCtrl.selectedSegmentIndex {
+        case 0:
+            return 265
+        default:
+            return 44
         }
     }
     

@@ -189,18 +189,6 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.messageLabel.text = message
             self.messageView.alpha = 1.0
             }, completion: nil)
-        /*
-         
-         I think I need a second function to make this disappear after the job is done
-         
-         let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(4.0 * Double(NSEC_PER_SEC)))
-         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-         //            self.fadeOutView() //maybe don't need a second function?
-         UIView.animateWithDuration(0.5, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-         self.messageView.alpha = 0.0
-         }, completion: nil)
-         })
-         */
     }
     
     func fadeOutMessageView() {
@@ -221,6 +209,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         wpLatTxtField.resignFirstResponder()
         wpLonTxtField.resignFirstResponder()
         resignAllFirstResponders()
+        
         guard let latDub = Double(wpLatTxtField.text!) else {
             return
         }
