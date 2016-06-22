@@ -13,23 +13,49 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     var locManager = LocationManager.sharedInstance
     var backendless = Backendless.sharedInstance()
     var routeArray = [Route]()
+    var featuredArray = [Route]()
     var locationManager = CLLocationManager()
+    @IBOutlet weak var featuredSegCtrl:   UISegmentedControl!
     
     @IBOutlet private weak var RouteTable  :UITableView!
     
     ////MARK: - Table Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return routeArray.count
+
+        switch featuredSegCtrl.selectedSegmentIndex {
+        case 0:
+            return featuredArray.count
+        case 1:
+            return routeArray.count
+        default:
+            return routeArray.count
+        }
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        let selectedRoute = routeArray[indexPath.row]
-        cell.textLabel!.text = selectedRoute.routeName
-        cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
-        
-        return cell
+        switch featuredSegCtrl.selectedSegmentIndex {
+        case 0:
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+            let selectedRoute = featuredArray[indexPath.row]
+            cell.textLabel!.text = selectedRoute.routeName
+            cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+            let selectedRoute = routeArray[indexPath.row]
+            cell.textLabel!.text = selectedRoute.routeName
+            cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
+            return cell
+        default:
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+            let selectedRoute = routeArray[indexPath.row]
+            cell.textLabel!.text = selectedRoute.routeName
+            cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
+            
+            return cell
+        }
     }
     
     //MARK: - Segue Methods
@@ -72,12 +98,23 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         let result = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
         if error == nil {
             routeArray = result.getCurrentPage() as! [Route]
+            featuredArray = routeArray.filter {$0.routeFeatured}
+            /*
+             featuredArray.removeAll()
+             var tempArray = [Route]()
+             for route in routeArray {
+              if route.routeFeatured {
+                tempArray.append(route)
+               }
+             }
+             featuredArray = tempArray
+             */
             //rint("requests: \(routeArray.count)")
         } else {
             print("server error \(error)")
             routeArray = [Route]()
         }
-
+        
     }
 
     //MARK: - Reoccuring Functions
@@ -88,11 +125,16 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         locManager.setupLocationMonitoring()
     }
     
+    @IBAction func switchTableContents() {
+        RouteTable.reloadData()
+    }
+    
     
     //MARK: - Life Cycle Method
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         refetchAndReload()
     }
     
