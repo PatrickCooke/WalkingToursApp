@@ -28,6 +28,8 @@
 		43DD2FE61D1422CF00433133 /* UIColor+iDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD2FE51D1422CF00433133 /* UIColor+iDesign.swift */; };
 		43DD2FE81D15A38800433133 /* newRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD2FE71D15A38800433133 /* newRouteViewController.swift */; };
 		43ED39371D199488009B8AC4 /* WayPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ED39361D199488009B8AC4 /* WayPointAnnotation.swift */; };
+		43ED39391D1AE07D009B8AC4 /* BorderedRoundedMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ED39381D1AE07D009B8AC4 /* BorderedRoundedMessageView.swift */; };
+		43ED393B1D1B07A5009B8AC4 /* RoundedButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ED393A1D1B07A5009B8AC4 /* RoundedButtons.swift */; };
 		B7637D5815BFF29E15937E43 /* Pods_WalkingToursApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633140528618EF6365ED9D7B /* Pods_WalkingToursApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +57,8 @@
 		43DD2FE51D1422CF00433133 /* UIColor+iDesign.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+iDesign.swift"; sourceTree = "<group>"; };
 		43DD2FE71D15A38800433133 /* newRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = newRouteViewController.swift; sourceTree = "<group>"; };
 		43ED39361D199488009B8AC4 /* WayPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WayPointAnnotation.swift; sourceTree = "<group>"; };
+		43ED39381D1AE07D009B8AC4 /* BorderedRoundedMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedRoundedMessageView.swift; sourceTree = "<group>"; };
+		43ED393A1D1B07A5009B8AC4 /* RoundedButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButtons.swift; sourceTree = "<group>"; };
 		45E7C5414A84DE0FE913E932 /* Pods-WalkingToursApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalkingToursApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WalkingToursApp/Pods-WalkingToursApp.release.xcconfig"; sourceTree = "<group>"; };
 		633140528618EF6365ED9D7B /* Pods_WalkingToursApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalkingToursApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9ACAD4AE768526427A2C2F /* Pods-WalkingToursApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalkingToursApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WalkingToursApp/Pods-WalkingToursApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 				43DD2FE51D1422CF00433133 /* UIColor+iDesign.swift */,
 				43D3EDE61D12D5AE0031F627 /* Routewaypointtablecell.swift */,
 				43C790091D18300200DEC5A8 /* BorderedRoundedUIView.swift */,
+				43ED393A1D1B07A5009B8AC4 /* RoundedButtons.swift */,
+				43ED39381D1AE07D009B8AC4 /* BorderedRoundedMessageView.swift */,
 				43C7900B1D18308E00DEC5A8 /* BorderedRoundedTableViewCell.swift */,
 				43132D0F1D105B85007BCC66 /* Info.plist */,
 			);
@@ -277,6 +283,7 @@
 				43132D061D105B85007BCC66 /* ViewController.swift in Sources */,
 				43D3EDE71D12D5AE0031F627 /* Routewaypointtablecell.swift in Sources */,
 				43C7900A1D18300200DEC5A8 /* BorderedRoundedUIView.swift in Sources */,
+				43ED39391D1AE07D009B8AC4 /* BorderedRoundedMessageView.swift in Sources */,
 				438FFBA31D133EE7007E22C3 /* LocationManager.swift in Sources */,
 				43D3EDE91D12E6A80031F627 /* FirstViewController.swift in Sources */,
 				43132D1D1D106176007BCC66 /* Waypoint.swift in Sources */,
@@ -287,6 +294,7 @@
 				43C790081D171C2B00DEC5A8 /* LoginManager.swift in Sources */,
 				43132D1A1D106131007BCC66 /* RouteViewController.swift in Sources */,
 				43ED39371D199488009B8AC4 /* WayPointAnnotation.swift in Sources */,
+				43ED393B1D1B07A5009B8AC4 /* RoundedButtons.swift in Sources */,
 				43D3EDEB1D12E6BC0031F627 /* WalkingRouteViewController.swift in Sources */,
 				43D3EDED1D12E8CE0031F627 /* LoginViewController.swift in Sources */,
 				43132D041D105B85007BCC66 /* AppDelegate.swift in Sources */,

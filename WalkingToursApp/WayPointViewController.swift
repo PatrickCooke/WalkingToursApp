@@ -27,6 +27,8 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBOutlet weak var wpMapView                :MKMapView!
     @IBOutlet weak var latCoordLabel            :UILabel!
     @IBOutlet weak var lonCoordLabel            :UILabel!
+    @IBOutlet weak var messageView              :UIView!
+    @IBOutlet weak var messageLabel             :UILabel!
     var latCoord = String()
     var lonCoord = String()
     
@@ -52,12 +54,10 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 }
                 if let placemark = placemarks?.first {
                     let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
-                    
                     self.latCoord = "\(coordinates.latitude)"
                     self.lonCoord = "\(coordinates.longitude)"
                     self.wpLatTxtField.text = "\(coordinates.latitude)"
                     self.wpLonTxtField.text = "\(coordinates.longitude)"
-                    
                     if plotOnMap {
                         self.wpMapView.removeAnnotations(self.wpMapView.annotations)
 //                        print("did plot")
@@ -78,6 +78,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBAction func saveRouteInfo(sender: UIBarButtonItem) {
         saveWayPoint(sourceRoute)
         resignAllFirstResponders()
+        fadeInMessageView("Saving")
     }
     
     func saveWayPoint(route: Route) {
@@ -110,16 +111,15 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             newWP.wpLat = latCoord
             newWP.wpLon = lonCoord
-
-
             route.routeWaypoints.append(newWP)
-            
             var error: Fault?
             let result = backendless.data.save(route, error: &error) as? Route
             if error == nil {
+                //call the message view to say "Saved"
                 print("Route havs been updated: \(result)")
             }
             else {
+                //call the message view to say error, not saved
                 print("Server reported an error: \(error)")
             }
         } else {
@@ -150,10 +150,22 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 selectedWP,
                 response: { (result: AnyObject!) -> Void in
                     let updatedRoute = result as! Waypoint
-                    print("Contact has been updated: \(updatedRoute.objectId)")
+                    if let saveMessage = self.selectedWP?.wpName {
+                      self.messageLabel.text = "\(saveMessage) has been saved"
+                    }
+                    self.fadeOutMessageView()
+                    //self.fadeInAndOutMessageView(saveMessage)
+                    
+                    print("Route has been updated: \(updatedRoute.objectId)")
+                    
                 },
                 error: { (fault: Fault!) -> Void in
-//                    print("Server reported an error (2): \(fault)")
+                    if let errorMessage = self.selectedWP?.wpName {
+                        self.messageLabel.text = "There has been an error, \(errorMessage) has not been saved"
+                        self.fadeOutMessageView()
+                    }
+//                    self.fadeInAndOutMessageView(errorMessage)
+                    //                    print("Server reported an error (2): \(fault)")
             })
         }
     }
@@ -169,6 +181,39 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         wpLatTxtField.resignFirstResponder()
         wpLonTxtField.resignFirstResponder()
     }
+    
+    //MARK: - Onscreen Alert Methods
+    
+    func fadeInMessageView(message : String) {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.messageLabel.text = message
+            self.messageView.alpha = 1.0
+            }, completion: nil)
+        /*
+         
+         I think I need a second function to make this disappear after the job is done
+         
+         let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(4.0 * Double(NSEC_PER_SEC)))
+         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+         //            self.fadeOutView() //maybe don't need a second function?
+         UIView.animateWithDuration(0.5, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+         self.messageView.alpha = 0.0
+         }, completion: nil)
+         })
+         */
+    }
+    
+    func fadeOutMessageView() {
+        let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(3.0 * Double(NSEC_PER_SEC)))
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            //            self.fadeOutView() //maybe don't need a second function?
+            UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.messageView.alpha = 0.0
+                }, completion: nil)
+        })
+    }
+    
+
     
     //MARK: - Search Methods
     
@@ -377,9 +422,8 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     override func viewDidLoad() {
         super.viewDidLoad()
         wpMapView.delegate = self
-        
         wpNameTxtField.delegate = self
-        
+        messageView.alpha = 0.0
         
         if let selWP = selectedWP {
             if let stopnum = selWP.wpStopNum{

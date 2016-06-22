@@ -18,7 +18,28 @@ class RouteViewController: UIViewController {
     @IBOutlet weak var routeDescriptionTXTField: UITextField!
     @IBOutlet weak var waypointTableView:       UITableView!
     @IBOutlet weak var routeActiveSwitch:        UISwitch!
+    @IBOutlet weak var messageView              :UIView!
+    @IBOutlet weak var messageLabel             :UILabel!
     var stopCount = 0
+    
+    //MARK: - Onscreen Alert Methods
+    
+    func fadeInMessageView(message : String) {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.messageLabel.text = message
+            self.messageView.alpha = 1.0
+            }, completion: nil)
+    }
+    
+    func fadeOutMessageView() {
+        let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(3.0 * Double(NSEC_PER_SEC)))
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            //            self.fadeOutView() //maybe don't need a second function?
+            UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.messageView.alpha = 0.0
+                }, completion: nil)
+        })
+    }
     
     //MARK: - Interactivity Methods
     
@@ -78,7 +99,8 @@ class RouteViewController: UIViewController {
     //MARK: - Save Method
     
     @IBAction func saveRouteInfo() {
-        //resignFirstRespond()
+        fadeInMessageView("Saving...")
+        resignFirstRespond()
         print("route saved pressed")
         if selectedRoute == nil {
             selectedRoute = Route()
@@ -102,8 +124,16 @@ class RouteViewController: UIViewController {
         dataStore.save(
             selectedRoute!,
             response: { (result) in
+                if let name = self.selectedRoute?.routeName {
+                    self.messageLabel.text = "\(name) has been saved"
+                }
+                self.fadeOutMessageView()
                 print("entry saved")
         }) { (fault) in
+            if let error = fault {
+                self.messageLabel.text = "Error in saving: \(error)"
+            }
+            self.fadeOutMessageView()
             print("server reported error:\(fault)")
         }
     }
@@ -127,7 +157,6 @@ class RouteViewController: UIViewController {
         let selectedWP = waypointArray[indexPath.row]
         if let stop = selectedWP.wpStopNum {
             if let name = selectedWP.wpName {
-            //cell.detailTextLabel?.text = "Stop: \(stop)"
             cell.textLabel?.text = "\(stop): \(name)"
             }
         }
@@ -192,6 +221,7 @@ class RouteViewController: UIViewController {
     //MARK: - Life Cycle Methods
     
     override func viewDidLoad() {
+        messageView.alpha = 0.0
         super.viewDidLoad()
         if let selRoute = selectedRoute {
             if let routeName = selRoute.routeName{
@@ -204,32 +234,33 @@ class RouteViewController: UIViewController {
             }
         } else {
             routeTitleTXTField.text = ""
-            //            routeDistTXTField.text = "0"
             routeDescriptionTXTField.text = ""
         }
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchData()
+        waypointTableView.reloadData()
+        
+        guard let route = selectedRoute else {
+            return
+        }
+        if route.routeActive == "1" {
+            routeActiveSwitch.on = true
+        } else if route.routeActive == "0" {
+            routeActiveSwitch.on = false
+        }
+    }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        fetchData()
-        
-        waypointTableView.reloadData()
+        //waypointTableView.reloadData()
         if selectedRoute == nil {
             stopCount = 0
         } else {
             stopCount = (selectedRoute?.routeWaypoints.count)!
         }
         //print("stops: \(stopCount)")
-        guard let route = selectedRoute else {
-            return
-        }
-        if route.routeActive == "1" {
-            routeActiveSwitch.on = true
-            print("active")
-        } else if route.routeActive == "0" {
-            routeActiveSwitch.on = false
-            print("not active")
-        }
     }
     
     override func viewDidDisappear(animated: Bool) {

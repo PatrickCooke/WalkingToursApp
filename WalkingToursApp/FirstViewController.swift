@@ -91,16 +91,18 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     
     //MARK: - Life Cycle Method
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        refetchAndReload()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        refetchAndReload()
-        
-        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        refetchAndReload()
+//        refetchAndReload()
     }
     
     override func didReceiveMemoryWarning() {

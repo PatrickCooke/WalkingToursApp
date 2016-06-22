@@ -14,10 +14,33 @@ class newRouteViewController: UIViewController {
     var selectedRoute = Route?()
     @IBOutlet weak var routeTitleTXTField:      UITextField!
     @IBOutlet weak var routeDescriptionTXTField:UITextField!
+    @IBOutlet weak var messageView              :UIView!
+    @IBOutlet weak var messageLabel             :UILabel!
+    
+    
+    //MARK: - Onscreen Alert Methods
+    
+    func fadeInMessageView(message : String) {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.messageLabel.text = message
+            self.messageView.alpha = 1.0
+            }, completion: nil)
+    }
+    
+    func fadeOutMessageView() {
+        let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(3.0 * Double(NSEC_PER_SEC)))
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            //            self.fadeOutView() //maybe don't need a second function?
+            UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.messageView.alpha = 0.0
+                }, completion: nil)
+        })
+    }
     
     //MARK: - Interactivty Methods
     
     @IBAction func saveRouteInfo() {
+        fadeInMessageView("Saving")
         print("route saved pressed")
         if selectedRoute == nil {
             let newRoute = Route()
@@ -32,8 +55,13 @@ class newRouteViewController: UIViewController {
                 newRoute,
                 response: { (result) in
                     print("entry saved")
+                    self.messageLabel.text = "Route Saved!"
+                    self.fadeOutMessageView()
             }) { (fault) in
                 print("server reported error:\(fault)")
+                if let error = fault {
+                self.messageLabel.text = "Error: \(error)"
+                }
             }
         }
         self.navigationController!.popViewControllerAnimated(true)
@@ -59,6 +87,7 @@ class newRouteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        messageView.alpha = 0.0
     }
 
     override func didReceiveMemoryWarning() {

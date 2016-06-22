@@ -26,7 +26,12 @@ class ViewController: UIViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         let selectedRoute = routeArray[indexPath.row]
         cell.textLabel!.text = selectedRoute.routeName
-        cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
+        if selectedRoute.routeActive! .containsString("1") {
+            cell.detailTextLabel!.text = "Active: \(selectedRoute.routeWaypoints.count) stops"
+        } else {
+           cell.detailTextLabel!.text = "Inactive: \(selectedRoute.routeWaypoints.count) stops" 
+        }
+        
         
         return cell
     }
