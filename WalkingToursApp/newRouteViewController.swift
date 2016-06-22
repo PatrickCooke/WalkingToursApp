@@ -39,6 +39,22 @@ class newRouteViewController: UIViewController {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    //MARK: - Textfield Delegate Methods
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        switch textField {
+        case routeTitleTXTField:
+            routeDescriptionTXTField.becomeFirstResponder()
+        case routeDescriptionTXTField:
+            saveRouteInfo()
+        default:
+            routeTitleTXTField.resignFirstResponder()
+            routeDescriptionTXTField.resignFirstResponder()
+        }
+        return true
+    }
+    
     //MARK: - Life Cycle Functions
     
     override func viewDidLoad() {

@@ -20,7 +20,8 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBOutlet weak var wpStateTxtField          :UITextField!
     @IBOutlet weak var wpZipTxtField            :UITextField!
     @IBOutlet weak var wpDescriptionTxtField    :UITextField!
-    @IBOutlet weak var wpstopNumberTxtField     :UITextField!
+    //@IBOutlet weak var wpstopNumberTxtField     :UITextField!
+    @IBOutlet weak var wpstopNumberLabel        :UILabel!
     @IBOutlet weak var wpLatTxtField            :UITextField!
     @IBOutlet weak var wpLonTxtField            :UITextField!
     @IBOutlet weak var wpMapView                :MKMapView!
@@ -59,13 +60,13 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     
                     if plotOnMap {
                         self.wpMapView.removeAnnotations(self.wpMapView.annotations)
-                        print("did plot")
+//                        print("did plot")
                         let pin = MKPointAnnotation()
                         pin.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
                         self.wpMapView.addAnnotation(pin)
                         self.wpMapView.showAnnotations(self.wpMapView.annotations, animated: true)
                     } else {
-                     print("did not plot")
+//                     print("did not plot")
                     }
                 }
             })
@@ -80,7 +81,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     func saveWayPoint(route: Route) {
-        print("wp saved pressed")
+//        print("wp saved pressed")
         geocodeAddress(false)
         if selectedWP == nil {
             let newWP = Waypoint()
@@ -102,7 +103,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if let zip = wpZipTxtField.text {
                 newWP.wpZip = zip
             }
-            if let stopNum = wpstopNumberTxtField.text {
+            if let stopNum = wpstopNumberLabel.text {
                 newWP.wpStopNum = stopNum
             } else {
                 newWP.wpStopNum = "0"
@@ -137,7 +138,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if let zip = wpZipTxtField.text {
                 selectedWP!.wpZip = zip
             }
-            if let stopNum = wpstopNumberTxtField.text {
+            if let stopNum = wpstopNumberLabel.text {
                 selectedWP!.wpStopNum = stopNum
             } else {
                 selectedWP!.wpStopNum = "0"
@@ -152,7 +153,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     print("Contact has been updated: \(updatedRoute.objectId)")
                 },
                 error: { (fault: Fault!) -> Void in
-                    print("Server reported an error (2): \(fault)")
+//                    print("Server reported an error (2): \(fault)")
             })
         }
     }
@@ -161,11 +162,10 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     func resignAllFirstResponders() {
         wpNameTxtField.resignFirstResponder()
         wpaddressTxtField.resignFirstResponder()
-        wpDescriptionTxtField.resignFirstResponder()
-        wpstopNumberTxtField.resignFirstResponder()
         wpCityTxtField.resignFirstResponder()
         wpStateTxtField.resignFirstResponder()
         wpZipTxtField.resignFirstResponder()
+        wpDescriptionTxtField.resignFirstResponder()
         wpLatTxtField.resignFirstResponder()
         wpLonTxtField.resignFirstResponder()
     }
@@ -173,6 +173,8 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     //MARK: - Search Methods
     
     @IBAction func pressedPlotGPS() {
+        wpLatTxtField.resignFirstResponder()
+        wpLonTxtField.resignFirstResponder()
         resignAllFirstResponders()
         guard let latDub = Double(wpLatTxtField.text!) else {
             return
@@ -190,31 +192,31 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             placeMark = placemarks?[0]
             
             // Address dictionary
-            print(placeMark.addressDictionary)
+//            print(placeMark.addressDictionary)
             let addDict = placeMark.addressDictionary
             
             //Address Info
-            guard let streetNum = addDict!["SubThoroughfare"] as? NSString else{
+            guard let streetNum = addDict!["SubThoroughfare"] as? String else{
                 return
             }
-            guard let streetName = addDict!["Thoroughfare"] as? NSString else{
+            guard let streetName = addDict!["Thoroughfare"] as? String else{
                 return
             }
             let street = "\(streetNum) \(streetName)"
-            print("street: \(street)")
-            guard let city = addDict!["City"] as? NSString else {
+//            print("street: \(street)")
+            guard let city = addDict!["City"] as? String else {
                 return
             }
-            print("city - \(city)")
-            guard let zip = addDict!["ZIP"] as? NSString else {
+//            print("city - \(city)")
+            guard let zip = addDict!["ZIP"] as? String else {
                 return
             }
-            print("zip: \(zip)")
-            guard let state = addDict!["State"] as? NSString else {
+//            print("zip: \(zip)")
+            guard let state = addDict!["State"] as? String else {
                 return
             }
-            print(state)
-            guard let country = addDict!["Country"] as? NSString else {
+//            print(state)
+            guard let country = addDict!["Country"] as? String else {
                 return
             }
             print(country)
@@ -235,6 +237,8 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     //MARK: - Apple Local Search
     
     @IBAction func localSearch() {
+        resignAllFirstResponders()
+        wpNameTxtField.resignFirstResponder()
         self.wpMapView.removeAnnotations(self.wpMapView.annotations)
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = wpNameTxtField.text
@@ -252,7 +256,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 }
                 let location = item.placemark
                 let addDict = item.placemark.addressDictionary
-                print(name)
+//                print(name)
                 //Address Info
                 
                 guard let streetNum = addDict!["SubThoroughfare"] as? String else{
@@ -262,19 +266,19 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     return
                 }
                 let street = "\(streetNum) \(streetName)"
-                print("street: \(street)")
+//                print("street: \(street)")
                 guard let city = addDict!["City"] as? String else {
                     return
                 }
-                print("city - \(city)")
+//                print("city - \(city)")
                 guard let zip = addDict!["ZIP"] as? String else {
                     return
                 }
-                print("zip: \(zip)")
+//                print("zip: \(zip)")
                 guard let state = addDict!["State"] as? String else {
                     return
                 }
-                print(state)
+//                print(state)
                 
                 let pin = WayPointAnnotation()
                 pin.coordinate = location.coordinate
@@ -319,7 +323,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 return
             }
             if pin.isKindOfClass(WayPointAnnotation) {
-                print("Got WPA")
+//                print("Got WPA")
                 let waypointPin = pin as! WayPointAnnotation
                 guard let wp = waypointPin.waypoint else {
                     return
@@ -339,16 +343,31 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     //MARK: - Textfield Delegate Methods
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()  //if desired
+        textField.resignFirstResponder()
         switch textField {
         case wpNameTxtField:
+            wpNameTxtField.resignFirstResponder()
             localSearch()
-        case wpaddressTxtField, wpCityTxtField, wpStateTxtField, wpZipTxtField:
+        case wpaddressTxtField:
+            wpaddressTxtField.resignFirstResponder()
             mapAddress()
-        case wpLonTxtField, wpLatTxtField:
+        case wpCityTxtField:
+            wpCityTxtField.resignFirstResponder()
+            mapAddress()
+        case wpStateTxtField:
+            wpStateTxtField.resignFirstResponder()
+            mapAddress()
+        case wpZipTxtField:
+            wpZipTxtField.resignFirstResponder()
+            mapAddress()
+        case wpLonTxtField:
+            wpLonTxtField.resignFirstResponder()
+            pressedPlotGPS()
+        case wpLatTxtField:
+            wpLatTxtField.resignFirstResponder()
             pressedPlotGPS()
         default:
-            print("nothing")
+            resignAllFirstResponders()
         }
         return true
     }
@@ -364,7 +383,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         
         if let selWP = selectedWP {
             if let stopnum = selWP.wpStopNum{
-                wpstopNumberTxtField.text = stopnum
+                wpstopNumberLabel.text = stopnum
             }
             
             if let name = selWP.wpName {
@@ -394,7 +413,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             geocodeAddress(true)
             
         } else {
-            wpstopNumberTxtField.text = "\(sourceRoute.routeWaypoints.count + 1)"
+            wpstopNumberLabel.text = "\(sourceRoute.routeWaypoints.count + 1)"
             wpNameTxtField.text = ""
             wpaddressTxtField.text = ""
             wpCityTxtField.text = ""

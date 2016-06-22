@@ -70,7 +70,7 @@ class ViewController: UIViewController {
         let result = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
         if error == nil {
             routeArray = result.getCurrentPage() as! [Route]
-            print("requests: \(routeArray.count)")
+//            print("requests: \(routeArray.count)")
         } else {
             print("server error \(error)")
             routeArray = [Route]()

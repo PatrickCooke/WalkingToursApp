@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
         blankFields()
     }
     
-    @IBAction private func loginUser(button: UIButton) {
+    @IBAction private func loginUser() {
         guard let email = emailTextField.text else {
             return
         }
@@ -47,6 +47,23 @@ class LoginViewController: UIViewController {
             print("user  has signed in")
             performSegueWithIdentifier("loggedIn", sender: currentuser)
     }
+    
+    //MARK: - Textfield Delegate Methods
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        switch textField {
+        case emailTextField:
+            passwordTextField.becomeFirstResponder()
+        case passwordTextField:
+            loginUser()
+        default:
+            emailTextField.resignFirstResponder()
+            passwordTextField.resignFirstResponder()
+        }
+        return true
+    }
+
     
     //MARK: - Basic Validation Functions
     
@@ -79,8 +96,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        emailTextField.text = "cookepa1@gmail.com"
-        passwordTextField.text = "password"
+//        emailTextField.text = "cookepa1@gmail.com"
+//        passwordTextField.text = "password"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(segueToViews), name: "recvLoginInfo", object: nil)
         emailTextField.becomeFirstResponder()
         textFieldChanged()

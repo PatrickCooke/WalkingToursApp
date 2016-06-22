@@ -60,6 +60,23 @@ class RouteViewController: UIViewController {
         routeDescriptionTXTField.resignFirstResponder()
     }
     
+    //MARK: - Textfield Delegate Methods
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        switch textField {
+        case routeTitleTXTField:
+            routeDescriptionTXTField.becomeFirstResponder()
+        case routeDescriptionTXTField:
+            resignFirstResponder()
+        default:
+            resignFirstResponder()
+        }
+        return true
+    }
+    
+    //MARK: - Save Method
+    
     @IBAction func saveRouteInfo() {
         //resignFirstRespond()
         print("route saved pressed")
@@ -91,6 +108,14 @@ class RouteViewController: UIViewController {
         }
     }
     
+    
+    
+    //MARK: - Alert Method
+    
+    func userAlertView(message : String) {
+        
+    }
+    
     //MARK: - Table Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -100,9 +125,11 @@ class RouteViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         let selectedWP = waypointArray[indexPath.row]
-        cell.textLabel?.text = selectedWP.wpName
         if let stop = selectedWP.wpStopNum {
-            cell.detailTextLabel?.text = "Stop: \(stop)"
+            if let name = selectedWP.wpName {
+            //cell.detailTextLabel?.text = "Stop: \(stop)"
+            cell.textLabel?.text = "\(stop): \(name)"
+            }
         }
         return cell
     }
@@ -126,6 +153,7 @@ class RouteViewController: UIViewController {
                     waypointArray.removeAll()
                     for point in (selectedRoute?.routeWaypoints)! {
                         waypointArray.append(point)
+                        organizeArray()
                     }
                 } else {
                     print("Server reported an error: \(error)")
@@ -134,6 +162,10 @@ class RouteViewController: UIViewController {
                 print("Server reported an error: \(error)")
             }
         }
+    }
+    
+    func organizeArray() {
+        waypointArray.sortInPlace { $0.wpStopNum < $1.wpStopNum}
     }
     
     //MARK: - Segue Methods
@@ -176,10 +208,11 @@ class RouteViewController: UIViewController {
             routeDescriptionTXTField.text = ""
         }
     }
-    
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         fetchData()
+        
         waypointTableView.reloadData()
         if selectedRoute == nil {
             stopCount = 0
