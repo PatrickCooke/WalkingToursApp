@@ -117,10 +117,12 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if error == nil {
                 //call the message view to say "Saved"
                 print("Route havs been updated: \(result)")
+                self.fadeOutMessageView()
             }
             else {
                 //call the message view to say error, not saved
                 print("Server reported an error: \(error)")
+                self.fadeOutMessageView()
             }
         } else {
             

@@ -42,28 +42,30 @@ class newRouteViewController: UIViewController {
     @IBAction func saveRouteInfo() {
         fadeInMessageView("Saving")
         print("route saved pressed")
-        if selectedRoute == nil {
-            let newRoute = Route()
-            if let routeName = routeTitleTXTField.text {
-                newRoute.routeName = routeName
-            }
-            if let routeDescription = routeDescriptionTXTField.text {
-                newRoute.routeDiscription=routeDescription
-            }
-            let dataStore = backendless.data.of(Route.ofClass())
-            dataStore.save(
-                newRoute,
-                response: { (result) in
-                    print("entry saved")
-                    self.messageLabel.text = "Route Saved!"
-                    self.fadeOutMessageView()
-            }) { (fault) in
-                print("server reported error:\(fault)")
-                if let error = fault {
-                self.messageLabel.text = "Error: \(error)"
-                }
-            }
+        
+        let newRoute = Route()
+        if let routeName = routeTitleTXTField.text {
+            newRoute.routeName = routeName
         }
+        if let routeDescription = routeDescriptionTXTField.text {
+            newRoute.routeDiscription=routeDescription
+        }
+        newRoute.routeActive = "0"
+        
+        let dataStore = backendless.data.of(Route.ofClass())
+        dataStore.save(
+            newRoute,
+            response: { (result) in
+                print("entry saved")
+                self.messageLabel.text = "Route Saved!"
+                self.fadeOutMessageView()
+        }) { (fault) in
+            print("server reported error:\(fault)")
+            self.messageLabel.text = "Error"
+            self.fadeOutMessageView()
+            
+        }
+        
         self.navigationController!.popViewControllerAnimated(true)
     }
     
