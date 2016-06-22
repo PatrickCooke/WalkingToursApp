@@ -157,17 +157,17 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         let result = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
         if error == nil {
             routeArray = result.getCurrentPage() as! [Route]
-            featuredArray = routeArray.filter {$0.routeFeatured}
-            /*
-             featuredArray.removeAll()
-             var tempArray = [Route]()
-             for route in routeArray {
-             if route.routeFeatured {
-             tempArray.append(route)
-             }
-             }
-             featuredArray = tempArray
-             */
+            //featuredArray = routeArray.filter {$0.routeFeatured}
+            
+            featuredArray.removeAll()
+            var tempArray = [Route]()
+            for route in routeArray {
+                if route.routeFeatured == "1" {
+                    tempArray.append(route)
+                }
+            }
+            featuredArray = tempArray
+ 
             //rint("requests: \(routeArray.count)")
         } else {
             print("server error \(error)")
@@ -193,17 +193,19 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         refetchAndReload()
+        print(featuredArray.count)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchData()
+        RouteTable.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        //        refetchAndReload()
+        
     }
     
     override func didReceiveMemoryWarning() {

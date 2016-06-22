@@ -21,6 +21,7 @@ class RouteViewController: UIViewController {
     @IBOutlet weak var messageView              :UIView!
     @IBOutlet weak var messageLabel             :UILabel!
     var stopCount = 0
+    var routeFeatured = "0"
     
     //MARK: - Onscreen Alert Methods
     
@@ -120,6 +121,8 @@ class RouteViewController: UIViewController {
             selectedRoute?.routeWpCount = routeCount
             print(routeCount)
         }
+        selectedRoute?.routeFeatured = routeFeatured
+        
         let dataStore = backendless.data.of(Route.ofClass())
         dataStore.save(
             selectedRoute!,
@@ -224,6 +227,9 @@ class RouteViewController: UIViewController {
         messageView.alpha = 0.0
         super.viewDidLoad()
         if let selRoute = selectedRoute {
+            if let feat = selRoute.routeFeatured{
+                routeFeatured = feat
+            }
             if let routeName = selRoute.routeName{
                 routeTitleTXTField.text = routeName
                 self.title = routeName

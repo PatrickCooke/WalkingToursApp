@@ -51,6 +51,7 @@ class newRouteViewController: UIViewController {
             newRoute.routeDiscription=routeDescription
         }
         newRoute.routeActive = "0"
+        newRoute.routeFeatured = "0"
         
         let dataStore = backendless.data.of(Route.ofClass())
         dataStore.save(

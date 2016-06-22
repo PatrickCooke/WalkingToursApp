@@ -236,8 +236,8 @@
                                 </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="Ypj-0I-lVL"/>
                                         <exclude reference="XcY-kY-ehc"/>
+                                        <exclude reference="Ypj-0I-lVL"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -358,17 +358,17 @@
                                                     <color key="textColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HMt-5C-2Tc">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HMt-5C-2Tc">
                                                     <rect key="frame" x="8" y="22" width="544" height="35"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="35" id="oFU-aN-pQW"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYg-U8-nK1">
-                                                    <rect key="frame" x="8" y="51" width="544" height="178"/>
+                                                    <rect key="frame" x="8" y="65" width="544" height="164"/>
                                                 </mapView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ss-dE-C0Q">
                                                     <rect key="frame" x="8" y="235" width="544" height="21"/>
@@ -390,7 +390,7 @@
                                                 <constraint firstAttribute="leadingMargin" secondItem="HMt-5C-2Tc" secondAttribute="leading" id="mOE-Mz-3Nk"/>
                                                 <constraint firstItem="7ss-dE-C0Q" firstAttribute="top" secondItem="dYg-U8-nK1" secondAttribute="bottom" constant="6" id="qR5-bd-vXV"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="7ss-dE-C0Q" secondAttribute="leading" id="tKA-eY-N6d"/>
-                                                <constraint firstItem="dYg-U8-nK1" firstAttribute="top" secondItem="HMt-5C-2Tc" secondAttribute="bottom" constant="-6" id="zEB-5r-mRR"/>
+                                                <constraint firstItem="dYg-U8-nK1" firstAttribute="top" secondItem="HMt-5C-2Tc" secondAttribute="bottom" constant="8" id="zEB-5r-mRR"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -410,7 +410,7 @@
                                 </prototypes>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="20"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                         <color key="value" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -446,7 +446,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="QDN-fM-6eQ">
-                        <barButtonItem key="leftBarButtonItem" title="admin" id="OHO-NS-ApS">
+                        <barButtonItem key="leftBarButtonItem" image="Settings" id="OHO-NS-ApS">
                             <connections>
                                 <segue destination="IBd-6a-XPl" kind="show" identifier="admin" id="zdW-cE-yRf"/>
                             </connections>
@@ -1605,6 +1605,7 @@
         <image name="Backicon" width="60" height="60"/>
         <image name="Marker" width="30" height="30"/>
         <image name="Nexticon" width="60" height="60"/>
+        <image name="Settings" width="25" height="25"/>
         <image name="define loc" width="30" height="30"/>
         <image name="search-blue" width="70" height="70"/>
     </resources>
