@@ -350,7 +350,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PFV-sy-f03">
-                                                    <rect key="frame" x="8" y="0.0" width="544" height="21"/>
+                                                    <rect key="frame" x="8" y="2" width="544" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="u8C-K7-xWN"/>
                                                     </constraints>
@@ -359,7 +359,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HMt-5C-2Tc">
-                                                    <rect key="frame" x="8" y="20" width="544" height="35"/>
+                                                    <rect key="frame" x="8" y="22" width="544" height="35"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="35" id="oFU-aN-pQW"/>
                                                     </constraints>
@@ -367,8 +367,8 @@
                                                     <color key="textColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="dYg-U8-nK1">
-                                                    <rect key="frame" x="8" y="49" width="544" height="178"/>
+                                                <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYg-U8-nK1">
+                                                    <rect key="frame" x="8" y="51" width="544" height="178"/>
                                                 </mapView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ss-dE-C0Q">
                                                     <rect key="frame" x="8" y="235" width="544" height="21"/>
@@ -388,7 +388,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="HMt-5C-2Tc" secondAttribute="trailing" id="iAH-7z-pjA"/>
                                                 <constraint firstItem="HMt-5C-2Tc" firstAttribute="top" secondItem="PFV-sy-f03" secondAttribute="bottom" constant="-1" id="mNF-RJ-9GM"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="HMt-5C-2Tc" secondAttribute="leading" id="mOE-Mz-3Nk"/>
-                                                <constraint firstItem="7ss-dE-C0Q" firstAttribute="top" secondItem="dYg-U8-nK1" secondAttribute="bottom" constant="8" id="qR5-bd-vXV"/>
+                                                <constraint firstItem="7ss-dE-C0Q" firstAttribute="top" secondItem="dYg-U8-nK1" secondAttribute="bottom" constant="6" id="qR5-bd-vXV"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="7ss-dE-C0Q" secondAttribute="leading" id="tKA-eY-N6d"/>
                                                 <constraint firstItem="dYg-U8-nK1" firstAttribute="top" secondItem="HMt-5C-2Tc" secondAttribute="bottom" constant="-6" id="zEB-5r-mRR"/>
                                             </constraints>
@@ -396,7 +396,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="dYg-U8-nK1" secondAttribute="trailing" constant="8" id="F03-KC-jDT"/>
-                                            <constraint firstItem="PFV-sy-f03" firstAttribute="top" secondItem="zdC-fZ-xa4" secondAttribute="top" id="Mgp-lK-l5m"/>
+                                            <constraint firstItem="PFV-sy-f03" firstAttribute="top" secondItem="zdC-fZ-xa4" secondAttribute="top" constant="2" id="Mgp-lK-l5m"/>
                                             <constraint firstItem="dYg-U8-nK1" firstAttribute="leading" secondItem="zdC-fZ-xa4" secondAttribute="leading" constant="8" id="w0m-P4-Zgk"/>
                                         </constraints>
                                         <connections>
@@ -404,6 +404,7 @@
                                             <outlet property="routeMapView" destination="dYg-U8-nK1" id="uzU-l6-Ih9"/>
                                             <outlet property="routeNameLabel" destination="PFV-sy-f03" id="Jx4-hU-7Id"/>
                                             <outlet property="routeStartPoint" destination="7ss-dE-C0Q" id="AWz-LO-b16"/>
+                                            <segue destination="MaF-gL-oss" kind="show" identifier="seeFeaturedRoute" id="2Lr-dk-TmV"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1608,6 +1609,7 @@
         <image name="search-blue" width="70" height="70"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="2Lr-dk-TmV"/>
         <segue reference="tGo-pu-PrF"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -22,7 +22,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     ////MARK: - Table Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         switch featuredSegCtrl.selectedSegmentIndex {
         case 0:
             return featuredArray.count
@@ -41,8 +41,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             let selectedRoute = featuredArray[indexPath.row]
             cell.routeNameLabel.text = selectedRoute.routeName
             cell.routeDescript.text = selectedRoute.routeDiscription
-            cell.routeStartPoint.text = selectedRoute.routeWaypoints[indexPath.row].wpCity
-            //cell.routeMapView = nil
+            cell.routeStartPoint.text = selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
+            //How to plot the map points
             
             for stop in selectedRoute.routeWaypoints {
                 let lat = Double(stop.wpLat!)
@@ -50,11 +50,37 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                 let location = CLLocation(latitude: lat!, longitude: lon!)
                 let pin = MKPointAnnotation()
                 pin.coordinate = location.coordinate
-                
                 cell.routeMapView.addAnnotation(pin)
-                cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: true)
+                cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: false)
             }
             
+            //How to plot the route line
+            
+            let pointsArray = ["\(selectedRoute.routeWaypoints[indexPath.row].wpLat), \(selectedRoute.routeWaypoints[indexPath.row].wpLon)"]
+            
+            let pointsCount = pointsArray.count
+            
+            var pointsToUse: [CLLocationCoordinate2D] = []
+            
+            for i in 0...pointsCount-1 {
+                let p = CGPointFromString(pointsArray[i] as String)
+                pointsToUse += [CLLocationCoordinate2DMake(CLLocationDegrees(p.x), CLLocationDegrees(p.y))]
+                
+                let myPolyline = MKPolyline(coordinates: &pointsToUse, count: pointsCount)
+                
+                cell.routeMapView.addOverlay(myPolyline)
+                
+//                func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
+//                    if overlay is MKPolyline {
+//                        let lineView = MKPolylineRenderer(overlay: overlay)
+//                        lineView.strokeColor = UIColor().BeccaBlue()
+//                        
+//                        return lineView
+//                    }
+//                    
+//                    return nil
+//                }
+            }
             
             return cell
         case 1:
@@ -81,13 +107,22 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             return 44
         }
     }
+
     
     //MARK: - Segue Methods
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        
-        if segue.identifier == "seeSelectedRoute" {
+        if segue.identifier == "seeFeaturedRoute" {
+            let destController = segue.destinationViewController as! WalkingRouteViewController
+            let indexPath = RouteTable.indexPathForSelectedRow!
+            let selectedRoute = featuredArray[indexPath.row]
+            destController.selectedRoute = selectedRoute
+            let backItem = UIBarButtonItem()
+            backItem.title = "Done"
+            navigationItem.backBarButtonItem = backItem
+            RouteTable.deselectRowAtIndexPath(indexPath, animated: true)
+        } else if segue.identifier == "seeSelectedRoute" {
             let destController = segue.destinationViewController as! WalkingRouteViewController
             let indexPath = RouteTable.indexPathForSelectedRow!
             let selectedRoute = routeArray[indexPath.row]
@@ -127,9 +162,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
              featuredArray.removeAll()
              var tempArray = [Route]()
              for route in routeArray {
-              if route.routeFeatured {
-                tempArray.append(route)
-               }
+             if route.routeFeatured {
+             tempArray.append(route)
+             }
              }
              featuredArray = tempArray
              */
@@ -140,7 +175,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         }
         
     }
-
+    
     //MARK: - Reoccuring Functions
     
     func refetchAndReload(){
@@ -168,7 +203,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-//        refetchAndReload()
+        //        refetchAndReload()
     }
     
     override func didReceiveMemoryWarning() {

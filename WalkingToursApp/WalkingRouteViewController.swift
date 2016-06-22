@@ -43,7 +43,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         wpName.text = currentWaypoint.wpName
         if let address = currentWaypoint.wpAddress {
             let city = currentWaypoint.wpCity ?? ""
-            let state = currentWaypoint.wpCity ?? ""
+            let state = currentWaypoint.wpState ?? ""
             wpAddress.text = "\(address), \(city) \(state)"
         } else {
             wpAddress.text = ""
