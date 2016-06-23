@@ -44,6 +44,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             cell.routeStartPoint.text = selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
             //How to plot the map points
             
+            
+            var tempCoordsArray = [CLLocationCoordinate2D]()
+            
             for stop in selectedRoute.routeWaypoints {
                 let lat = Double(stop.wpLat!)
                 let lon = Double(stop.wpLon!)
@@ -56,31 +59,38 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             
             //How to plot the route line
             
-            let pointsArray = ["\(selectedRoute.routeWaypoints[indexPath.row].wpLat), \(selectedRoute.routeWaypoints[indexPath.row].wpLon)"]
             
-            let pointsCount = pointsArray.count
-            
-            var pointsToUse: [CLLocationCoordinate2D] = []
-            
-            for i in 0...pointsCount-1 {
-                let p = CGPointFromString(pointsArray[i] as String)
-                pointsToUse += [CLLocationCoordinate2DMake(CLLocationDegrees(p.x), CLLocationDegrees(p.y))]
+            for stop in 0...(selectedRoute.routeWaypoints.count - 2) {
+                let sourceLat = Double(selectedRoute.routeWaypoints[stop].wpLat!)
+                let sourceLon = Double(selectedRoute.routeWaypoints[stop].wpLon!)
                 
-                let myPolyline = MKPolyline(coordinates: &pointsToUse, count: pointsCount)
+                let destLat = Double(selectedRoute.routeWaypoints[stop + 1].wpLat!)
+                let destLon = Double(selectedRoute.routeWaypoints[stop + 1].wpLon!)
                 
-                cell.routeMapView.addOverlay(myPolyline)
+                let source = CLLocationCoordinate2D(latitude: sourceLat!, longitude: sourceLon!)
                 
-//                func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
-//                    if overlay is MKPolyline {
-//                        let lineView = MKPolylineRenderer(overlay: overlay)
-//                        lineView.strokeColor = UIColor().BeccaBlue()
-//                        
-//                        return lineView
-//                    }
-//                    
-//                    return nil
-//                }
+                let request = MKDirectionsRequest()
+                
+                request.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: sourceLat!, longitude: sourceLon!), addressDictionary: nil))
+                request.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: destLat!, longitude: destLon!), addressDictionary: nil))
+                request.requestsAlternateRoutes = false
+                request.transportType = .Walking
+                
+                let directions = MKDirections(request: request)
+                
+                directions.calculateDirectionsWithCompletionHandler { [unowned self] response, error in
+                    guard let unwrappedResponse = response else { return }
+                    for route in unwrappedResponse.routes {
+                        cell.routeMapView.addOverlay(route.polyline)
+                    }
+                }
+                func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+                    let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+                    renderer.strokeColor = UIColor().BeccaBlue() .colorWithAlphaComponent(0.7)
+                    return renderer
+                }
             }
+
             
             return cell
         case 1:
@@ -107,6 +117,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             return 44
         }
     }
+
 
     
     //MARK: - Segue Methods

@@ -336,6 +336,68 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         
     }
     
+    //MARK: - Long Press Gesture
+    
+    @IBAction func mapLongPressed(gesture: UILongPressGestureRecognizer ) {
+        if gesture.state == UIGestureRecognizerState.Ended {
+            print("pressed")
+            wpMapView.removeAnnotations(wpMapView.annotations)
+            let point = gesture.locationInView(self.wpMapView)
+            let pointCoord = self.wpMapView .convertPoint(point, toCoordinateFromView: self.wpMapView)
+            let geoCoder = CLGeocoder()
+            
+            let location = CLLocation(latitude: pointCoord.latitude, longitude: pointCoord.longitude)
+            geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+
+                var placeMark: CLPlacemark!
+                placeMark = placemarks?[0]
+
+                let addDict = placeMark.addressDictionary
+                
+                //Address Info
+                guard let streetNum = addDict!["SubThoroughfare"] as? String else{
+                    return
+                }
+                guard let streetName = addDict!["Thoroughfare"] as? String else{
+                    return
+                }
+                let street = "\(streetNum) \(streetName)"
+                //            print("street: \(street)")
+                guard let city = addDict!["City"] as? String else {
+                    return
+                }
+                //            print("city - \(city)")
+                guard let zip = addDict!["ZIP"] as? String else {
+                    return
+                }
+                //            print("zip: \(zip)")
+                guard let state = addDict!["State"] as? String else {
+                    return
+                }
+                //            print(state)
+                guard let country = addDict!["Country"] as? String else {
+                    return
+                }
+                print(country)
+                
+                let pin = WayPointAnnotation()
+                pin.coordinate = pointCoord
+                pin.title = placeMark.name
+                pin.subtitle = street
+                let waypoint = Waypoint()
+                waypoint.wpAddress = street
+                waypoint.wpCity = city
+                waypoint.wpState = state
+                waypoint.wpZip = zip
+                waypoint.wpLat = "\(location.coordinate.latitude)"
+                waypoint.wpLon = "\(location.coordinate.longitude)"
+                pin.waypoint = waypoint
+                self.wpMapView.addAnnotation(pin)
+                self.wpMapView.showAnnotations(self.wpMapView.annotations, animated: true)
+            })
+        }
+    }
+    
     //MARK: - Map Annotation Methods
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {

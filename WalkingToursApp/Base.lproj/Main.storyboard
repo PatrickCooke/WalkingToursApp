@@ -370,6 +370,10 @@
                                                 <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYg-U8-nK1">
                                                     <rect key="frame" x="8" y="65" width="544" height="164"/>
                                                 </mapView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cgZ-oB-RjK">
+                                                    <rect key="frame" x="8" y="65" width="544" height="164"/>
+                                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ss-dE-C0Q">
                                                     <rect key="frame" x="8" y="235" width="544" height="21"/>
                                                     <constraints>
@@ -384,8 +388,12 @@
                                                 <constraint firstAttribute="leadingMargin" secondItem="PFV-sy-f03" secondAttribute="leading" id="7aA-Yo-wS1"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="7ss-dE-C0Q" secondAttribute="bottom" constant="0.5" id="9Ek-qi-PH1"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="7ss-dE-C0Q" secondAttribute="trailing" id="Bmu-dK-bvb"/>
+                                                <constraint firstItem="cgZ-oB-RjK" firstAttribute="bottom" secondItem="dYg-U8-nK1" secondAttribute="bottom" id="Hp9-zX-7LN"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="PFV-sy-f03" secondAttribute="trailing" id="Iue-kL-8Ij"/>
+                                                <constraint firstItem="cgZ-oB-RjK" firstAttribute="trailing" secondItem="dYg-U8-nK1" secondAttribute="trailing" id="RIb-AZ-SJk"/>
+                                                <constraint firstItem="cgZ-oB-RjK" firstAttribute="top" secondItem="dYg-U8-nK1" secondAttribute="top" id="Vch-Ef-nNR"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="HMt-5C-2Tc" secondAttribute="trailing" id="iAH-7z-pjA"/>
+                                                <constraint firstItem="cgZ-oB-RjK" firstAttribute="leading" secondItem="dYg-U8-nK1" secondAttribute="leading" id="iHj-L7-Ukt"/>
                                                 <constraint firstItem="HMt-5C-2Tc" firstAttribute="top" secondItem="PFV-sy-f03" secondAttribute="bottom" constant="-1" id="mNF-RJ-9GM"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="HMt-5C-2Tc" secondAttribute="leading" id="mOE-Mz-3Nk"/>
                                                 <constraint firstItem="7ss-dE-C0Q" firstAttribute="top" secondItem="dYg-U8-nK1" secondAttribute="bottom" constant="6" id="qR5-bd-vXV"/>
@@ -501,7 +509,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="Xmg-pQ-MMB"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                 <color key="textColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1223,6 +1231,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ZIr-No-9dh">
                                 <rect key="frame" x="20" y="378" width="560" height="202"/>
                                 <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="sWd-zZ-L5I" appends="YES" id="qI2-EK-qVn"/>
+                                </connections>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gON-iQ-Ja9">
                                 <rect key="frame" x="20" y="95" width="86" height="11"/>
@@ -1597,6 +1608,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D6w-TY-bjx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="sWd-zZ-L5I">
+                    <connections>
+                        <action selector="mapLongPressed:" destination="GNj-KV-eri" id="iOu-Yd-04d"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3812" y="275"/>
         </scene>
