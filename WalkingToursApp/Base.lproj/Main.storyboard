@@ -369,6 +369,9 @@
                                                 </label>
                                                 <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYg-U8-nK1">
                                                     <rect key="frame" x="8" y="65" width="544" height="164"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="dhb-sq-Sm6" id="mbf-GL-F6q"/>
+                                                    </connections>
                                                 </mapView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cgZ-oB-RjK">
                                                     <rect key="frame" x="8" y="65" width="544" height="164"/>

@@ -45,7 +45,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             //How to plot the map points
             
             
-            var tempCoordsArray = [CLLocationCoordinate2D]()
+//            var tempCoordsArray = [CLLocationCoordinate2D]()
             
             for stop in selectedRoute.routeWaypoints {
                 let lat = Double(stop.wpLat!)
@@ -53,42 +53,45 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                 let location = CLLocation(latitude: lat!, longitude: lon!)
                 let pin = MKPointAnnotation()
                 pin.coordinate = location.coordinate
-                cell.routeMapView.addAnnotation(pin)
-                cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: false)
+                //cell.routeMapView.addAnnotation(pin)
             }
+            //cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: false)
             
             //How to plot the route line
             
             
-            for stop in 0...(selectedRoute.routeWaypoints.count - 2) {
-                let sourceLat = Double(selectedRoute.routeWaypoints[stop].wpLat!)
-                let sourceLon = Double(selectedRoute.routeWaypoints[stop].wpLon!)
-                
-                let destLat = Double(selectedRoute.routeWaypoints[stop + 1].wpLat!)
-                let destLon = Double(selectedRoute.routeWaypoints[stop + 1].wpLon!)
-                
+            for (index, stop) in selectedRoute.routeWaypoints.enumerate() {
+                let sourceLat = Double(stop.wpLat!)
+                let sourceLon = Double(stop.wpLon!)
                 let source = CLLocationCoordinate2D(latitude: sourceLat!, longitude: sourceLon!)
+                
+                var nextStop = index + 1
+                if index == selectedRoute.routeWaypoints.count - 1 {
+                    nextStop = 0
+                }
+                let destLat = Double(selectedRoute.routeWaypoints[nextStop].wpLat!)
+                let destLon = Double(selectedRoute.routeWaypoints[nextStop].wpLon!)
+                let dest = CLLocationCoordinate2D(latitude: destLat!, longitude: destLon!)
+                
                 
                 let request = MKDirectionsRequest()
                 
-                request.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: sourceLat!, longitude: sourceLon!), addressDictionary: nil))
-                request.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: destLat!, longitude: destLon!), addressDictionary: nil))
+                request.source = MKMapItem(placemark: MKPlacemark(coordinate: source, addressDictionary: nil))
+                request.destination = MKMapItem(placemark: MKPlacemark(coordinate: dest, addressDictionary: nil))
                 request.requestsAlternateRoutes = false
                 request.transportType = .Walking
                 
                 let directions = MKDirections(request: request)
                 
-                directions.calculateDirectionsWithCompletionHandler { [unowned self] response, error in
+                directions.calculateDirectionsWithCompletionHandler({ (response, error) in
                     guard let unwrappedResponse = response else { return }
                     for route in unwrappedResponse.routes {
+                        print("Add polyline")
                         cell.routeMapView.addOverlay(route.polyline)
+
                     }
-                }
-                func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
-                    let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-                    renderer.strokeColor = UIColor().BeccaBlue() .colorWithAlphaComponent(0.7)
-                    return renderer
-                }
+                })
+                
             }
 
             
@@ -108,6 +111,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             return cell
         }
     }
+    
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+        renderer.strokeColor = UIColor().BeccaBlue() .colorWithAlphaComponent(0.7)
+        return renderer
+    }
+
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch featuredSegCtrl.selectedSegmentIndex {

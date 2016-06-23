@@ -340,7 +340,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     @IBAction func mapLongPressed(gesture: UILongPressGestureRecognizer ) {
         if gesture.state == UIGestureRecognizerState.Ended {
-            print("pressed")
+            //print("pressed")
             wpMapView.removeAnnotations(wpMapView.annotations)
             let point = gesture.locationInView(self.wpMapView)
             let pointCoord = self.wpMapView .convertPoint(point, toCoordinateFromView: self.wpMapView)
