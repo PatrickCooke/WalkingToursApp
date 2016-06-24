@@ -117,11 +117,13 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if error == nil {
                 //call the message view to say "Saved"
                 print("Route havs been updated: \(result)")
+                self.messageLabel.text = "Saved"
                 self.fadeOutMessageView()
             }
             else {
                 //call the message view to say error, not saved
                 print("Server reported an error: \(error)")
+                self.messageLabel.text = "Error"
                 self.fadeOutMessageView()
             }
         } else {
@@ -187,8 +189,8 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     //MARK: - Onscreen Alert Methods
     
     func fadeInMessageView(message : String) {
+        self.messageLabel.text = message
         UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            self.messageLabel.text = message
             self.messageView.alpha = 1.0
             }, completion: nil)
     }
@@ -218,6 +220,9 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         guard let lonDub = Double(wpLonTxtField.text!) else {
             return
         }
+        
+        self.latCoord = wpLatTxtField.text!
+        self.lonCoord = wpLonTxtField.text!
         let geoCoder = CLGeocoder()
         let location = CLLocation(latitude: latDub, longitude: lonDub)
         
@@ -328,6 +333,8 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 waypoint.wpZip = zip
                 waypoint.wpLat = "\(location.coordinate.latitude)"
                 waypoint.wpLon = "\(location.coordinate.longitude)"
+                self.latCoord = "\(location.coordinate.latitude)"
+                self.lonCoord = "\(location.coordinate.longitude)"
                 pin.waypoint = waypoint
                 self.wpMapView.addAnnotation(pin)
                 self.wpMapView.showAnnotations(self.wpMapView.annotations, animated: true)
@@ -391,6 +398,9 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 waypoint.wpZip = zip
                 waypoint.wpLat = "\(location.coordinate.latitude)"
                 waypoint.wpLon = "\(location.coordinate.longitude)"
+                self.latCoord = "\(location.coordinate.latitude)"
+                self.lonCoord = "\(location.coordinate.longitude)"
+
                 pin.waypoint = waypoint
                 self.wpMapView.addAnnotation(pin)
                 self.wpMapView.showAnnotations(self.wpMapView.annotations, animated: true)
@@ -432,6 +442,8 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             wpLatTxtField.text = String(pin.coordinate.latitude)
             wpLonTxtField.text = String(pin.coordinate.longitude)
+            latCoord = String(pin.coordinate.latitude)
+            lonCoord = String(pin.coordinate.longitude)
             wpNameTxtField.text = pin.title!
             wpaddressTxtField.text = pin.subtitle!
           

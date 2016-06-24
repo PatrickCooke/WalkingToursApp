@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate {
+class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate {
     
     var locManager = LocationManager.sharedInstance
     var backendless = Backendless.sharedInstance()
@@ -53,10 +53,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                 let location = CLLocation(latitude: lat!, longitude: lon!)
                 let pin = MKPointAnnotation()
                 pin.coordinate = location.coordinate
-                //cell.routeMapView.addAnnotation(pin)
+                
+                cell.routeMapView.addAnnotation(pin)
             }
-            //cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: false)
-            
+            cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: false)
+            //cell.routeMapView.removeAnnotations(cell.routeMapView.annotations)
             //How to plot the route line
             
             
@@ -86,10 +87,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                 directions.calculateDirectionsWithCompletionHandler({ (response, error) in
                     guard let unwrappedResponse = response else { return }
                     for route in unwrappedResponse.routes {
-                        print("Add polyline")
+//                        print("Add polyline")
                         cell.routeMapView.addOverlay(route.polyline)
-
                     }
+                   // cell.routeMapView.visibleMapRect = [cell.routeMapView.overlays]
                 })
                 
             }
@@ -114,10 +115,22 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-        renderer.strokeColor = UIColor().BeccaBlue() .colorWithAlphaComponent(0.7)
+        renderer.strokeColor = UIColor().BeccaBlue() .colorWithAlphaComponent(0.5)
         return renderer
     }
 
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseIdentifier = "pin"
+        var pin = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseIdentifier) as? MKPinAnnotationView
+        if pin == nil {
+            pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+            pin!.alpha = 0.0
+            pin!.canShowCallout = false
+        } else {
+            pin!.annotation = annotation
+        }
+        return pin
+    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch featuredSegCtrl.selectedSegmentIndex {
@@ -202,7 +215,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     func refetchAndReload(){
         fetchData()
         RouteTable.reloadData()
-        locManager.setupLocationMonitoring()
     }
     
     @IBAction func switchTableContents() {
@@ -215,13 +227,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         refetchAndReload()
-        print(featuredArray.count)
+        locManager.setupLocationMonitoring()
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchData()
-        RouteTable.reloadData()
+
     }
     
     override func viewDidAppear(animated: Bool) {
