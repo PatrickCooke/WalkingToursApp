@@ -204,7 +204,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
  
             //rint("requests: \(routeArray.count)")
         } else {
-            print("server error \(error)")
+//            print("server error \(error)")
             routeArray = [Route]()
         }
         

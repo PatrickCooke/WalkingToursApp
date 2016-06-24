@@ -81,8 +81,8 @@ class LoginViewController: UIViewController {
     }
     
     func segueToViews() {
-        print("Email: \(self.loginManager.currentuser.email), UserID: \(self.loginManager.currentuser.objectId)")
-        print("user  has signed in")
+//        print("Email: \(self.loginManager.currentuser.email), UserID: \(self.loginManager.currentuser.objectId)")
+//        print("user  has signed in")
         performSegueWithIdentifier("loggedIn", sender: currentuser)
         fadeOutMessageView()
     }

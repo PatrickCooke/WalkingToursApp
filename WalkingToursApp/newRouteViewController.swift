@@ -41,7 +41,7 @@ class newRouteViewController: UIViewController {
     
     @IBAction func saveRouteInfo() {
         fadeInMessageView("Saving")
-        print("route saved pressed")
+//        print("route saved pressed")
         
         let newRoute = Route()
         if let routeName = routeTitleTXTField.text {
@@ -57,11 +57,11 @@ class newRouteViewController: UIViewController {
         dataStore.save(
             newRoute,
             response: { (result) in
-                print("entry saved")
+//                print("entry saved")
                 self.messageLabel.text = "Route Saved!"
                 self.fadeOutMessageView()
         }) { (fault) in
-            print("server reported error:\(fault)")
+//            print("server reported error:\(fault)")
             self.messageLabel.text = "Error"
             self.fadeOutMessageView()
             

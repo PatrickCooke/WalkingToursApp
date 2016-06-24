@@ -13,11 +13,11 @@ class RouteViewController: UIViewController {
     let backendless = Backendless.sharedInstance()
     var selectedRoute = Route?()
     var waypointArray = [Waypoint]()
-    @IBOutlet weak var routeTitleTXTField:      UITextField!
-    @IBOutlet weak var routeDistTXTField:       UITextField!
-    @IBOutlet weak var routeDescriptionTXTField: UITextField!
-    @IBOutlet weak var waypointTableView:       UITableView!
-    @IBOutlet weak var routeActiveSwitch:        UISwitch!
+    @IBOutlet weak var routeTitleTXTField       :UITextField!
+    @IBOutlet weak var routeDistTXTField        :UITextField!
+    @IBOutlet weak var routeDescriptionTXTField :UITextField!
+    @IBOutlet weak var waypointTableView        :UITableView!
+    @IBOutlet weak var routeActiveSwitch        :UISwitch!
     @IBOutlet weak var messageView              :UIView!
     @IBOutlet weak var messageLabel             :UILabel!
     var stopCount = 0
@@ -45,30 +45,34 @@ class RouteViewController: UIViewController {
     //MARK: - Interactivity Methods
     
     @IBAction func deleteButtonPressed(sender: UIBarButtonItem){
-        //deleteListing()
+        deleteListing()
+    }
+    
+    func reloadTable() {
+        waypointTableView.reloadData()
     }
     
     func deleteListing() {
-        print("delete Listing")
+//        print("delete Listing")
         let dataStore = backendless.data.of(Route.ofClass())
         // save object asynchronously
         dataStore.save(
             selectedRoute,
             response: { (result: AnyObject!) -> Void in
                 let savedRoute = result as! Route
-                print("Contact has been saved: \(savedRoute.objectId)")
+//                print("Contact has been saved: \(savedRoute.objectId)")
                 // now delete the saved object
                 dataStore.remove(
                     savedRoute,
                     response: { (result: AnyObject!) -> Void in
-                        print("Route has been deleted: \(result)")
+//                        print("Route has been deleted: \(result)")
                     },
                     error: { (fault: Fault!) -> Void in
-                        print("Server reported an error (2): \(fault)")
+//                        print("Server reported an error (2): \(fault)")
                 })
             },
             error: { (fault: Fault!) -> Void in
-                print("Server reported an error (1): \(fault)")
+//                print("Server reported an error (1): \(fault)")
         })
         self.navigationController!.popViewControllerAnimated(true)
     }
@@ -102,7 +106,7 @@ class RouteViewController: UIViewController {
     @IBAction func saveRouteInfo() {
         fadeInMessageView("Saving...")
         resignFirstRespond()
-        print("route saved pressed")
+//        print("route saved pressed")
         if selectedRoute == nil {
             selectedRoute = Route()
         }
@@ -119,7 +123,7 @@ class RouteViewController: UIViewController {
         }
         if let routeCount = selectedRoute?.routeWaypoints.count {
             selectedRoute?.routeWpCount = routeCount
-            print(routeCount)
+//            print(routeCount)
         }
         selectedRoute?.routeFeatured = routeFeatured
         
@@ -131,13 +135,13 @@ class RouteViewController: UIViewController {
                     self.messageLabel.text = "\(name) has been saved"
                 }
                 self.fadeOutMessageView()
-                print("entry saved")
+//                print("entry saved")
         }) { (fault) in
             if let error = fault {
                 self.messageLabel.text = "Error in saving: \(error)"
             }
             self.fadeOutMessageView()
-            print("server reported error:\(fault)")
+//            print("server reported error:\(fault)")
         }
     }
     
@@ -158,11 +162,11 @@ class RouteViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         let selectedWP = waypointArray[indexPath.row]
-        if let stop = selectedWP.wpStopNum {
-            if let name = selectedWP.wpName {
+        let stop = selectedWP.wpStopNum
+        if let name = selectedWP.wpName {
             cell.textLabel?.text = "\(stop): \(name)"
-            }
         }
+        
         return cell
     }
     
@@ -181,17 +185,17 @@ class RouteViewController: UIViewController {
                 
                 selectedRoute = backendless.data.of(Route.ofClass()).load(selectedRoute, relations: ["routeWaypoints"], fault: &error) as? Route
                 if error == nil {
-                    print("Waypoints has been retrieved")
+//                    print("Waypoints has been retrieved")
                     waypointArray.removeAll()
                     for point in (selectedRoute?.routeWaypoints)! {
                         waypointArray.append(point)
                         organizeArray()
                     }
                 } else {
-                    print("Server reported an error: \(error)")
+//                    print("Server reported an error: \(error)")
                 }
             } else {
-                print("Server reported an error: \(error)")
+//                print("Server reported an error: \(error)")
             }
         }
     }
@@ -224,8 +228,9 @@ class RouteViewController: UIViewController {
     //MARK: - Life Cycle Methods
     
     override func viewDidLoad() {
-        messageView.alpha = 0.0
         super.viewDidLoad()
+        waypointTableView.reloadData()
+        messageView.alpha = 0.0
         if let selRoute = selectedRoute {
             if let feat = selRoute.routeFeatured{
                 routeFeatured = feat
@@ -243,13 +248,12 @@ class RouteViewController: UIViewController {
             routeDescriptionTXTField.text = ""
         }
     }
-
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
-        waypointTableView.reloadData()
-        
-        guard let route = selectedRoute else {
+        reloadTable()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadTable), name: "wpdeleted", object: nil)
+                guard let route = selectedRoute else {
             return
         }
         if route.routeActive == "1" {
@@ -258,15 +262,14 @@ class RouteViewController: UIViewController {
             routeActiveSwitch.on = false
         }
     }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        //waypointTableView.reloadData()
         if selectedRoute == nil {
             stopCount = 0
         } else {
             stopCount = (selectedRoute?.routeWaypoints.count)!
         }
-        //print("stops: \(stopCount)")
     }
     
     override func viewDidDisappear(animated: Bool) {
