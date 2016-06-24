@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RouteViewController: UIViewController {
+class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let backendless = Backendless.sharedInstance()
     var selectedRoute = Route?()
@@ -49,6 +49,7 @@ class RouteViewController: UIViewController {
     }
     
     func reloadTable() {
+        print("reloading")
         waypointTableView.reloadData()
     }
     
@@ -155,6 +156,9 @@ class RouteViewController: UIViewController {
     
     //MARK: - Table Methods
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return waypointArray.count
     }
@@ -170,14 +174,60 @@ class RouteViewController: UIViewController {
         return cell
     }
     
+    //MARK: - WPTableview Sort Method
+    
+    @IBAction func startEditing(sender: UIButton) {
+            waypointTableView.editing = !waypointTableView.editing
+    }
+    
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        print("From \(sourceIndexPath.row) To \(destinationIndexPath.row) ")
+        let itemMoved = waypointArray[sourceIndexPath.row]
+        waypointArray.removeAtIndex(sourceIndexPath.row)
+        waypointArray.insert(itemMoved, atIndex: destinationIndexPath.row)
+        for (index, waypoint) in waypointArray.enumerate() {
+            waypoint.wpStopNum = index + 1
+            thcSaveWaypoint(waypoint)
+
+        }
+        reloadTable()
+    }
+    
+    func thcSaveWaypoint(waypoint: Waypoint) {
+        let dataStore = Backendless.sharedInstance().data.of(Waypoint.ofClass())
+        dataStore.save(
+            waypoint,
+            response: { (result: AnyObject!) -> Void in
+                let updatedRoute = result as! Waypoint
+                if let saveMessage = waypoint.wpName {
+                    print("\(saveMessage) has been saved")
+                    self.messageLabel.text = "\(saveMessage) has been saved"
+                }
+                self.fadeOutMessageView()
+                self.messageLabel.text = "\(updatedRoute.wpName)"
+                
+                //                    print("Route has been updated: \(updatedRoute.objectId)")
+                
+            },
+            error: { (fault: Fault!) -> Void in
+                if let errorMessage = waypoint.wpName {
+                    self.messageLabel.text = "There has been an error, \(errorMessage) has not been saved"
+                    self.fadeOutMessageView()
+                }
+        })
+    }
+    
     //MARK: - Fetch Methods
     
-    private func fetchData() {
+    @objc private func refetchTableData() {
         
         if selectedRoute == nil {
             
         } else {
-            
             var error: Fault?
             if error == nil {
                 
@@ -185,17 +235,16 @@ class RouteViewController: UIViewController {
                 
                 selectedRoute = backendless.data.of(Route.ofClass()).load(selectedRoute, relations: ["routeWaypoints"], fault: &error) as? Route
                 if error == nil {
-//                    print("Waypoints has been retrieved")
+                    print("Fetched \(selectedRoute?.routeWaypoints.count)")
                     waypointArray.removeAll()
                     for point in (selectedRoute?.routeWaypoints)! {
                         waypointArray.append(point)
                         organizeArray()
                     }
+                    reloadTable()
                 } else {
-//                    print("Server reported an error: \(error)")
                 }
             } else {
-//                print("Server reported an error: \(error)")
             }
         }
     }
@@ -247,12 +296,13 @@ class RouteViewController: UIViewController {
             routeTitleTXTField.text = ""
             routeDescriptionTXTField.text = ""
         }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refetchTableData), name: "wpdeleted", object: nil)
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        fetchData()
-        reloadTable()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadTable), name: "wpdeleted", object: nil)
+        refetchTableData()
+        
+        
                 guard let route = selectedRoute else {
             return
         }

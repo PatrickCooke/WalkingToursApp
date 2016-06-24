@@ -923,7 +923,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route Stops and Points of Interest:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcF-Ra-2kB">
-                                <rect key="frame" x="20" y="236" width="317" height="21"/>
+                                <rect key="frame" x="20" y="236" width="357" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="GC9-G2-hQh"/>
                                 </constraints>
@@ -998,6 +998,33 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfz-1S-N72" customClass="RoundedButtons" customModule="WalkingToursApp" customModuleProvider="target">
+                                <rect key="frame" x="509" y="232" width="71" height="30"/>
+                                <color key="backgroundColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="61" id="5Oa-Nu-sgL"/>
+                                    <constraint firstAttribute="height" constant="30" id="GsO-hc-dxP"/>
+                                    <constraint firstAttribute="width" constant="71" id="fhI-op-yJa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="13"/>
+                                <state key="normal" title="add stop">
+                                    <color key="titleColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="5Oa-Nu-sgL"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="saveRouteInfo" destination="GiG-Ig-JKv" eventType="touchUpInside" id="5Lx-a1-Z4u"/>
+                                    <segue destination="GNj-KV-eri" kind="show" identifier="addNewWP" id="hQ9-MT-nGw"/>
+                                </connections>
+                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Route Description" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YJ6-WI-UGM">
                                 <rect key="frame" x="20" y="159" width="560" height="30"/>
                                 <constraints>
@@ -1096,10 +1123,10 @@
                                 </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bf7-Kw-bas" customClass="RoundedButtons" customModule="WalkingToursApp" customModuleProvider="target">
-                                <rect key="frame" x="352" y="232" width="127" height="30"/>
+                                <rect key="frame" x="385" y="233" width="116" height="30"/>
                                 <color key="backgroundColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="127" id="i0C-ZX-dUF"/>
+                                    <constraint firstAttribute="width" constant="116" id="i0C-ZX-dUF"/>
                                     <constraint firstAttribute="height" constant="30" id="vof-JU-CIW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="13"/>
@@ -1111,32 +1138,8 @@
                                         <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfz-1S-N72" customClass="RoundedButtons" customModule="WalkingToursApp" customModuleProvider="target">
-                                <rect key="frame" x="497" y="232" width="83" height="30"/>
-                                <color key="backgroundColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="61" id="5Oa-Nu-sgL"/>
-                                    <constraint firstAttribute="height" constant="30" id="GsO-hc-dxP"/>
-                                    <constraint firstAttribute="width" constant="83" id="fhI-op-yJa"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="13"/>
-                                <state key="normal" title="add stop">
-                                    <color key="titleColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="5Oa-Nu-sgL"/>
-                                    </mask>
-                                </variation>
                                 <connections>
-                                    <action selector="saveRouteInfo" destination="GiG-Ig-JKv" eventType="touchUpInside" id="5Lx-a1-Z4u"/>
-                                    <segue destination="GNj-KV-eri" kind="show" identifier="addNewWP" id="hQ9-MT-nGw"/>
+                                    <action selector="startEditing:" destination="GiG-Ig-JKv" eventType="touchUpInside" id="Ngm-h5-hym"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1145,9 +1148,9 @@
                             <constraint firstItem="ZMs-U8-Nej" firstAttribute="top" secondItem="D7e-bt-fvI" secondAttribute="bottom" constant="8" id="0MC-3a-BDO"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ZMs-U8-Nej" secondAttribute="leading" id="3Mw-5a-zeR"/>
                             <constraint firstAttribute="leadingMargin" secondItem="dcF-Ra-2kB" secondAttribute="leading" id="5Ge-fe-KxZ"/>
-                            <constraint firstItem="Nfz-1S-N72" firstAttribute="leading" secondItem="Bf7-Kw-bas" secondAttribute="trailing" constant="18" id="64T-S9-c2R"/>
+                            <constraint firstItem="Nfz-1S-N72" firstAttribute="leading" secondItem="Bf7-Kw-bas" secondAttribute="trailing" constant="8" id="64T-S9-c2R"/>
                             <constraint firstItem="dcF-Ra-2kB" firstAttribute="top" secondItem="ZMs-U8-Nej" secondAttribute="bottom" constant="211" id="75s-3v-VEe"/>
-                            <constraint firstItem="VsV-YB-jAb" firstAttribute="top" secondItem="Bf7-Kw-bas" secondAttribute="bottom" constant="3" id="7eh-Hc-LFx"/>
+                            <constraint firstItem="VsV-YB-jAb" firstAttribute="top" secondItem="Bf7-Kw-bas" secondAttribute="bottom" constant="2" id="7eh-Hc-LFx"/>
                             <constraint firstAttribute="leadingMargin" secondItem="rcU-R8-SNT" secondAttribute="leading" id="8zE-0T-YVM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Nfz-1S-N72" secondAttribute="trailing" id="AAB-iX-hMR"/>
                             <constraint firstItem="VsV-YB-jAb" firstAttribute="top" secondItem="Nfz-1S-N72" secondAttribute="bottom" constant="3" id="ATz-Pc-2fZ"/>
@@ -1162,7 +1165,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="VsV-YB-jAb" secondAttribute="trailing" id="PWI-dS-DbN"/>
                             <constraint firstItem="jBQ-qY-pHt" firstAttribute="centerX" secondItem="hkg-1A-2xL" secondAttribute="centerX" id="PdA-GX-ZWa"/>
                             <constraint firstAttribute="leadingMargin" secondItem="YJ6-WI-UGM" secondAttribute="leading" id="WG1-HS-obo"/>
-                            <constraint firstItem="Bf7-Kw-bas" firstAttribute="leading" secondItem="dcF-Ra-2kB" secondAttribute="trailing" constant="15" id="Y4V-CV-Iyw"/>
+                            <constraint firstItem="Bf7-Kw-bas" firstAttribute="leading" secondItem="dcF-Ra-2kB" secondAttribute="trailing" constant="8" id="Y4V-CV-Iyw"/>
                             <constraint firstItem="KJm-9v-Ns5" firstAttribute="top" secondItem="ZMs-U8-Nej" secondAttribute="bottom" constant="8" id="Z0k-7H-8wE"/>
                             <constraint firstItem="dcF-Ra-2kB" firstAttribute="top" secondItem="KJm-9v-Ns5" secondAttribute="bottom" constant="158" id="ZSI-Y7-qvz"/>
                             <constraint firstItem="rcU-R8-SNT" firstAttribute="centerY" secondItem="Hup-Fn-3Ym" secondAttribute="centerY" id="a9c-vK-BGU"/>
