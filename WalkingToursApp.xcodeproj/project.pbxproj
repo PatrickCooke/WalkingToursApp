@@ -58,6 +58,7 @@
 		43D3EDEC1D12E8CE0031F627 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		43DD2FE51D1422CF00433133 /* UIColor+iDesign.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+iDesign.swift"; sourceTree = "<group>"; };
 		43DD2FE71D15A38800433133 /* newRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = newRouteViewController.swift; sourceTree = "<group>"; };
+		43E0BD5A1D1ED4EF003895C1 /* Directions.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = Directions.geojson; sourceTree = "<group>"; };
 		43ED39361D199488009B8AC4 /* WayPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WayPointAnnotation.swift; sourceTree = "<group>"; };
 		43ED39381D1AE07D009B8AC4 /* BorderedRoundedMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedRoundedMessageView.swift; sourceTree = "<group>"; };
 		43ED393A1D1B07A5009B8AC4 /* RoundedButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButtons.swift; sourceTree = "<group>"; };
@@ -126,6 +127,7 @@
 				43ED39381D1AE07D009B8AC4 /* BorderedRoundedMessageView.swift */,
 				43C7900B1D18308E00DEC5A8 /* BorderedRoundedTableViewCell.swift */,
 				43132D0F1D105B85007BCC66 /* Info.plist */,
+				43E0BD5A1D1ED4EF003895C1 /* Directions.geojson */,
 			);
 			path = WalkingToursApp;
 			sourceTree = "<group>";
