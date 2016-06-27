@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate {
     
     let locManager = LocationManager.sharedInstance
     let backendless = Backendless.sharedInstance()
@@ -28,10 +28,31 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     @IBOutlet weak var wpDistTime   :UILabel!
     @IBOutlet weak var wpRouteTable :UITableView!
     @IBOutlet weak var wpDirectionsButton :UIButton!
+    @IBOutlet weak var wpDetailsButton :UIButton!
     
     
     var directionsArray: [String]!
     
+    //MARK: - Popover methods
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "detailPopoverSegue" {
+            let currentWaypoint = waypointArray[nextStop]
+            let destController = segue.destinationViewController as! DetailPopoverViewController
+            destController.detail = currentWaypoint.wpDescript
+//            print("Sent: \(destController.detail)")
+            destController.popoverPresentationController!.delegate = self
+        }
+    }
+    
+    func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
+     //print("dismiss")
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+
     
     //MARK: - Fill Methods
     
@@ -191,12 +212,6 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         waypointArray = selectedRoute.routeWaypoints
         waypointArray.sortInPlace { $0.wpStopNum < $1.wpStopNum }
         fillAllInfo(nextStop)
-        
-        /*
-        if location isn't available {
-            wpDirectionsButton.enabled = false
-        }
-        */
         locManager.setupLocationMonitoring()
         wpMapView.showsUserLocation=true
     }

@@ -16,6 +16,7 @@
 		43132D1A1D106131007BCC66 /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D181D106131007BCC66 /* RouteViewController.swift */; };
 		43132D1B1D106131007BCC66 /* WayPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D191D106131007BCC66 /* WayPointViewController.swift */; };
 		43132D1D1D106176007BCC66 /* Waypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43132D1C1D106176007BCC66 /* Waypoint.swift */; };
+		432FBCBA1D216991006E28A8 /* DetailPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432FBCB91D216991006E28A8 /* DetailPopoverViewController.swift */; };
 		438FFBA11D13382A007E22C3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 438FFBA01D13382A007E22C3 /* MapKit.framework */; };
 		438FFBA31D133EE7007E22C3 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438FFBA21D133EE7007E22C3 /* LocationManager.swift */; };
 		43C790081D171C2B00DEC5A8 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C790071D171C2B00DEC5A8 /* LoginManager.swift */; };
@@ -47,6 +48,7 @@
 		43132D181D106131007BCC66 /* RouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteViewController.swift; sourceTree = "<group>"; };
 		43132D191D106131007BCC66 /* WayPointViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WayPointViewController.swift; sourceTree = "<group>"; };
 		43132D1C1D106176007BCC66 /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
+		432FBCB91D216991006E28A8 /* DetailPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPopoverViewController.swift; sourceTree = "<group>"; };
 		438FFBA01D13382A007E22C3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		438FFBA21D133EE7007E22C3 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		43C790071D171C2B00DEC5A8 /* LoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				43132D031D105B85007BCC66 /* AppDelegate.swift */,
 				43D3EDE81D12E6A80031F627 /* FirstViewController.swift */,
 				43D3EDEA1D12E6BC0031F627 /* WalkingRouteViewController.swift */,
+				432FBCB91D216991006E28A8 /* DetailPopoverViewController.swift */,
 				43D3EDEC1D12E8CE0031F627 /* LoginViewController.swift */,
 				43132D051D105B85007BCC66 /* ViewController.swift */,
 				43132D181D106131007BCC66 /* RouteViewController.swift */,
@@ -298,6 +301,7 @@
 				43132D1D1D106176007BCC66 /* Waypoint.swift in Sources */,
 				43132D1B1D106131007BCC66 /* WayPointViewController.swift in Sources */,
 				43ED393D1D1B22E7009B8AC4 /* FeaturedCellTableViewCell.swift in Sources */,
+				432FBCBA1D216991006E28A8 /* DetailPopoverViewController.swift in Sources */,
 				43C7900C1D18308E00DEC5A8 /* BorderedRoundedTableViewCell.swift in Sources */,
 				43DD2FE81D15A38800433133 /* newRouteViewController.swift in Sources */,
 				43DD2FE61D1422CF00433133 /* UIColor+iDesign.swift in Sources */,
