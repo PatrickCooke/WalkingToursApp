@@ -201,6 +201,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                 }
             }
             featuredArray = tempArray
+            RouteTable.reloadData()
  
             //rint("requests: \(routeArray.count)")
         } else {
@@ -214,7 +215,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     
     func refetchAndReload(){
         fetchData()
-        RouteTable.reloadData()
+        //RouteTable.reloadData()
     }
     
     @IBAction func switchTableContents() {

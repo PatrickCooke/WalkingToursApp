@@ -20,15 +20,13 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBOutlet weak var wpStateTxtField          :UITextField!
     @IBOutlet weak var wpZipTxtField            :UITextField!
     @IBOutlet weak var wpDescriptionTxtField    :UITextField!
-    //@IBOutlet weak var wpstopNumberTxtField     :UITextField!
     @IBOutlet weak var wpstopNumberLabel        :UILabel!
     @IBOutlet weak var wpLatTxtField            :UITextField!
     @IBOutlet weak var wpLonTxtField            :UITextField!
     @IBOutlet weak var wpMapView                :MKMapView!
-    @IBOutlet weak var latCoordLabel            :UILabel!
-    @IBOutlet weak var lonCoordLabel            :UILabel!
     @IBOutlet weak var messageView              :UIView!
     @IBOutlet weak var messageLabel             :UILabel!
+    @IBOutlet weak var charRemainLabel          :UILabel!
     var latCoord = String()
     var lonCoord = String()
     
@@ -40,6 +38,21 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         saveWayPoint(sourceRoute)
         resignAllFirstResponders()
         fadeInMessageView("Saving")
+    }
+    
+    @IBAction func checkMaxLength() {
+        if (wpDescriptionTxtField.text?.characters.count > 500) {
+            wpDescriptionTxtField.deleteBackward()
+        }
+        if (wpNameTxtField.text?.characters.count > 500) {
+            wpNameTxtField.deleteBackward()
+        }
+    }
+    
+    @IBAction func charRemaining() {
+        let descript = wpDescriptionTxtField.text
+        let charUsed = 500 - descript!.characters.count
+        charRemainLabel.text = "Characters Remaining: \(charUsed)"
     }
     
     func saveWayPoint(route: Route) {
@@ -79,6 +92,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
 //                print("Route havs been updated: \(result)")
                 self.messageLabel.text = "\(result)"
                 self.fadeOutMessageView()
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "wpsaved", object: nil))
             }
             else {
                 //call the message view to say error, not saved
@@ -112,6 +126,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     let updatedRoute = result as! Waypoint
                     if let saveMessage = self.selectedWP?.wpName {
                       self.messageLabel.text = "\(saveMessage) has been saved"
+                        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "wpsaved", object: nil))
                     }
                     self.fadeOutMessageView()
                     self.messageLabel.text = "\(updatedRoute.wpName)"
@@ -551,6 +566,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         wpNameTxtField.delegate = self
         messageView.alpha = 0.0
         
+        
         if let selWP = selectedWP {
             let stopnum = selWP.wpStopNum
                 wpstopNumberLabel.text = "\(stopnum)"
@@ -580,6 +596,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if let descript = selWP.wpDescript {
                 wpDescriptionTxtField.text = descript
             }
+            charRemaining()
             geocodeAddress(true)
             
         } else {

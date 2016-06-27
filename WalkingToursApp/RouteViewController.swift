@@ -20,6 +20,7 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var routeActiveSwitch        :UISwitch!
     @IBOutlet weak var messageView              :UIView!
     @IBOutlet weak var messageLabel             :UILabel!
+    @IBOutlet weak var charRemainLabel          :UILabel!
     var stopCount = 0
     var routeFeatured = "0"
     
@@ -274,6 +275,23 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
     }
     
+    //MARK: - TextField Limit Methods
+    
+    @IBAction func checkMaxLength() {
+        if (routeTitleTXTField.text?.characters.count > 500) {
+            routeTitleTXTField.deleteBackward()
+        }
+        if (routeDescriptionTXTField.text?.characters.count > 500) {
+            routeDescriptionTXTField.deleteBackward()
+        }
+    }
+    
+    @IBAction func charRemaining() {
+        let descript = routeDescriptionTXTField.text
+        let charUsed = 500 - descript!.characters.count
+        charRemainLabel.text = "Characters Remaining: \(charUsed)"
+        }
+    
     //MARK: - Life Cycle Methods
     
     override func viewDidLoad() {
@@ -292,11 +310,14 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if let routeDescript = selRoute.routeDiscription {
                 routeDescriptionTXTField.text = routeDescript
             }
+            charRemaining()
         } else {
             routeTitleTXTField.text = ""
             routeDescriptionTXTField.text = ""
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refetchTableData), name: "wpdeleted", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refetchTableData), name: "wpsaved", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refetchTableData), name: "routeCreated", object: nil)
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)

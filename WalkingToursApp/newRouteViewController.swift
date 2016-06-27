@@ -60,6 +60,7 @@ class newRouteViewController: UIViewController {
 //                print("entry saved")
                 self.messageLabel.text = "Route Saved!"
                 self.fadeOutMessageView()
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "routeCreated", object: nil))
         }) { (fault) in
 //            print("server reported error:\(fault)")
             self.messageLabel.text = "Error"
