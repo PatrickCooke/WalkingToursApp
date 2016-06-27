@@ -76,7 +76,9 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
             error: { (fault: Fault!) -> Void in
 //                print("Server reported an error (1): \(fault)")
         })
+        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "routeDeleted", object: nil))
         self.navigationController!.popViewControllerAnimated(true)
+        
     }
     
     @IBAction func resignAll(selector: UIGestureRecognizer){
@@ -236,7 +238,7 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 selectedRoute = backendless.data.of(Route.ofClass()).load(selectedRoute, relations: ["routeWaypoints"], fault: &error) as? Route
                 if error == nil {
-                    print("Fetched \(selectedRoute?.routeWaypoints.count)")
+                    //print("Fetched \(selectedRoute?.routeWaypoints.count)")
                     waypointArray.removeAll()
                     for point in (selectedRoute?.routeWaypoints)! {
                         waypointArray.append(point)

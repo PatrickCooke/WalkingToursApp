@@ -35,9 +35,9 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     //MARK: - Interactivity Methods
     
     @IBAction func saveRouteInfo(sender: UIBarButtonItem) {
+//        fadeInMessageView("Saving")
         saveWayPoint(sourceRoute)
         resignAllFirstResponders()
-        fadeInMessageView("Saving")
     }
     
     @IBAction func checkMaxLength() {
@@ -56,7 +56,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     func saveWayPoint(route: Route) {
-//        print("wp saved pressed")
+        fadeInMessageView("Saving")
         geocodeAddress(false)
         if selectedWP == nil {
             let newWP = Waypoint()
@@ -88,15 +88,14 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             var error: Fault?
             let result = backendless.data.save(route, error: &error) as? Route
             if error == nil {
-                //call the message view to say "Saved"
-//                print("Route havs been updated: \(result)")
-                self.messageLabel.text = "\(result)"
+                print(result)
                 self.fadeOutMessageView()
                 NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "wpsaved", object: nil))
-            }
-            else {
+                
+                self.messageLabel.text = "Saved"
+            } else {
                 //call the message view to say error, not saved
-//                print("Server reported an error: \(error)")
+                print("Server reported an error: \(error)")
                 self.messageLabel.text = "Error"
                 self.fadeOutMessageView()
             }
@@ -124,18 +123,19 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 selectedWP,
                 response: { (result: AnyObject!) -> Void in
                     let updatedRoute = result as! Waypoint
-                    if let saveMessage = self.selectedWP?.wpName {
+                    if let saveMessage = updatedRoute.wpName {
                       self.messageLabel.text = "\(saveMessage) has been saved"
                         NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "wpsaved", object: nil))
                     }
                     self.fadeOutMessageView()
-                    self.messageLabel.text = "\(updatedRoute.wpName)"
+                    
                     
 //                    print("Route has been updated: \(updatedRoute.objectId)")
                     
                 },
                 error: { (fault: Fault!) -> Void in
                     if let errorMessage = self.selectedWP?.wpName {
+                        print(errorMessage)
                         self.messageLabel.text = "There has been an error, \(errorMessage) has not been saved"
                         self.fadeOutMessageView()
                     }
@@ -192,9 +192,8 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     func fadeInMessageView(message : String) {
         self.messageLabel.text = message
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            self.messageView.alpha = 1.0
-            }, completion: nil)
+        self.messageView.alpha = 1.0
+//        saveWayPoint(sourceRoute)
     }
     
     func fadeOutMessageView() {

@@ -44,20 +44,16 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             cell.routeStartPoint.text = selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
             //How to plot the map points
             
-            
-//            var tempCoordsArray = [CLLocationCoordinate2D]()
-            
             for stop in selectedRoute.routeWaypoints {
                 let lat = Double(stop.wpLat!)
                 let lon = Double(stop.wpLon!)
                 let location = CLLocation(latitude: lat!, longitude: lon!)
                 let pin = MKPointAnnotation()
                 pin.coordinate = location.coordinate
-                
                 cell.routeMapView.addAnnotation(pin)
             }
             cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: false)
-            //cell.routeMapView.removeAnnotations(cell.routeMapView.annotations)
+
             //How to plot the route line
             
             
@@ -87,10 +83,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                 directions.calculateDirectionsWithCompletionHandler({ (response, error) in
                     guard let unwrappedResponse = response else { return }
                     for route in unwrappedResponse.routes {
-//                        print("Add polyline")
                         cell.routeMapView.addOverlay(route.polyline)
                     }
-                   // cell.routeMapView.visibleMapRect = [cell.routeMapView.overlays]
                 })
                 
             }
@@ -115,7 +109,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-        renderer.strokeColor = UIColor().BeccaBlue() .colorWithAlphaComponent(0.5)
+        renderer.strokeColor = UIColor().BeccaBlue() .colorWithAlphaComponent(0.4)
         return renderer
     }
 

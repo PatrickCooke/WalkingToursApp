@@ -82,11 +82,16 @@ class ViewController: UIViewController {
         }
     }
     
+    func reloadTable() {
+        RouteTable.reloadData()
+    }
+    
     //MARK: - Reoccuring Functions
     
     func refetchAndReload(){
         fetchData()
         RouteTable.reloadData()
+
     }
     
     ////MARK: - Life Cycle Methods
@@ -95,6 +100,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         //saveNewRoute()
         refetchAndReload()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadTable), name: "routeDeleted", object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
