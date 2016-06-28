@@ -32,7 +32,6 @@ class LoginViewController: UIViewController {
     func fadeOutMessageView() {
         let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC)))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-            //            self.fadeOutView() //maybe don't need a second function?
             UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.messageView.alpha = 0.0
                 }, completion: nil)
@@ -81,8 +80,6 @@ class LoginViewController: UIViewController {
     }
     
     func segueToViews() {
-//        print("Email: \(self.loginManager.currentuser.email), UserID: \(self.loginManager.currentuser.objectId)")
-//        print("user  has signed in")
         performSegueWithIdentifier("loggedIn", sender: currentuser)
         fadeOutMessageView()
     }
@@ -130,14 +127,13 @@ class LoginViewController: UIViewController {
         passwordTextField.text = ""
     }
     
-    
     //MARK: - Life Cycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         messageView.alpha = 0.0
-        emailTextField.text = "cookepa1@gmail.com"
-        passwordTextField.text = "password"
+//        emailTextField.text = "cookepa1@gmail.com"
+//        passwordTextField.text = "password"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(segueToViews), name: "recvLoginInfo", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loginfailed), name: "loginInFailed", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(signUpSuccess), name: "signUpSuccess", object: nil)

@@ -10,11 +10,10 @@ import UIKit
 
 class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let backendless = Backendless.sharedInstance()
+    let backendless   = Backendless.sharedInstance()
     var selectedRoute = Route?()
     var waypointArray = [Waypoint]()
     @IBOutlet weak var routeTitleTXTField       :UITextField!
-    @IBOutlet weak var routeDistTXTField        :UITextField!
     @IBOutlet weak var routeDescriptionTXTField :UITextField!
     @IBOutlet weak var waypointTableView        :UITableView!
     @IBOutlet weak var routeActiveSwitch        :UISwitch!
@@ -36,7 +35,6 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func fadeOutMessageView() {
         let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(3.0 * Double(NSEC_PER_SEC)))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-            //            self.fadeOutView() //maybe don't need a second function?
             UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.messageView.alpha = 0.0
                 }, completion: nil)
@@ -55,26 +53,19 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func deleteListing() {
-//        print("delete Listing")
         let dataStore = backendless.data.of(Route.ofClass())
-        // save object asynchronously
         dataStore.save(
             selectedRoute,
             response: { (result: AnyObject!) -> Void in
                 let savedRoute = result as! Route
-//                print("Contact has been saved: \(savedRoute.objectId)")
-                // now delete the saved object
                 dataStore.remove(
                     savedRoute,
                     response: { (result: AnyObject!) -> Void in
-//                        print("Route has been deleted: \(result)")
                     },
                     error: { (fault: Fault!) -> Void in
-//                        print("Server reported an error (2): \(fault)")
                 })
             },
             error: { (fault: Fault!) -> Void in
-//                print("Server reported an error (1): \(fault)")
         })
         NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "routeDeleted", object: nil))
         self.navigationController!.popViewControllerAnimated(true)
@@ -110,7 +101,6 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBAction func saveRouteInfo() {
         fadeInMessageView("Saving...")
         resignFirstRespond()
-//        print("route saved pressed")
         if selectedRoute == nil {
             selectedRoute = Route()
         }
@@ -127,7 +117,6 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         if let routeCount = selectedRoute?.routeWaypoints.count {
             selectedRoute?.routeWpCount = routeCount
-//            print(routeCount)
         }
         selectedRoute?.routeFeatured = routeFeatured
         
@@ -139,13 +128,11 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     self.messageLabel.text = "\(name) has been saved"
                 }
                 self.fadeOutMessageView()
-//                print("entry saved")
         }) { (fault) in
             if let error = fault {
                 self.messageLabel.text = "Error in saving: \(error)"
             }
             self.fadeOutMessageView()
-//            print("server reported error:\(fault)")
         }
     }
     
@@ -180,7 +167,7 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //MARK: - WPTableview Sort Method
     
     @IBAction func startEditing(sender: UIButton) {
-            waypointTableView.editing = !waypointTableView.editing
+        waypointTableView.editing = !waypointTableView.editing
     }
     
     func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -195,7 +182,7 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
         for (index, waypoint) in waypointArray.enumerate() {
             waypoint.wpStopNum = index + 1
             thcSaveWaypoint(waypoint)
-
+            
         }
         reloadTable()
     }
@@ -212,9 +199,6 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
                 self.fadeOutMessageView()
                 self.messageLabel.text = "\(updatedRoute.wpName)"
-                
-                //                    print("Route has been updated: \(updatedRoute.objectId)")
-                
             },
             error: { (fault: Fault!) -> Void in
                 if let errorMessage = waypoint.wpName {
@@ -233,12 +217,8 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
         } else {
             var error: Fault?
             if error == nil {
-                
-                //add sorting stuff
-                
                 selectedRoute = backendless.data.of(Route.ofClass()).load(selectedRoute, relations: ["routeWaypoints"], fault: &error) as? Route
                 if error == nil {
-                    //print("Fetched \(selectedRoute?.routeWaypoints.count)")
                     waypointArray.removeAll()
                     for point in (selectedRoute?.routeWaypoints)! {
                         waypointArray.append(point)
@@ -292,7 +272,7 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let descript = routeDescriptionTXTField.text
         let charUsed = 500 - descript!.characters.count
         charRemainLabel.text = "Characters Remaining: \(charUsed)"
-        }
+    }
     
     //MARK: - Life Cycle Methods
     
@@ -307,7 +287,6 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if let routeName = selRoute.routeName{
                 routeTitleTXTField.text = routeName
                 self.title = routeName
-                
             }
             if let routeDescript = selRoute.routeDiscription {
                 routeDescriptionTXTField.text = routeDescript
@@ -324,9 +303,7 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         refetchTableData()
-        
-        
-                guard let route = selectedRoute else {
+        guard let route = selectedRoute else {
             return
         }
         if route.routeActive == "1" {

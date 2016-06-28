@@ -26,7 +26,6 @@ class LocationManager: NSObject,CLLocationManagerDelegate {
         locManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locManager.startUpdatingLocation()
         if CLLocationManager.locationServicesEnabled() {
-            //print("Location Service Enabled")
             switch CLLocationManager .authorizationStatus() {
             case .AuthorizedAlways:
                 turnOnLocationMonitoring()
@@ -39,14 +38,11 @@ class LocationManager: NSObject,CLLocationManagerDelegate {
                 locManager .requestAlwaysAuthorization()
                 break
             case .Restricted:
-               // print("Restricted")
                 break
             case .Denied:
-               // print("Denied")
                 break
             }
         } else {
-            //print("Turn on location services in settings")
         }
     }
     

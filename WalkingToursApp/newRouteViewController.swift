@@ -9,7 +9,7 @@
 import UIKit
 
 class newRouteViewController: UIViewController {
-
+    
     let backendless = Backendless.sharedInstance()
     var selectedRoute = Route?()
     @IBOutlet weak var routeTitleTXTField:      UITextField!
@@ -30,7 +30,6 @@ class newRouteViewController: UIViewController {
     func fadeOutMessageView() {
         let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(3.0 * Double(NSEC_PER_SEC)))
         dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-            //            self.fadeOutView() //maybe don't need a second function?
             UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.messageView.alpha = 0.0
                 }, completion: nil)
@@ -41,8 +40,6 @@ class newRouteViewController: UIViewController {
     
     @IBAction func saveRouteInfo() {
         fadeInMessageView("Saving")
-//        print("route saved pressed")
-        
         let newRoute = Route()
         if let routeName = routeTitleTXTField.text {
             newRoute.routeName = routeName
@@ -57,12 +54,10 @@ class newRouteViewController: UIViewController {
         dataStore.save(
             newRoute,
             response: { (result) in
-//                print("entry saved")
                 self.messageLabel.text = "Route Saved!"
                 self.fadeOutMessageView()
                 NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "routeCreated", object: nil))
         }) { (fault) in
-//            print("server reported error:\(fault)")
             self.messageLabel.text = "Error"
             self.fadeOutMessageView()
             
@@ -93,7 +88,7 @@ class newRouteViewController: UIViewController {
         super.viewDidLoad()
         messageView.alpha = 0.0
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

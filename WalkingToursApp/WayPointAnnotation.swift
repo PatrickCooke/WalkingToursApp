@@ -11,5 +11,5 @@ import UIKit
 class WayPointAnnotation: MKPointAnnotation {
     
     var waypoint :Waypoint?
-
+    
 }

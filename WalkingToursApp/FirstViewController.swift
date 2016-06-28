@@ -16,13 +16,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     var featuredArray = [Route]()
     var locationManager = CLLocationManager()
     @IBOutlet weak var featuredSegCtrl:   UISegmentedControl!
-    
     @IBOutlet private weak var RouteTable  :UITableView!
     
     ////MARK: - Table Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         switch featuredSegCtrl.selectedSegmentIndex {
         case 0:
             return featuredArray.count
@@ -31,7 +29,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         default:
             return routeArray.count
         }
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -42,8 +39,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             cell.routeNameLabel.text = selectedRoute.routeName
             cell.routeDescript.text = selectedRoute.routeDiscription
             cell.routeStartPoint.text = selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
-            //How to plot the map points
             
+            //How to plot the map points
             for stop in selectedRoute.routeWaypoints {
                 let lat = Double(stop.wpLat!)
                 let lon = Double(stop.wpLon!)
@@ -53,10 +50,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                 cell.routeMapView.addAnnotation(pin)
             }
             cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: false)
-
+            
             //How to plot the route line
-            
-            
             for (index, stop) in selectedRoute.routeWaypoints.enumerate() {
                 let sourceLat = Double(stop.wpLat!)
                 let sourceLon = Double(stop.wpLon!)
@@ -69,7 +64,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                 let destLat = Double(selectedRoute.routeWaypoints[nextStop].wpLat!)
                 let destLon = Double(selectedRoute.routeWaypoints[nextStop].wpLon!)
                 let dest = CLLocationCoordinate2D(latitude: destLat!, longitude: destLon!)
-                
                 
                 let request = MKDirectionsRequest()
                 
@@ -86,10 +80,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                         cell.routeMapView.addOverlay(route.polyline)
                     }
                 })
-                
             }
-
-            
             return cell
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
@@ -112,7 +103,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         renderer.strokeColor = UIColor().BeccaBlue() .colorWithAlphaComponent(0.4)
         return renderer
     }
-
+    
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseIdentifier = "pin"
         var pin = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseIdentifier) as? MKPinAnnotationView
@@ -134,8 +125,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             return 44
         }
     }
-
-
     
     //MARK: - Segue Methods
     
@@ -160,7 +149,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             navigationItem.backBarButtonItem = backItem
             RouteTable.deselectRowAtIndexPath(indexPath, animated: true)
         } else if segue.identifier == "admin" {
-            //let destController = segue.destinationViewController as! LoginViewController
             let backItem = UIBarButtonItem()
             backItem.title = "Menu"
             navigationItem.backBarButtonItem = backItem
@@ -185,7 +173,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         let result = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
         if error == nil {
             routeArray = result.getCurrentPage() as! [Route]
-            //featuredArray = routeArray.filter {$0.routeFeatured}
             
             featuredArray.removeAll()
             var tempArray = [Route]()
@@ -196,20 +183,16 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             }
             featuredArray = tempArray
             RouteTable.reloadData()
- 
-            //rint("requests: \(routeArray.count)")
+            
         } else {
-//            print("server error \(error)")
             routeArray = [Route]()
         }
-        
     }
     
     //MARK: - Reoccuring Functions
     
     func refetchAndReload(){
         fetchData()
-        //RouteTable.reloadData()
     }
     
     @IBAction func switchTableContents() {
@@ -223,18 +206,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         super.viewWillAppear(animated)
         refetchAndReload()
         locManager.setupLocationMonitoring()
-
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

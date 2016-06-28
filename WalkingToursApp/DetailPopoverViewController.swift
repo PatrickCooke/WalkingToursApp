@@ -9,9 +9,9 @@
 import UIKit
 
 class DetailPopoverViewController: UIViewController {
-
-    var detail : String!
+    
     @IBOutlet weak var wpDetailTextView:    UITextView!
+    var detail : String!
     
     //MARK: - Life Cycle Methods
     
@@ -23,11 +23,8 @@ class DetailPopoverViewController: UIViewController {
         super.viewDidLoad()
         self.preferredContentSize = CGSizeMake(400, 200)
         wpDetailTextView.text = detail
-
         wpDetailTextView.setContentOffset(CGPointZero, animated: false)
-
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

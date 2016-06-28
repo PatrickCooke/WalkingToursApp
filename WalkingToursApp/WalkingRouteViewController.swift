@@ -23,12 +23,9 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     @IBOutlet weak var wpName       :UILabel!
     @IBOutlet weak var wpAddress    :UILabel!
     @IBOutlet weak var wpDescript   :UILabel!
-    @IBOutlet weak var wpDirections :UITextView!
     @IBOutlet weak var wpMapView    :MKMapView!
-    @IBOutlet weak var wpDistTime   :UILabel!
     @IBOutlet weak var wpRouteTable :UITableView!
-    @IBOutlet weak var wpDirectionsButton :UIButton!
-    @IBOutlet weak var wpDetailsButton :UIButton!
+    
     
     
     var directionsArray: [String]!
@@ -40,26 +37,24 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
             let currentWaypoint = waypointArray[nextStop]
             let destController = segue.destinationViewController as! DetailPopoverViewController
             destController.detail = currentWaypoint.wpDescript
-//            print("Sent: \(destController.detail)")
             destController.popoverPresentationController!.delegate = self
         }
     }
     
     func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
-     //print("dismiss")
     }
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return .None
     }
-
+    
     
     //MARK: - Fill Methods
     
     func fillAllInfo(stop: Int) {
         let currentWaypoint = waypointArray[nextStop]
         let stops = currentWaypoint.wpStopNum
-            wpStopNum.text = "Destination #\(stops)"
+        wpStopNum.text = "Destination #\(stops)"
         wpName.text = currentWaypoint.wpName
         if let address = currentWaypoint.wpAddress {
             let city = currentWaypoint.wpCity ?? ""
@@ -77,9 +72,9 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         wpName.text = ""
         wpAddress.text = ""
         wpDescript.text = ""
-        wpDirections.text = ""
-        
     }
+    
+    //MARK: - Interactivity Methods
     
     @IBAction func nextButtonPressed(sender: UIButton) {
         wpMapView.removeAnnotations(wpMapView.annotations)
@@ -126,7 +121,6 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
             return
         }
         let pin = MKPointAnnotation()
-        
         pin.coordinate = CLLocationCoordinate2D(latitude: latDouble, longitude: lonDouble)
         wpMapView.addAnnotation(pin)
         
@@ -161,7 +155,6 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         request.transportType = .Walking
         
         let directions = MKDirections(request: request)
-        
         directions.calculateDirectionsWithCompletionHandler { [unowned self] response, error in
             guard let unwrappedResponse = response else { return }
             
@@ -172,7 +165,6 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
                 let mapEdgePadding = UIEdgeInsets(top: 60, left: 50, bottom: 20, right: 50)
                 self.wpMapView.addOverlay(route.polyline)
                 self.wpMapView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: mapEdgePadding, animated: true)
-                
             }
         }
     }
@@ -191,11 +183,9 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        
         let routeStep = stepsArray[indexPath.row]
         let distanceInMiles = String(format: "%0.2f mi",routeStep.distance / 1609.344)
         cell.textLabel!.text = "\(routeStep.instructions) - \(distanceInMiles)"
-        //cell.detailTextLabel!.text = ""
         
         return cell
     }
