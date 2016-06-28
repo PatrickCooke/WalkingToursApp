@@ -34,53 +34,64 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch featuredSegCtrl.selectedSegmentIndex {
         case 0:
+            var routeDist = 0
+            
             let cell = tableView.dequeueReusableCellWithIdentifier("fcell", forIndexPath: indexPath) as! FeaturedCellTableViewCell
             let selectedRoute = featuredArray[indexPath.row]
             cell.routeNameLabel.text = selectedRoute.routeName
             cell.routeDescript.text = selectedRoute.routeDiscription
-            cell.routeStartPoint.text = selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
+            cell.routeStartPoint.text = "Starting Citying: " + selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
             
             //How to plot the map points
-            for stop in selectedRoute.routeWaypoints {
-                let lat = Double(stop.wpLat!)
-                let lon = Double(stop.wpLon!)
-                let location = CLLocation(latitude: lat!, longitude: lon!)
-                let pin = MKPointAnnotation()
-                pin.coordinate = location.coordinate
-                cell.routeMapView.addAnnotation(pin)
-            }
-            cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: false)
-            
-            //How to plot the route line
-            for (index, stop) in selectedRoute.routeWaypoints.enumerate() {
-                let sourceLat = Double(stop.wpLat!)
-                let sourceLon = Double(stop.wpLon!)
-                let source = CLLocationCoordinate2D(latitude: sourceLat!, longitude: sourceLon!)
-                
-                var nextStop = index + 1
-                if index == selectedRoute.routeWaypoints.count - 1 {
-                    nextStop = 0
+            if cell.routeMapView.annotations.count == 0 {
+                for stop in selectedRoute.routeWaypoints {
+                    let lat = Double(stop.wpLat!)
+                    let lon = Double(stop.wpLon!)
+                    let location = CLLocation(latitude: lat!, longitude: lon!)
+                    let pin = MKPointAnnotation()
+                    pin.coordinate = location.coordinate
+                    cell.routeMapView.addAnnotation(pin)
                 }
-                let destLat = Double(selectedRoute.routeWaypoints[nextStop].wpLat!)
-                let destLon = Double(selectedRoute.routeWaypoints[nextStop].wpLon!)
-                let dest = CLLocationCoordinate2D(latitude: destLat!, longitude: destLon!)
-                
-                let request = MKDirectionsRequest()
-                
-                request.source = MKMapItem(placemark: MKPlacemark(coordinate: source, addressDictionary: nil))
-                request.destination = MKMapItem(placemark: MKPlacemark(coordinate: dest, addressDictionary: nil))
-                request.requestsAlternateRoutes = false
-                request.transportType = .Walking
-                
-                let directions = MKDirections(request: request)
-                
-                directions.calculateDirectionsWithCompletionHandler({ (response, error) in
-                    guard let unwrappedResponse = response else { return }
-                    for route in unwrappedResponse.routes {
-                        cell.routeMapView.addOverlay(route.polyline)
-                    }
-                })
+                cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: false)
             }
+            //How to plot the route line
+            if cell.routeMapView.overlays.count == 0 {
+                for (index, stop) in selectedRoute.routeWaypoints.enumerate() {
+                    let sourceLat = Double(stop.wpLat!)
+                    let sourceLon = Double(stop.wpLon!)
+                    let source = CLLocationCoordinate2D(latitude: sourceLat!, longitude: sourceLon!)
+                    
+                    var nextStop = index + 1
+                    if index == selectedRoute.routeWaypoints.count - 1 {
+                        nextStop = 0
+                    }
+                    let destLat = Double(selectedRoute.routeWaypoints[nextStop].wpLat!)
+                    let destLon = Double(selectedRoute.routeWaypoints[nextStop].wpLon!)
+                    let dest = CLLocationCoordinate2D(latitude: destLat!, longitude: destLon!)
+                    
+                    let request = MKDirectionsRequest()
+                    
+                    request.source = MKMapItem(placemark: MKPlacemark(coordinate: source, addressDictionary: nil))
+                    request.destination = MKMapItem(placemark: MKPlacemark(coordinate: dest, addressDictionary: nil))
+                    request.requestsAlternateRoutes = false
+                    request.transportType = .Walking
+                    
+                    let directions = MKDirections(request: request)
+                    cell.routeMapView.removeOverlays(cell.routeMapView.overlays)
+                    directions.calculateDirectionsWithCompletionHandler({ (response, error) in
+                        guard let unwrappedResponse = response else { return }
+                        for route in unwrappedResponse.routes {
+                            cell.routeMapView.addOverlay(route.polyline)
+                            let dist = Int(route.distance)
+                            routeDist += dist
+                        }
+                        let distInMiles = Double(routeDist)/1609.344
+                        let distString = String(format:"%.1f", distInMiles)
+                        cell.routeDist.text = "Expected Walking Distance: \(distString) mi"
+                    })
+                }
+            }
+            
             return cell
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)

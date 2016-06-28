@@ -333,11 +333,11 @@
                                             <segue destination="MaF-gL-oss" kind="show" identifier="seeSelectedRoute" id="3xC-Ft-c6Q"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fcell" rowHeight="265" id="zdC-fZ-xa4" customClass="FeaturedCellTableViewCell" customModule="WalkingToursApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="560" height="265"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fcell" rowHeight="286" id="zdC-fZ-xa4" customClass="FeaturedCellTableViewCell" customModule="WalkingToursApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="560" height="286"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zdC-fZ-xa4" id="Ygw-IZ-Xgm">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="264.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="285.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PFV-sy-f03">
@@ -368,10 +368,19 @@
                                                     <rect key="frame" x="8" y="65" width="544" height="164"/>
                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ss-dE-C0Q">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expected Walking Distance: 00 mi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ss-dE-C0Q">
                                                     <rect key="frame" x="8" y="235" width="544" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="1Pr-US-RA1"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
+                                                    <color key="textColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OD5-o0-dfB">
+                                                    <rect key="frame" x="8" y="256" width="544" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="zch-eD-dQ3"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
                                                     <color key="textColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -382,9 +391,12 @@
                                                 <constraint firstAttribute="leadingMargin" secondItem="PFV-sy-f03" secondAttribute="leading" id="7aA-Yo-wS1"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="7ss-dE-C0Q" secondAttribute="bottom" constant="0.5" id="9Ek-qi-PH1"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="7ss-dE-C0Q" secondAttribute="trailing" id="Bmu-dK-bvb"/>
+                                                <constraint firstItem="OD5-o0-dfB" firstAttribute="leading" secondItem="7ss-dE-C0Q" secondAttribute="trailing" constant="-544" id="HbL-ob-o1g"/>
                                                 <constraint firstItem="cgZ-oB-RjK" firstAttribute="bottom" secondItem="dYg-U8-nK1" secondAttribute="bottom" id="Hp9-zX-7LN"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="PFV-sy-f03" secondAttribute="trailing" id="Iue-kL-8Ij"/>
+                                                <constraint firstItem="OD5-o0-dfB" firstAttribute="top" secondItem="7ss-dE-C0Q" secondAttribute="bottom" id="JCV-ic-wX2"/>
                                                 <constraint firstItem="cgZ-oB-RjK" firstAttribute="trailing" secondItem="dYg-U8-nK1" secondAttribute="trailing" id="RIb-AZ-SJk"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="OD5-o0-dfB" secondAttribute="bottom" constant="0.5" id="Um8-UZ-HI8"/>
                                                 <constraint firstItem="cgZ-oB-RjK" firstAttribute="top" secondItem="dYg-U8-nK1" secondAttribute="top" id="Vch-Ef-nNR"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="HMt-5C-2Tc" secondAttribute="trailing" id="iAH-7z-pjA"/>
                                                 <constraint firstItem="cgZ-oB-RjK" firstAttribute="leading" secondItem="dYg-U8-nK1" secondAttribute="leading" id="iHj-L7-Ukt"/>
@@ -393,19 +405,29 @@
                                                 <constraint firstItem="7ss-dE-C0Q" firstAttribute="top" secondItem="dYg-U8-nK1" secondAttribute="bottom" constant="6" id="qR5-bd-vXV"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="7ss-dE-C0Q" secondAttribute="leading" id="tKA-eY-N6d"/>
                                                 <constraint firstItem="dYg-U8-nK1" firstAttribute="top" secondItem="HMt-5C-2Tc" secondAttribute="bottom" constant="8" id="zEB-5r-mRR"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="OD5-o0-dfB" secondAttribute="leading" id="zN0-2J-NzZ"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="9Ek-qi-PH1"/>
+                                                    <exclude reference="HbL-ob-o1g"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="dYg-U8-nK1" secondAttribute="trailing" constant="8" id="F03-KC-jDT"/>
                                             <constraint firstItem="PFV-sy-f03" firstAttribute="top" secondItem="zdC-fZ-xa4" secondAttribute="top" constant="2" id="Mgp-lK-l5m"/>
+                                            <constraint firstAttribute="trailing" secondItem="OD5-o0-dfB" secondAttribute="trailing" constant="8" id="S6I-T3-6Sf"/>
+                                            <constraint firstItem="OD5-o0-dfB" firstAttribute="leading" secondItem="zdC-fZ-xa4" secondAttribute="leading" constant="8" id="rR8-CN-VwK"/>
                                             <constraint firstItem="dYg-U8-nK1" firstAttribute="leading" secondItem="zdC-fZ-xa4" secondAttribute="leading" constant="8" id="w0m-P4-Zgk"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="routeDescript" destination="HMt-5C-2Tc" id="XyM-6j-K5L"/>
+                                            <outlet property="routeDist" destination="7ss-dE-C0Q" id="O7b-6L-BUb"/>
                                             <outlet property="routeMapView" destination="dYg-U8-nK1" id="uzU-l6-Ih9"/>
                                             <outlet property="routeNameLabel" destination="PFV-sy-f03" id="Jx4-hU-7Id"/>
-                                            <outlet property="routeStartPoint" destination="7ss-dE-C0Q" id="AWz-LO-b16"/>
+                                            <outlet property="routeStartPoint" destination="OD5-o0-dfB" id="DuX-1U-9zS"/>
                                             <segue destination="MaF-gL-oss" kind="show" identifier="seeFeaturedRoute" id="2Lr-dk-TmV"/>
                                         </connections>
                                     </tableViewCell>
@@ -795,7 +817,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L3r-Ep-BdD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2419" y="863"/>
+            <point key="canvasLocation" x="2358" y="753"/>
         </scene>
         <!--New Route-->
         <scene sceneID="f2w-Ui-tUH">

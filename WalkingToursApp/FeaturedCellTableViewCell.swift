@@ -14,6 +14,7 @@ class FeaturedCellTableViewCell: UITableViewCell {
     @IBOutlet weak var routeStartPoint  :UILabel!
     @IBOutlet weak var routeDescript    :UILabel!
     @IBOutlet weak var routeMapView     :MKMapView!
+    @IBOutlet weak var routeDist        :UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
