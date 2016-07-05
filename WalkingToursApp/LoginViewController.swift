@@ -132,8 +132,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         messageView.alpha = 0.0
-//        emailTextField.text = "cookepa1@gmail.com"
-//        passwordTextField.text = "password"
+        emailTextField.text = "cookepa1@gmail.com"
+        passwordTextField.text = "password"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(segueToViews), name: "recvLoginInfo", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loginfailed), name: "loginInFailed", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(signUpSuccess), name: "signUpSuccess", object: nil)

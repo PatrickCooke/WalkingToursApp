@@ -12,8 +12,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     
     var locManager = LocationManager.sharedInstance
     var backendless = Backendless.sharedInstance()
+    var loginManager = LoginManager.sharedInstance
     var routeArray = [Route]()
     var featuredArray = [Route]()
+    var privateArray = [Route]()
     var locationManager = CLLocationManager()
     @IBOutlet weak var featuredSegCtrl:   UISegmentedControl!
     @IBOutlet private weak var RouteTable  :UITableView!
@@ -26,6 +28,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             return featuredArray.count
         case 1:
             return routeArray.count
+        case 2:
+            return privateArray.count
         default:
             return routeArray.count
         }
@@ -99,6 +103,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             cell.textLabel!.text = selectedRoute.routeName
             cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
             return cell
+            
+        case 2:
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+            let selectedRoute = privateArray[indexPath.row]
+            cell.textLabel!.text = selectedRoute.routeName
+            cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
+            return cell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
             let selectedRoute = routeArray[indexPath.row]
@@ -169,7 +180,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     
     //MARK: - Fetch Methods
     
-    private func fetchData() {
+    private func fetchPublicData() {
         
         let dataQuery = BackendlessDataQuery()
         
@@ -200,10 +211,30 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         }
     }
     
+    private func fetchPrivateData() {
+        
+        let dataQuery = BackendlessDataQuery()
+        
+        let whereClause = "routeWpCount > 1 and ownerId = '\(loginManager.currentuser.objectId)'"
+        dataQuery.whereClause = whereClause
+        
+        let queryOptions = QueryOptions()
+        queryOptions.sortBy = ["routeName"]
+        dataQuery.queryOptions = queryOptions
+        
+        var error: Fault?
+        let result = backendless.data.of(Route.ofClass()).find(dataQuery, fault: &error)
+        if error == nil {
+            privateArray.removeAll()
+            privateArray = result.getCurrentPage() as! [Route]
+            RouteTable.reloadData()
+        }
+    }
+    
     //MARK: - Reoccuring Functions
     
     func refetchAndReload(){
-        fetchData()
+        fetchPublicData()
     }
     
     @IBAction func switchTableContents() {
@@ -217,6 +248,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         super.viewWillAppear(animated)
         refetchAndReload()
         locManager.setupLocationMonitoring()
+        if backendless.userService.currentUser == nil {
+        } else {
+            fetchPrivateData()
+        }
     }
     
     

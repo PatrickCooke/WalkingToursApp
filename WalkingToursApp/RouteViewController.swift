@@ -48,7 +48,7 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func reloadTable() {
-        print("reloading")
+//        print("reloading")
         waypointTableView.reloadData()
     }
     
@@ -175,7 +175,7 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        print("From \(sourceIndexPath.row) To \(destinationIndexPath.row) ")
+//        print("From \(sourceIndexPath.row) To \(destinationIndexPath.row) ")
         let itemMoved = waypointArray[sourceIndexPath.row]
         waypointArray.removeAtIndex(sourceIndexPath.row)
         waypointArray.insert(itemMoved, atIndex: destinationIndexPath.row)
@@ -194,7 +194,7 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
             response: { (result: AnyObject!) -> Void in
                 let updatedRoute = result as! Waypoint
                 if let saveMessage = waypoint.wpName {
-                    print("\(saveMessage) has been saved")
+//                    print("\(saveMessage) has been saved")
                     self.messageLabel.text = "\(saveMessage) has been saved"
                 }
                 self.fadeOutMessageView()

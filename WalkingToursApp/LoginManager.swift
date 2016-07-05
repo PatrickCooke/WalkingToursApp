@@ -22,7 +22,6 @@ class LoginManager: NSObject {
             NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "signUpSuccess", object: nil))
         }) { (error) in
             NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "signUpFailed", object: nil))
-            
         }
     }
     
@@ -33,8 +32,6 @@ class LoginManager: NSObject {
         }) { (error) in
             NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "loginInFailed", object: nil))
         }
-        
     }
-    
     
 }

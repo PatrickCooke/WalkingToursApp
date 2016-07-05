@@ -293,8 +293,9 @@
                                     <constraint firstAttribute="height" constant="28" id="Q37-Vl-jBv"/>
                                 </constraints>
                                 <segments>
-                                    <segment title="Featured Routes"/>
-                                    <segment title="User Generated Routes"/>
+                                    <segment title="Featured Tours"/>
+                                    <segment title="Public Tours"/>
+                                    <segment title="Private Tours"/>
                                 </segments>
                                 <color key="tintColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1168,7 +1169,7 @@
                                     <action selector="checkMaxLength" destination="GiG-Ig-JKv" eventType="editingChanged" id="60R-mV-CUF"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route Active?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcU-R8-SNT">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route Public?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcU-R8-SNT">
                                 <rect key="frame" x="20" y="202" width="126" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="6Iu-2X-tPV"/>
