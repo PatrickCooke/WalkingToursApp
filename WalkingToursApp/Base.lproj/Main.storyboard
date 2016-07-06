@@ -262,7 +262,6 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="logoutUser" destination="IBd-6a-XPl" eventType="touchUpInside" id="z7K-JS-yQ4"/>
-                                    <segue destination="dhb-sq-Sm6" kind="show" id="8Zc-r3-lpr"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -295,6 +294,7 @@
                         <outlet property="passwordTextField" destination="RI0-SO-qNn" id="ops-t4-m3n"/>
                         <outlet property="signupButton" destination="AES-eh-CAV" id="N2t-JD-pY9"/>
                         <segue destination="dhb-sq-Sm6" kind="show" identifier="loggedIn" id="OfA-8s-wgm"/>
+                        <segue destination="dhb-sq-Sm6" kind="show" identifier="loggedOut" id="Uir-nj-Pv0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KwF-Yb-75g" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -321,7 +321,7 @@
                                 <segments>
                                     <segment title="Featured Tours"/>
                                     <segment title="Public Tours"/>
-                                    <segment title="Your Private Tours"/>
+                                    <segment title="Private Tours"/>
                                 </segments>
                                 <color key="tintColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1948,7 +1948,7 @@
         <image name="title" width="550" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="OfA-8s-wgm"/>
+        <segue reference="Uir-nj-Pv0"/>
         <segue reference="gmM-jV-fbL"/>
         <segue reference="tGo-pu-PrF"/>
     </inferredMetricsTieBreakers>

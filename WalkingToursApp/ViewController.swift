@@ -27,9 +27,9 @@ class ViewController: UIViewController {
         let selectedRoute = routeArray[indexPath.row]
         cell.textLabel!.text = selectedRoute.routeName
         if selectedRoute.routeActive! .containsString("1") {
-            cell.detailTextLabel!.text = "Active: \(selectedRoute.routeWaypoints.count) stops"
+            cell.detailTextLabel!.text = "Public: \(selectedRoute.routeWaypoints.count) stops"
         } else {
-            cell.detailTextLabel!.text = "Inactive: \(selectedRoute.routeWaypoints.count) stops"
+            cell.detailTextLabel!.text = "Private: \(selectedRoute.routeWaypoints.count) stops"
         }
         
         return cell

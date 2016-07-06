@@ -80,17 +80,25 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction private func logoutUser() {
+        fadeInMessageView("Logging Out")
         Types.tryblock({ () -> Void in
             self.loginManager.backendless.userService.logout()
-//            print("User logged out")
+            self.messageLabel.text = "Logged Out"
+            self.loggedoutsegueToViews()
             },
                        catchblock: { (exception) -> Void in
+                        self.messageLabel.text = "Log Out Failed"
 //                        print("Server reported an error: \(exception as! Fault)")
         })
     }
     
     func segueToViews() {
         performSegueWithIdentifier("loggedIn", sender: currentuser)
+        fadeOutMessageView()
+    }
+    
+    func loggedoutsegueToViews() {
+        performSegueWithIdentifier("loggedOut", sender: currentuser)
         fadeOutMessageView()
     }
     
