@@ -170,13 +170,14 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             if backendless.userService.currentUser == nil {
                 cell.textLabel!.text = loggedOutArray.first
                 cell.detailTextLabel!.text = " "
-                return cell
+//                return cell
             } else {
                 let selectedRoute = privateArray[indexPath.row]
                 cell.textLabel!.text = selectedRoute.routeName
                 cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
-                return cell
+//                return cell
             }
+            return cell
 
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
@@ -236,6 +237,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             let destController = segue.destinationViewController as! WalkingRouteViewController
             let indexPath = RouteTable.indexPathForSelectedRow!
             let selectedRoute = routeArray[indexPath.row]
+            destController.selectedRoute = selectedRoute
+            let backItem = UIBarButtonItem()
+            backItem.title = "Done"
+            navigationItem.backBarButtonItem = backItem
+            RouteTable.deselectRowAtIndexPath(indexPath, animated: true)
+        } else if segue.identifier == "seePrivateRoute" {
+            let destController = segue.destinationViewController as! WalkingRouteViewController
+            let indexPath = RouteTable.indexPathForSelectedRow!
+            let selectedRoute = privateArray[indexPath.row]
             destController.selectedRoute = selectedRoute
             let backItem = UIBarButtonItem()
             backItem.title = "Done"

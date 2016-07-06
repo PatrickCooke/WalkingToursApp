@@ -357,7 +357,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="MaF-gL-oss" kind="show" identifier="seeSelectedRoute" id="3xC-Ft-c6Q"/>
+                                            <segue destination="MaF-gL-oss" kind="show" identifier="seePrivateRoute" id="3xC-Ft-c6Q"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fcell" rowHeight="286" id="zdC-fZ-xa4" customClass="FeaturedCellTableViewCell" customModule="WalkingToursApp" customModuleProvider="target">
@@ -1949,7 +1949,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Uir-nj-Pv0"/>
-        <segue reference="gmM-jV-fbL"/>
+        <segue reference="3xC-Ft-c6Q"/>
         <segue reference="tGo-pu-PrF"/>
     </inferredMetricsTieBreakers>
 </document>
