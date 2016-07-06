@@ -16,6 +16,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     var routeArray = [Route]()
     var featuredArray = [Route]()
     var privateArray = [Route]()
+    var loggedOutArray = ["Please log in to see your Private Tours."]
     var locationManager = CLLocationManager()
     @IBOutlet weak var loginLogoutButton   :UIBarButtonItem!
     @IBOutlet weak var settingsButton      :UIBarButtonItem!
@@ -31,7 +32,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         case 1:
             return routeArray.count
         case 2:
-            return privateArray.count
+            if backendless.userService.currentUser == nil {
+                return loggedOutArray.count
+            } else {
+                return privateArray.count
+            }
         default:
             return routeArray.count
         }
@@ -162,10 +167,17 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             
         case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-            let selectedRoute = privateArray[indexPath.row]
-            cell.textLabel!.text = selectedRoute.routeName
-            cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
-            return cell
+            if backendless.userService.currentUser == nil {
+                cell.textLabel!.text = loggedOutArray.first
+                cell.detailTextLabel!.text = " "
+                return cell
+            } else {
+                let selectedRoute = privateArray[indexPath.row]
+                cell.textLabel!.text = selectedRoute.routeName
+                cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
+                return cell
+            }
+
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
             let selectedRoute = routeArray[indexPath.row]
@@ -300,11 +312,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         RouteTable.reloadData()
     }
     
-    func loginLogoutButtonChange() {
-        self.navigationItem.backBarButtonItem?.image = UIImage(named: "Logout-GRAY")
-    }
-    
-    
     //MARK: - Life Cycle Method
     
     override func viewWillAppear(animated: Bool) {
@@ -313,21 +320,21 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         locManager.setupLocationMonitoring()
         
         if backendless.userService.currentUser == nil {
-            print("current user no")
             self.navigationItem.leftBarButtonItem?.image = UIImage(named: "Login-GRAY")
             self.navigationItem.rightBarButtonItem?.image = nil
-            //make the settings button.alpha=0.0
-            //make the loginbutton.image = Login-GRAY
+            self.navigationItem.rightBarButtonItem?.enabled = false
         } else {
-            print("current user yes")
             self.navigationItem.leftBarButtonItem?.image = UIImage(named: "Logout-GRAY")
             self.navigationItem.rightBarButtonItem?.image = UIImage(named: "Settings")
-            //make the settings button.alpha=1.0
-            //make the loginbutton.image = Logout-GRAY
+            self.navigationItem.rightBarButtonItem?.enabled = true
             fetchPrivateData()
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
