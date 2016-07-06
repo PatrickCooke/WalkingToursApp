@@ -241,6 +241,30 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uy-8Y-dvn" customClass="RoundedButtons" customModule="WalkingToursApp" customModuleProvider="target">
+                                <rect key="frame" x="412" y="338" width="80" height="45"/>
+                                <color key="backgroundColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="JhW-rl-HcX"/>
+                                    <constraint firstAttribute="height" constant="45" id="g9x-eO-ZH5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="15"/>
+                                <state key="normal" title="Log off">
+                                    <color key="titleColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="disabled">
+                                    <color key="titleColor" red="0.1877059193" green="0.2730855814" blue="0.35702535819999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="logoutUser" destination="IBd-6a-XPl" eventType="touchUpInside" id="z7K-JS-yQ4"/>
+                                    <segue destination="dhb-sq-Sm6" kind="show" id="8Zc-r3-lpr"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -252,8 +276,10 @@
                             <constraint firstAttribute="leadingMargin" secondItem="6OP-xY-LDJ" secondAttribute="leading" id="KCj-cO-9f3"/>
                             <constraint firstAttribute="leadingMargin" secondItem="RI0-SO-qNn" secondAttribute="leading" id="YZD-5W-VXG"/>
                             <constraint firstItem="TAA-Bm-CYD" firstAttribute="centerX" secondItem="qtS-j0-cqO" secondAttribute="centerX" id="auH-3S-mVj"/>
+                            <constraint firstItem="WOM-FD-d2s" firstAttribute="leading" secondItem="7uy-8Y-dvn" secondAttribute="trailing" constant="8" id="ca0-7C-0Tv"/>
                             <constraint firstItem="RI0-SO-qNn" firstAttribute="top" secondItem="DAN-gu-lEd" secondAttribute="bottom" constant="38" id="eOe-aG-IMy"/>
                             <constraint firstItem="DAN-gu-lEd" firstAttribute="top" secondItem="6OP-xY-LDJ" secondAttribute="bottom" constant="87" id="elk-C4-2en"/>
+                            <constraint firstItem="7uy-8Y-dvn" firstAttribute="top" secondItem="RI0-SO-qNn" secondAttribute="bottom" constant="23" id="enH-gH-tQP"/>
                             <constraint firstItem="WOM-FD-d2s" firstAttribute="top" secondItem="bwt-DE-Fz0" secondAttribute="bottom" constant="274" id="fQc-m2-Fop"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RI0-SO-qNn" secondAttribute="trailing" id="lEA-4m-W49"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WOM-FD-d2s" secondAttribute="trailing" id="p0W-24-mKl"/>
@@ -428,8 +454,125 @@
                                             <outlet property="routeDist" destination="7ss-dE-C0Q" id="O7b-6L-BUb"/>
                                             <outlet property="routeMapView" destination="dYg-U8-nK1" id="uzU-l6-Ih9"/>
                                             <outlet property="routeNameLabel" destination="PFV-sy-f03" id="Jx4-hU-7Id"/>
-                                            <outlet property="routeStartPoint" destination="OD5-o0-dfB" id="DuX-1U-9zS"/>
+                                            <outlet property="routeStartPoint" destination="OD5-o0-dfB" id="bww-Lz-OkQ"/>
                                             <segue destination="MaF-gL-oss" kind="show" identifier="seeFeaturedRoute" id="2Lr-dk-TmV"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pcell" rowHeight="180" id="BXF-Mm-jCP" customClass="PublicTableViewCell" customModule="WalkingToursApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="358" width="560" height="180"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BXF-Mm-jCP" id="9RD-eW-opd">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="179.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X8r-CZ-34t">
+                                                    <rect key="frame" x="180" y="2" width="372" height="42"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="42" id="J8w-gM-8nz"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="20"/>
+                                                    <color key="textColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Owd-V0-E0T">
+                                                    <rect key="frame" x="180" y="43" width="372" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="YtV-ul-wS8"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="13"/>
+                                                    <color key="textColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WmT-yu-9KP" customClass="BorderedRoundedUIView" customModule="WalkingToursApp" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="8" width="164" height="164"/>
+                                                    <subviews>
+                                                        <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JG6-cs-TPJ">
+                                                            <rect key="frame" x="0.0" y="0.0" width="164" height="164"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="164" id="36w-BN-QYg"/>
+                                                                <constraint firstAttribute="width" constant="164" id="QNU-sb-a3v"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="dhb-sq-Sm6" id="M1V-3O-fTJ"/>
+                                                            </connections>
+                                                        </mapView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="JG6-cs-TPJ" firstAttribute="leading" secondItem="WmT-yu-9KP" secondAttribute="leading" id="A3l-gO-g97"/>
+                                                        <constraint firstAttribute="width" constant="164" id="LkC-DN-hg0"/>
+                                                        <constraint firstAttribute="height" constant="164" id="M53-op-Ebn"/>
+                                                        <constraint firstItem="JG6-cs-TPJ" firstAttribute="top" secondItem="WmT-yu-9KP" secondAttribute="top" id="dfi-y0-9iI"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="15"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expected Walking Distance: 00 mi" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="klc-MF-eMo">
+                                                    <rect key="frame" x="180" y="132" width="372" height="42"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="42" id="1zF-4e-M0v"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
+                                                    <color key="textColor" red="0.31372549020000001" green="0.4549019608" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="leadingMargin" secondItem="klc-MF-eMo" secondAttribute="leading" id="9JM-nV-o1M"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="X8r-CZ-34t" secondAttribute="leading" id="9nB-iP-QsC"/>
+                                                <constraint firstItem="Owd-V0-E0T" firstAttribute="leading" secondItem="WmT-yu-9KP" secondAttribute="trailing" constant="8" id="BYn-kC-eyH"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Owd-V0-E0T" secondAttribute="trailing" id="Bnd-fe-EFP"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="Owd-V0-E0T" secondAttribute="leading" id="Cxr-gw-zCq"/>
+                                                <constraint firstItem="Owd-V0-E0T" firstAttribute="leading" secondItem="WmT-yu-9KP" secondAttribute="trailing" constant="8" id="FOw-ny-tkY"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="X8r-CZ-34t" secondAttribute="trailing" id="JmT-vP-q1x"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="klc-MF-eMo" secondAttribute="trailing" id="MhM-pO-zxg"/>
+                                                <constraint firstItem="X8r-CZ-34t" firstAttribute="leading" secondItem="WmT-yu-9KP" secondAttribute="trailing" constant="8" id="dCH-13-gLW"/>
+                                                <constraint firstItem="klc-MF-eMo" firstAttribute="leading" secondItem="WmT-yu-9KP" secondAttribute="trailing" constant="8" id="dyx-0C-OgF"/>
+                                                <constraint firstItem="klc-MF-eMo" firstAttribute="leading" secondItem="WmT-yu-9KP" secondAttribute="trailing" constant="8" id="kQZ-hv-lXU"/>
+                                                <constraint firstItem="X8r-CZ-34t" firstAttribute="leading" secondItem="WmT-yu-9KP" secondAttribute="trailing" constant="8" id="qYs-E4-Yxi"/>
+                                                <constraint firstItem="Owd-V0-E0T" firstAttribute="top" secondItem="X8r-CZ-34t" secondAttribute="bottom" constant="-1" id="rc1-qq-bNH"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="klc-MF-eMo" secondAttribute="bottom" constant="0.5" id="wce-Ss-33h"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="9nB-iP-QsC"/>
+                                                    <exclude reference="qYs-E4-Yxi"/>
+                                                    <exclude reference="BYn-kC-eyH"/>
+                                                    <exclude reference="Cxr-gw-zCq"/>
+                                                    <exclude reference="9JM-nV-o1M"/>
+                                                    <exclude reference="dyx-0C-OgF"/>
+                                                    <exclude reference="wce-Ss-33h"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="X8r-CZ-34t" firstAttribute="top" secondItem="BXF-Mm-jCP" secondAttribute="top" constant="2" id="Ne3-0w-CL4"/>
+                                            <constraint firstAttribute="bottom" secondItem="klc-MF-eMo" secondAttribute="bottom" constant="6" id="Prd-dZ-SCc"/>
+                                            <constraint firstAttribute="bottom" secondItem="klc-MF-eMo" secondAttribute="bottom" constant="6" id="Sn1-g8-8ft"/>
+                                            <constraint firstItem="WmT-yu-9KP" firstAttribute="top" secondItem="BXF-Mm-jCP" secondAttribute="top" constant="8" id="x6a-WP-upI"/>
+                                            <constraint firstItem="WmT-yu-9KP" firstAttribute="leading" secondItem="BXF-Mm-jCP" secondAttribute="leading" constant="8" id="ysm-gH-6ZP"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Prd-dZ-SCc"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="routeDescript" destination="Owd-V0-E0T" id="jQF-it-4CY"/>
+                                            <outlet property="routeDist" destination="klc-MF-eMo" id="m4x-Bv-vIa"/>
+                                            <outlet property="routeMapView" destination="JG6-cs-TPJ" id="vWO-HL-BmN"/>
+                                            <outlet property="routeNameLabel" destination="X8r-CZ-34t" id="iEf-dJ-Jcc"/>
+                                            <segue destination="MaF-gL-oss" kind="show" identifier="seeSelectedRoute" id="gmM-jV-fbL"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -468,15 +611,21 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="QDN-fM-6eQ">
-                        <barButtonItem key="leftBarButtonItem" image="Settings" id="OHO-NS-ApS">
+                        <barButtonItem key="leftBarButtonItem" image="Login-GRAY" id="OHO-NS-ApS">
                             <connections>
                                 <segue destination="IBd-6a-XPl" kind="show" identifier="admin" id="zdW-cE-yRf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="Settings" id="lyh-Il-u3z">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="show" id="q8D-eT-lCP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="RouteTable" destination="DyO-yA-ZTX" id="G23-SH-l5t"/>
                         <outlet property="featuredSegCtrl" destination="boG-6v-NYD" id="CyI-Td-lEH"/>
+                        <outlet property="settingsButton" destination="lyh-Il-u3z" id="FaR-gd-f44"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="81Q-xa-Yaj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1790,6 +1939,7 @@
     </scenes>
     <resources>
         <image name="Backicon" width="60" height="60"/>
+        <image name="Login-GRAY" width="25" height="25"/>
         <image name="Marker" width="30" height="30"/>
         <image name="Nexticon" width="60" height="60"/>
         <image name="Settings" width="25" height="25"/>
@@ -1798,7 +1948,9 @@
         <image name="title" width="550" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2Lr-dk-TmV"/>
+        <segue reference="LAc-oW-n7W"/>
+        <segue reference="q8D-eT-lCP"/>
+        <segue reference="gmM-jV-fbL"/>
         <segue reference="tGo-pu-PrF"/>
     </inferredMetricsTieBreakers>
 </document>

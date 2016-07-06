@@ -17,7 +17,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     var featuredArray = [Route]()
     var privateArray = [Route]()
     var locationManager = CLLocationManager()
-    @IBOutlet weak var featuredSegCtrl:   UISegmentedControl!
+    @IBOutlet weak var loginLogoutButton   :UIBarButtonItem!
+    @IBOutlet weak var settingsButton      :UIBarButtonItem!
+    @IBOutlet weak var featuredSegCtrl     :UISegmentedControl!
     @IBOutlet private weak var RouteTable  :UITableView!
     
     ////MARK: - Table Methods
@@ -98,11 +100,65 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             
             return cell
         case 1:
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+            var routeDist = 0
+            
+            let cellP = tableView.dequeueReusableCellWithIdentifier("pcell", forIndexPath: indexPath) as! PublicTableViewCell
             let selectedRoute = routeArray[indexPath.row]
-            cell.textLabel!.text = selectedRoute.routeName
-            cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
-            return cell
+            cellP.routeNameLabel.text = selectedRoute.routeName
+            cellP.routeDescript.text = selectedRoute.routeDiscription
+//            cellP.routeStartPoint.text = "Starting Citying: " + selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
+            
+            //How to plot the map points
+            if cellP.routeMapView.annotations.count == 0 {
+                for stop in selectedRoute.routeWaypoints {
+                    let lat = Double(stop.wpLat!)
+                    let lon = Double(stop.wpLon!)
+                    let location = CLLocation(latitude: lat!, longitude: lon!)
+                    let pin = MKPointAnnotation()
+                    pin.coordinate = location.coordinate
+                    cellP.routeMapView.addAnnotation(pin)
+                }
+                cellP.routeMapView.showAnnotations(cellP.routeMapView.annotations, animated: false)
+            }
+            //How to plot the route line
+            if cellP.routeMapView.overlays.count == 0 {
+                for (index, stop) in selectedRoute.routeWaypoints.enumerate() {
+                    let sourceLat = Double(stop.wpLat!)
+                    let sourceLon = Double(stop.wpLon!)
+                    let source = CLLocationCoordinate2D(latitude: sourceLat!, longitude: sourceLon!)
+                    
+                    var nextStop = index + 1
+                    if index == selectedRoute.routeWaypoints.count - 1 {
+                        nextStop = 0
+                    }
+                    let destLat = Double(selectedRoute.routeWaypoints[nextStop].wpLat!)
+                    let destLon = Double(selectedRoute.routeWaypoints[nextStop].wpLon!)
+                    let dest = CLLocationCoordinate2D(latitude: destLat!, longitude: destLon!)
+                    
+                    let request = MKDirectionsRequest()
+                    
+                    request.source = MKMapItem(placemark: MKPlacemark(coordinate: source, addressDictionary: nil))
+                    request.destination = MKMapItem(placemark: MKPlacemark(coordinate: dest, addressDictionary: nil))
+                    request.requestsAlternateRoutes = false
+                    request.transportType = .Walking
+                    
+                    let directions = MKDirections(request: request)
+                    cellP.routeMapView.removeOverlays(cellP.routeMapView.overlays)
+                    directions.calculateDirectionsWithCompletionHandler({ (response, error) in
+                        guard let unwrappedResponse = response else { return }
+                        for route in unwrappedResponse.routes {
+                            cellP.routeMapView.addOverlay(route.polyline)
+                            let dist = Int(route.distance)
+                            routeDist += dist
+                        }
+                        let distInMiles = Double(routeDist)/1609.344
+                        let distString = String(format:"%.1f", distInMiles)
+                        cellP.routeDist.text = "Expected Walking Distance: \(distString) mi"
+                    })
+                }
+            }
+            
+            return cellP
             
         case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
@@ -131,7 +187,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         var pin = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseIdentifier) as? MKPinAnnotationView
         if pin == nil {
             pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
-            pin!.alpha = 0.0
+            pin!.image = UIImage(named: "Marker")!
+            pin?.pinTintColor = UIColor().BeccaBlue()
             pin!.canShowCallout = false
         } else {
             pin!.annotation = annotation
@@ -143,6 +200,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         switch featuredSegCtrl.selectedSegmentIndex {
         case 0:
             return 265
+        case 1:
+            return 180
         default:
             return 44
         }
@@ -241,6 +300,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         RouteTable.reloadData()
     }
     
+    func loginLogoutButtonChange() {
+        self.navigationItem.backBarButtonItem?.image = UIImage(named: "Logout-GRAY")
+    }
+    
     
     //MARK: - Life Cycle Method
     
@@ -248,8 +311,19 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         super.viewWillAppear(animated)
         refetchAndReload()
         locManager.setupLocationMonitoring()
+        
         if backendless.userService.currentUser == nil {
+            print("current user no")
+            self.navigationItem.leftBarButtonItem?.image = UIImage(named: "Login-GRAY")
+            self.navigationItem.rightBarButtonItem?.image = nil
+            //make the settings button.alpha=0.0
+            //make the loginbutton.image = Login-GRAY
         } else {
+            print("current user yes")
+            self.navigationItem.leftBarButtonItem?.image = UIImage(named: "Logout-GRAY")
+            self.navigationItem.rightBarButtonItem?.image = UIImage(named: "Settings")
+            //make the settings button.alpha=1.0
+            //make the loginbutton.image = Logout-GRAY
             fetchPrivateData()
         }
     }
