@@ -64,9 +64,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                     cell.routeMapView.addAnnotation(pin)
                 }
                 cell.routeMapView.showAnnotations(cell.routeMapView.annotations, animated: false)
-            }
+            
             //How to plot the route line
-            if cell.routeMapView.overlays.count == 0 {
+            
                 for (index, stop) in selectedRoute.routeWaypoints.enumerate() {
                     let sourceLat = Double(stop.wpLat!)
                     let sourceLon = Double(stop.wpLon!)
@@ -124,9 +124,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
                     cellP.routeMapView.addAnnotation(pin)
                 }
                 cellP.routeMapView.showAnnotations(cellP.routeMapView.annotations, animated: false)
-            }
+            
             //How to plot the route line
-            if cellP.routeMapView.overlays.count == 0 {
+            
                 for (index, stop) in selectedRoute.routeWaypoints.enumerate() {
                     let sourceLat = Double(stop.wpLat!)
                     let sourceLon = Double(stop.wpLon!)
