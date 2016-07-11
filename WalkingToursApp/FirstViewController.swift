@@ -54,7 +54,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             cell.routeStartPoint.text = "Starting Citying: " + selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
             
             //How to plot the map points
-            if cell.routeMapView.annotations.count == 0 {
+            if cell.routeMapView.annotations.count == selectedRoute.routeWaypoints.count {
                 for stop in selectedRoute.routeWaypoints {
                     let lat = Double(stop.wpLat!)
                     let lon = Double(stop.wpLon!)
@@ -114,7 +114,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
 //            cellP.routeStartPoint.text = "Starting Citying: " + selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
             
             //How to plot the map points
-            if cellP.routeMapView.annotations.count == 0 {
+            if cellP.routeMapView.annotations.count == selectedRoute.routeWaypoints.count {
                 for stop in selectedRoute.routeWaypoints {
                     let lat = Double(stop.wpLat!)
                     let lon = Double(stop.wpLon!)
@@ -330,11 +330,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
         locManager.setupLocationMonitoring()
         
         if backendless.userService.currentUser == nil {
-            self.navigationItem.leftBarButtonItem?.image = UIImage(named: "Login-GRAY")
+            self.navigationItem.leftBarButtonItem?.title = "Log In"
             self.navigationItem.rightBarButtonItem?.image = nil
             self.navigationItem.rightBarButtonItem?.enabled = false
         } else {
-            self.navigationItem.leftBarButtonItem?.image = UIImage(named: "Logout-GRAY")
+            self.navigationItem.leftBarButtonItem?.title = "Log Out"
             self.navigationItem.rightBarButtonItem?.image = UIImage(named: "Settings")
             self.navigationItem.rightBarButtonItem?.enabled = true
             fetchPrivateData()
