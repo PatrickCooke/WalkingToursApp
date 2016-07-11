@@ -100,7 +100,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         }
         fillAllInfo(nextStop)
         stepsArray.removeAll()
-        wpRouteTable.reloadData() 
+        wpRouteTable.reloadData()
         updateDirectionsPushed()
     }
     
