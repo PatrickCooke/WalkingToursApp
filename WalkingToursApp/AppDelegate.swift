@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        backendless.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
+        backendless.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM) 
         
         UINavigationBar.appearance().barTintColor = UIColor().BeccaBlue()
         UINavigationBar.appearance().tintColor = UIColor().backgroundGrey()

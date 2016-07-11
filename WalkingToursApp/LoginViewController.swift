@@ -72,7 +72,7 @@ class LoginViewController: UIViewController {
         guard let email = emailTextField.text else {
             return
         }
-        guard let password = passwordTextField.text else { 
+        guard let password = passwordTextField.text else {
             return
         }
         loginManager.loginUserFunc(email, password: password)
@@ -88,7 +88,7 @@ class LoginViewController: UIViewController {
             },
                        catchblock: { (exception) -> Void in
                         self.messageLabel.text = "Log Out Failed"
-//                        print("Server reported an error: \(exception as! Fault)")
+                        //                        print("Server reported an error: \(exception as! Fault)")
         })
     }
     

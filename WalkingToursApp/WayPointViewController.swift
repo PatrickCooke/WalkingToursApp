@@ -90,7 +90,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "wpsaved", object: nil))
                 self.messageLabel.text = "Saved"
             } else {
-//                print("Server reported an error: \(error)")
+                //                print("Server reported an error: \(error)")
                 self.messageLabel.text = "Error"
                 self.fadeOutMessageView()
             }
@@ -120,13 +120,13 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     let updatedRoute = result as! Waypoint
                     if let saveMessage = updatedRoute.wpName {
                         self.messageLabel.text = "\(saveMessage) has been saved"
-                        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "wpsaved", object: nil)) 
+                        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "wpsaved", object: nil))
                     }
                     self.fadeOutMessageView()
                 },
                 error: { (fault: Fault!) -> Void in
                     if let errorMessage = self.selectedWP?.wpName {
-//                        print(errorMessage)
+                        //                        print(errorMessage)
                         self.messageLabel.text = "There has been an error, \(errorMessage) has not been saved"
                         self.fadeOutMessageView()
                     }

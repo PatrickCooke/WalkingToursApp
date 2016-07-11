@@ -67,7 +67,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             }
             //How to plot the route line
             if cell.routeMapView.overlays.count == 0 {
-                for (index, stop) in selectedRoute.routeWaypoints.enumerate() { 
+                for (index, stop) in selectedRoute.routeWaypoints.enumerate() {
                     let sourceLat = Double(stop.wpLat!)
                     let sourceLon = Double(stop.wpLon!)
                     let source = CLLocationCoordinate2D(latitude: sourceLat!, longitude: sourceLon!)
@@ -111,7 +111,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             let selectedRoute = routeArray[indexPath.row]
             cellP.routeNameLabel.text = selectedRoute.routeName
             cellP.routeDescript.text = selectedRoute.routeDiscription
-//            cellP.routeStartPoint.text = "Starting Citying: " + selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
+            //            cellP.routeStartPoint.text = "Starting Citying: " + selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
             
             //How to plot the map points
             if cellP.routeMapView.annotations.count == selectedRoute.routeWaypoints.count {
@@ -170,15 +170,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             if backendless.userService.currentUser == nil {
                 cell.textLabel!.text = loggedOutArray.first
                 cell.detailTextLabel!.text = " "
-//                return cell
+                //                return cell
             } else {
                 let selectedRoute = privateArray[indexPath.row]
                 cell.textLabel!.text = selectedRoute.routeName
                 cell.detailTextLabel!.text = "\(selectedRoute.routeWaypoints.count) stops"
-//                return cell
+                //                return cell
             }
             return cell
-
+            
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
             let selectedRoute = routeArray[indexPath.row]
@@ -343,7 +343,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
     
     override func didReceiveMemoryWarning() {

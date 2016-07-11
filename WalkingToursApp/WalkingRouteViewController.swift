@@ -94,7 +94,7 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         wpMapView.removeAnnotations(wpMapView.annotations)
         wpMapView.removeOverlays(wpMapView.overlays)
         if nextStop > 0  {
-            nextStop -= 1 
+            nextStop -= 1
         } else {
             nextStop = (waypointArray.count - 1)
         }
