@@ -319,7 +319,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
     }
     
     @IBAction func switchTableContents() {
-        RouteTable.reloadData()
+        RouteTable.reloadData() 
     }
     
     //MARK: - Life Cycle Method
