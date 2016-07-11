@@ -20,7 +20,7 @@ class BorderedRoundedUIView: UITableView {
     
     @IBInspectable var borderWidth : CGFloat = 0 {
         didSet {
-            layer.borderWidth = borderWidth
+            layer.borderWidth = borderWidth 
         }
     }
     

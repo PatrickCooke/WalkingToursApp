@@ -67,7 +67,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
             }
             //How to plot the route line
             if cell.routeMapView.overlays.count == 0 {
-                for (index, stop) in selectedRoute.routeWaypoints.enumerate() {
+                for (index, stop) in selectedRoute.routeWaypoints.enumerate() { 
                     let sourceLat = Double(stop.wpLat!)
                     let sourceLon = Double(stop.wpLon!)
                     let source = CLLocationCoordinate2D(latitude: sourceLat!, longitude: sourceLon!)

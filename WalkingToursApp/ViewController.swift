@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     //MARK: - Table Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return routeArray.count
+        return routeArray.count 
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

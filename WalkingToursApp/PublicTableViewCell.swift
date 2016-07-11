@@ -17,7 +17,7 @@ class PublicTableViewCell: UITableViewCell {
     @IBOutlet weak var routeDist        :UILabel!
     
     override func awakeFromNib() {
-        super.awakeFromNib()
+        super.awakeFromNib() 
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

@@ -42,7 +42,7 @@
 		<string>MKDirectionsModePedestrian</string>
 	</array>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>SoleSearcher needs your location to help you find yourself while talking a walk</string>
+	<string>SoleSearcher needs your location to help you find yourself while talking a walk.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>SoleSearcher needs your location to help you find yourself while talking a walk</string>
 	<key>UILaunchStoryboardName</key>

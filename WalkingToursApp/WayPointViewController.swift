@@ -120,7 +120,7 @@ class WayPointViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     let updatedRoute = result as! Waypoint
                     if let saveMessage = updatedRoute.wpName {
                         self.messageLabel.text = "\(saveMessage) has been saved"
-                        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "wpsaved", object: nil))
+                        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "wpsaved", object: nil)) 
                     }
                     self.fadeOutMessageView()
                 },

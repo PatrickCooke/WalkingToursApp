@@ -60,7 +60,6 @@ class newRouteViewController: UIViewController {
         }) { (fault) in
             self.messageLabel.text = "Error"
             self.fadeOutMessageView()
-            
         }
         
         self.navigationController!.popViewControllerAnimated(true)

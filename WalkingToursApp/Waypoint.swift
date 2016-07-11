@@ -24,4 +24,5 @@ class Waypoint: NSObject {
     var objectId        :String?
     var created         :NSDate?
     var updated         :NSDate?
+    
 }

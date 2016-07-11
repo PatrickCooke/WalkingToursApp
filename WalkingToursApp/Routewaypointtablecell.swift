@@ -14,4 +14,5 @@ class Routewaypointtablecell: UITableViewCell {
     @IBOutlet weak var waypointStopNumLabel :UILabel!
     @IBOutlet weak var waypointAddressLabel :UILabel!
     
+    
 }

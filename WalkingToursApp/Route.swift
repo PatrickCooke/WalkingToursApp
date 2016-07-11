@@ -21,4 +21,5 @@ class Route : NSObject {
     var created: NSDate?
     var updated: NSDate?
     var routeWaypoints: [Waypoint] = []
+    
 }

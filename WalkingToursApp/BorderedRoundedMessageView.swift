@@ -10,7 +10,7 @@ import UIKit
 
 @IBDesignable
 class BorderedRoundedMessageView: UIView {
-
+    
     @IBInspectable var cornerRadius : CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
@@ -29,5 +29,4 @@ class BorderedRoundedMessageView: UIView {
             layer.borderColor = borderColor?.CGColor
         }
     }
-
 }

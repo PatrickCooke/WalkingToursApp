@@ -18,16 +18,16 @@ class BorderedRoundedTableViewCell: UITableViewCell {
         }
     }
     
-        @IBInspectable var borderWidth : CGFloat = 0 {
-            didSet {
-                layer.borderWidth = borderWidth
-            }
+    @IBInspectable var borderWidth : CGFloat = 0 {
+        didSet {
+            layer.borderWidth = borderWidth
         }
+    }
     
     @IBInspectable var borderColor : UIColor? {
         didSet {
             layer.borderColor = borderColor?.CGColor
         }
     }
-
+    
 }

@@ -91,7 +91,7 @@ class RouteViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case routeDescriptionTXTField:
             resignFirstResponder()
         default:
-            resignFirstResponder()
+            resignFirstResponder() 
         }
         return true
     }

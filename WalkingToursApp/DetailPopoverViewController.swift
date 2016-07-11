@@ -19,7 +19,7 @@ class DetailPopoverViewController: UIViewController {
         self.wpDetailTextView.setContentOffset(CGPointZero, animated: false)
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad() { 
         super.viewDidLoad()
         self.preferredContentSize = CGSizeMake(400, 200)
         wpDetailTextView.text = detail
