@@ -28,7 +28,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager .authorizationStatus() {
             case .AuthorizedAlways:
-                turnOnLocationMonitoring() 
+                turnOnLocationMonitoring()
                 break
             case .AuthorizedWhenInUse:
                 turnOnLocationMonitoring()

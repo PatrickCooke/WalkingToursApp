@@ -16,7 +16,7 @@ class LoginManager: NSObject {
     
     func signUpNewUser(email: String, password: String) {
         let user = BackendlessUser()
-        user.email = email 
+        user.email = email
         user.password = password
         backendless.userService.registering(user, response: { (registeredUser) in
             NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "signUpSuccess", object: nil))
