@@ -114,7 +114,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UITableV
 //            cellP.routeStartPoint.text = "Starting Citying: " + selectedRoute.routeWaypoints[indexPath.row].wpCity! + ", " + selectedRoute.routeWaypoints[indexPath.row].wpState!
             
             //How to plot the map points
-            if cellP.routeMapView.annotations.count == selectedRoute.routeWaypoints.count { 
+            if cellP.routeMapView.annotations.count == selectedRoute.routeWaypoints.count {
                 for stop in selectedRoute.routeWaypoints {
                     let lat = Double(stop.wpLat!)
                     let lon = Double(stop.wpLon!)
