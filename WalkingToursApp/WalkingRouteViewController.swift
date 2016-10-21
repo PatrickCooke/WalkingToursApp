@@ -175,6 +175,21 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         return renderer
     }
     
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseIdentifier = "pin"
+        var pin = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseIdentifier) as? MKPinAnnotationView
+        if pin == nil {
+            pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+            pin!.image = UIImage(named: "marker-blue")
+            //pin?.pinTintColor = UIColor().BeccaBlue()
+            pin!.canShowCallout = false
+        } else {
+            pin!.annotation = annotation
+            pin?.pinTintColor = UIColor().BeccaBlue()
+        }
+        return pin
+    }
+    
     //MARK: - Table View Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -193,6 +208,54 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         return 28.0
     }
     
+    //MARK: - Opening Method
+    
+    func mapAllPoints() {
+        
+        //plot waypoints
+        
+        for stop in selectedRoute.routeWaypoints {
+            let lat = Double(stop.wpLat!)
+            let lon = Double(stop.wpLon!)
+            let location = CLLocation(latitude: lat!, longitude: lon!)
+            let pin = MKPointAnnotation()
+            pin.coordinate = location.coordinate
+            wpMapView.addAnnotation(pin)
+        }
+        wpMapView.showAnnotations(wpMapView.annotations, animated: false)
+        
+        //plot route
+        
+        for (index, stop) in selectedRoute.routeWaypoints.enumerate() {
+            let sourceLat = Double(stop.wpLat!)
+            let sourceLon = Double(stop.wpLon!)
+            let source = CLLocationCoordinate2D(latitude: sourceLat!, longitude: sourceLon!)
+            
+            var nextStop = index + 1
+            if index == selectedRoute.routeWaypoints.count - 1 {
+                nextStop = 0
+            }
+            let destLat = Double(selectedRoute.routeWaypoints[nextStop].wpLat!)
+            let destLon = Double(selectedRoute.routeWaypoints[nextStop].wpLon!)
+            let dest = CLLocationCoordinate2D(latitude: destLat!, longitude: destLon!)
+            
+            let request = MKDirectionsRequest()
+            
+            request.source = MKMapItem(placemark: MKPlacemark(coordinate: source, addressDictionary: nil))
+            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: dest, addressDictionary: nil))
+            request.requestsAlternateRoutes = false
+            request.transportType = .Walking
+            
+            let directions = MKDirections(request: request)
+            directions.calculateDirectionsWithCompletionHandler({ (response, error) in
+                guard let unwrappedResponse = response else { return }
+                for route in unwrappedResponse.routes {
+                    self.wpMapView.addOverlay(route.polyline)
+                }
+            })
+        }
+    }
+    
     
     //MARK: - Life Cycle Methods
     
@@ -204,6 +267,15 @@ class WalkingRouteViewController: UIViewController, CLLocationManagerDelegate, M
         fillAllInfo(nextStop)
         locManager.setupLocationMonitoring()
         wpMapView.showsUserLocation=true
+        mapAllPoints()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if wpMapView.userLocation == true {
+            getDirections(0)
+        }
     }
     
     override func didReceiveMemoryWarning() {
